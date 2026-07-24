@@ -33,6 +33,10 @@ def print_banner():
 
 def main():
     """Main CLI entry point."""
+    # Fix Windows GBK encoding issue — Rich emoji output crashes otherwise
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
     print_banner()
 
     parser = argparse.ArgumentParser(description="Horizon - AI-Driven Information Aggregation System")

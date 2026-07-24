@@ -29,6 +29,7 @@ ENV/
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 *~
@@ -38,11 +39,14 @@ ENV/
 
 # Data files (keep structure, ignore content)
 data/config.json
+data/config.json.bak
 data/seen.json
 data/summaries/*.md
 data/subscribers.json
 data/mcp.secrets.json
 data/mcp-secrets.json
+config/mcp.secrets.json
+config/mcp.secrets.local.json
 data/mcp-runs/
 data/x_cookies_*.json
 
