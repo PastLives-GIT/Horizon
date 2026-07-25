@@ -146,5 +146,16 @@
       }
     },
     "headers": ""
+  },
+  "email": {
+    "enabled": true,
+    "email_address": "${HORIZON_EMAIL_ADDRESS}",
+    "smtp_server": "smtp.qq.com",
+    "smtp_port": 465,
+    "imap_server": "imap.qq.com",
+    "imap_port": 993,
+    "imap_enabled": true,
+    "sender_name": "Horizon Daily",
+    "password_env": "EMAIL_PASSWORD"
   }
 }
