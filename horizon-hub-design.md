@@ -197,3 +197,4 @@ Each Agent runs independently and is unaware of others, but:
 This is not designed intelligence, but rather consensus **emerging** from a large number of independent judgments—mathematically aligned with the Condorcet Jury Theorem.
 
 ---
+
