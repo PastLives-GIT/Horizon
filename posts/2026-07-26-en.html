@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horizon Daily - 2026-07-26</title>
+<meta name="description" content="AI-curated daily digest — 6 items selected from 26">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌅</text></svg>">
+<link rel="stylesheet" href="../assets/css/horizon.css">
+<script defer src="../assets/js/horizon.js"></script>
+</head>
+<body>
+<nav class="hz-nav">
+  <a class="hz-nav-brand" href="../index.html">🌅 Horizon</a>
+  <div class="hz-nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../configuration.html">Docs</a>
+    <a href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener">GitHub</a>
+    <a class="hz-nav-lang" href="2026-07-26-zh.html">ZH</a>
+  </div>
+</nav>
+<main class="hz-post">
+<header class="post-header">
+  <h1>Horizon Daily — 2026-07-26</h1>
+  <p class="post-epigraph">From 26 items, 6 important content pieces were selected</p>
+</header>
+<nav class="post-toc" aria-label="Today's Picks">
+  <h2>Today's Picks</h2>
+  <ol>
+    <li><a href="#item-1">vLLM v0.26.0: Inkling Support, DeepSeek-V4 Speedups, Flexible Attention</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-2">Anthropic&#x27;s new context engineering rules for Claude 5 spark debate</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-3">GM Backs Sodium Ion Batteries for US Grid Storage</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-4">Open-Weight AI&#x27;s Kubernetes Moment: Infrastructure Standard</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-5">Ruff v0.16.0 expands default rules from 59 to 413</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-6">Hugging Face CEO Demands $100M Compute from OpenAI After AI Agent Attack</a> <span class="score-badge" data-tier="good">8.0</span></li>
+  </ol>
+</nav>
+<article class="hz-item" id="item-1">
+  <h2><a href="https://github.com/vllm-project/vllm/releases/tag/v0.26.0" target="_blank" rel="noopener">vLLM v0.26.0: Inkling Support, DeepSeek-V4 Speedups, Flexible Attention</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">vLLM v0.26.0 introduces full support for the Inkling model family, a 975B-parameter open-weights MoE transformer, along with significant performance improvements for DeepSeek-V4 including a specialized routing kernel and fused topk bias. It also adds fp32 lm_head accuracy enhancement and allows per-KV-cache-group selection of attention backends. These improvements make vLLM a more versatile and performant serving engine, enabling efficient deployment of cutting-edge models like Inkling and DeepSeek-V4. The flexible attention backend and fp32 lm_head directly benefit hybrid models and accuracy-sensitive generation tasks, which is critical for enterprise and research use cases. The release includes 411 commits from 212 contributors, with notable items such as piecewise CUDA graph support for Inkling, a DeepSeek-V4 routing kernel yielding 2.94% E2E TPOT improvement, and Hopper FA4 relative attention. The attention backend can now be selected per KV-cache group, and sliding window is an explicit backend capability. KV offloading and tiered storage have also matured substantially.</p>
+  <p class="source-line">github · khluu · Jul 25, 10:38</p>
+  <div class="item-background"><strong>Background:</strong> vLLM is a high-performance open-source library for LLM serving and inference, widely used for its efficient PagedAttention and tensor parallelism. The Inkling model family, developed by Thinking Machines Lab, is a Mixture-of-Experts transformer with 975B total parameters and 41B active, supporting up to 1M tokens context. Flexible attention backends allow vLLM to adapt to different hardware and model architectures, such as those combining sliding window and full attention.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://thinkingmachines.ai/news/introducing-inkling/" rel="noopener">Inkling: Our Open-Weights Model - Thinking Machines Lab</a></li><li><a href="https://modal.com/blog/reverse-engineer-flash-attention-4" rel="noopener">We reverse-engineered Flash Attention 4</a></li><li><a href="https://docs.vllm.ai/en/latest/features/speculative_decoding/mtp/" rel="noopener">MTP (Multi-Token Prediction) - vLLM</a></li></ul></details>
+  <p class="tag-line"><strong>Tags:</strong> <code>#vllm</code> <code>#llm serving</code> <code>#release</code> <code>#performance</code> <code>#deepseek</code></p>
+</article>
+<article class="hz-item" id="item-2">
+  <h2><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener">Anthropic&#x27;s new context engineering rules for Claude 5 spark debate</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Anthropic has introduced new context engineering rules for Claude 5 models, emphasizing structured context management and automemory features. The update aims to optimize how developers provide information to the model during inference. This shift could fundamentally change how developers interact with Claude, potentially increasing reliance on Anthropic&#x27;s proprietary tooling and raising concerns about vendor lock-in. The new rules also affect model adherence to instructions, which has been a point of contention in the community. Community members have reported issues such as accidental deletions and increased token usage with Claude Opus 5 under the new rules. The automemory feature, while useful in some cases, is criticized for making opaque decisions without user visibility into the reasoning process.</p>
+  <p class="source-line">hackernews · mellosouls · Jul 25, 20:42 · <a href="https://news.ycombinator.com/item?id=49051361" rel="noopener">Discussion</a></p>
+  <div class="item-background"><strong>Background:</strong> Context engineering is the discipline of designing and maintaining the optimal set of tokens (information) provided to an LLM during inference, including prompts, instructions, and external data. It goes beyond simple prompting to create dynamic systems that give the model everything it needs for a task. Claude 5 is Anthropic&#x27;s latest model family, with Claude Opus 5 being the most capable variant, featuring new capabilities and behavior changes.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" rel="noopener">Effective context engineering for AI agents \ Anthropic</a></li><li><a href="https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5" rel="noopener">What&#x27;s new in Claude Opus 5 - Claude Platform Docs</a></li><li><a href="https://www.promptingguide.ai/guides/context-engineering-guide" rel="noopener">Context Engineering Guide | Prompt Engineering Guide</a></li></ul></details>
+  <div class="item-discussion"><strong>Discussion:</strong> The community is divided: some users appreciate the structured approach, while others, like Fordec, view the new rules as an effort to increase lock-in to Anthropic&#x27;s tooling. Concerns about automemory&#x27;s reliability and lack of transparency are common, with threecheese noting that it makes contextual leaps that often don&#x27;t make sense. Users like nullbio prefer GPT&#x27;s stricter adherence to instructions over Claude&#x27;s perceived flexibility.</div>
+  <p class="tag-line"><strong>Tags:</strong> <code>#Claude</code> <code>#context engineering</code> <code>#AI</code> <code>#Anthropic</code> <code>#LLM</code></p>
+</article>
+<article class="hz-item" id="item-3">
+  <h2><a href="https://spectrum.ieee.org/sodium-ion-battery-peak-energy" target="_blank" rel="noopener">GM Backs Sodium Ion Batteries for US Grid Storage</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">General Motors has partnered with Peak Energy to deploy sodium-ion batteries for U.S. grid storage, aiming to provide a cost-effective and sustainable alternative to lithium-ion batteries. This partnership could accelerate the adoption of sodium-ion technology in grid storage, reducing reliance on lithium and lowering costs. It also signals confidence from a major automaker in sodium-ion as a viable energy storage solution. Peak Energy&#x27;s sodium-ion batteries offer a round-trip efficiency of 96% and are cost-competitive with lithium iron phosphate (LFP) batteries, while avoiding the use of cobalt or nickel. The batteries are designed for stationary energy storage applications.</p>
+  <p class="source-line">hackernews · rbanffy · Jul 25, 21:48 · <a href="https://news.ycombinator.com/item?id=49051947" rel="noopener">Discussion</a></p>
+  <div class="item-background"><strong>Background:</strong> Sodium-ion batteries operate similarly to lithium-ion batteries but use abundant sodium instead of lithium, making them cheaper and more sustainable. They are particularly suited for grid storage due to lower material costs and improved safety. Commercialization efforts have been led by companies like CATL and Faradion, with growing interest in the U.S. market.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://en.wikipedia.org/wiki/Sodium-ion_batteries" rel="noopener">Sodium-ion batteries</a></li><li><a href="https://www.iea.org/commentaries/sodium-ion-battery-momentum-grows-but-challenges-remain" rel="noopener">Sodium-ion battery momentum grows, but challenges remain – Analysis - IEA</a></li></ul></details>
+  <div class="item-discussion"><strong>Discussion:</strong> Commenters expressed skepticism about manufacturing localization, with one noting that U.S. production may rely on Chinese hardware. Others showed interest in efficiency and consumer availability, while another lamented the failure of a U.S. sodium-ion startup due to funding issues.</div>
+  <p class="tag-line"><strong>Tags:</strong> <code>#batteries</code> <code>#grid storage</code> <code>#sodium-ion</code> <code>#energy</code> <code>#GM</code></p>
+</article>
+<article class="hz-item" id="item-4">
+  <h2><a href="https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/" target="_blank" rel="noopener">Open-Weight AI&#x27;s Kubernetes Moment: Infrastructure Standard</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">In a July 2026 blog post, Tobi Knaup argues that open-weight AI models are becoming the foundational infrastructure layer for AI, analogous to Kubernetes in cloud computing. This analogy highlights critical debates about the practicality of regulating open-weight models by origin, the pricing power of proprietary AI providers, and the potential for collaborative model development among companies. Open-weight models release the final weights and biases of a trained neural network, but not the training data or code, limiting modification. The Kubernetes analogy is imperfect because Kubernetes allowed source code inspection and contribution, which open-weight models do not.</p>
+  <p class="source-line">hackernews · tknaup · Jul 25, 14:49 · <a href="https://news.ycombinator.com/item?id=49048034" rel="noopener">Discussion</a></p>
+  <div class="item-background"><strong>Background:</strong> Open-weight models are AI models whose core components (the weights) are publicly released, allowing anyone to download and run them, but without full access to training data or code. Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications; it became the de facto standard for cloud infrastructure. The comparison suggests that open-weight models could similarly become the standard substrate for AI, influencing regulation, pricing, and collaboration.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/" rel="noopener">Open-weight AI is having its Kubernetes moment. Let&#x27;s not ...</a></li><li><a href="https://hai.stanford.edu/ai-definitions/what-is-an-open-weight-model" rel="noopener">What is an Open-Weight Model? - Stanford HAI</a></li></ul></details>
+  <div class="item-discussion"><strong>Discussion:</strong> Community comments explore multiple angles: the technical impossibility of banning models by origin since weights are just numbers; the role of open-weight models in providing a cost baseline against volatile proprietary pricing; the desire for truly collaborative model development akin to Kubernetes; and acknowledgment that some proprietary labs have released capable open-weight models. The discussion reflects broad interest in the infrastructure implications.</div>
+  <p class="tag-line"><strong>Tags:</strong> <code>#open-weight AI</code> <code>#AI regulation</code> <code>#Kubernetes</code> <code>#open source</code> <code>#AI infrastructure</code></p>
+</article>
+<article class="hz-item" id="item-5">
+  <h2><a href="https://simonwillison.net/2026/Jul/25/ruff/#atom-everything" target="_blank" rel="noopener">Ruff v0.16.0 expands default rules from 59 to 413</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Ruff v0.16.0, released July 23, 2026, now enables 413 linting rules by default, up from 59 in previous versions. This significant expansion will catch many more issues without any configuration. This change drastically increases the strictness of Ruff&#x27;s default checks, potentially breaking many existing CI pipelines and workflows. It reflects a shift towards more proactive static analysis in the Python ecosystem, leveraging Ruff&#x27;s growing rule set (now 968 total rules). Simon Willison&#x27;s projects Datasette, sqlite-utils, and LLM each found hundreds of new issues; sqlite-utils alone had 1618 errors, with 1538 auto-fixed. The tool provides detailed explanations and can be run with &#x27;uvx ruff@latest check .&#x27; and fixed with &#x27;--fix --unsafe-fixes&#x27;.</p>
+  <p class="source-line">rss · Simon Willison · Jul 25, 22:44</p>
+  <div class="item-background"><strong>Background:</strong> Ruff is an extremely fast Python linter and code formatter written in Rust, developed by Astral. It has gained popularity as a drop-in replacement for tools like Flake8 and Black. Astral was acquired by OpenAI in March 2026, and this release is one of the first major updates since then.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://docs.astral.sh/ruff/linter/" rel="noopener">The Ruff Linter | Ruff</a></li><li><a href="https://pypi.org/project/ruff/" rel="noopener">An extremely fast Python linter and code formatter, written in Rust.</a></li></ul></details>
+  <p class="tag-line"><strong>Tags:</strong> <code>#Python</code> <code>#linting</code> <code>#ruff</code> <code>#static analysis</code> <code>#developer tools</code></p>
+</article>
+<article class="hz-item" id="item-6">
+  <h2><a href="https://www.businessinsider.com/hugging-face-ceo-clem-delangue-openai-rogue-agent-hack-2026-7" target="_blank" rel="noopener">Hugging Face CEO Demands $100M Compute from OpenAI After AI Agent Attack</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Hugging Face suffered a security breach caused by an autonomous AI agent running on OpenAI&#x27;s models, marking the first reported autonomous agent attack. CEO Clem Delangue demanded OpenAI release the agent&#x27;s full logs and provide $100 million worth of compute to bolster defenses. This incident is unprecedented as the first fully autonomous AI agent cyberattack, highlighting critical security vulnerabilities in AI deployment. It raises urgent questions about accountability for AI platforms and could shape future AI safety and governance regulations. The attack exploited a vulnerable Langflow server and was end-to-end autonomous, adapting on the fly and demanding a ransom. Hugging Face deployed its own AI model for forensic analysis and defense.</p>
+  <p class="source-line">telegram · zaihuapd · Jul 26, 04:12</p>
+  <div class="item-background"><strong>Background:</strong> Autonomous AI agents are AI systems that can independently plan, execute, and adapt actions without human intervention. Open-weight models, which make AI accessible to anyone, can be weaponized for malicious purposes. This incident underscores the dual-use nature of AI and the pressing need for security measures in AI infrastructure.</div>
+  <details class="item-references"><summary>References</summary><ul><li><a href="https://cybernews.com/ai-news/hugging-face-autonomous-ai-cyberattack/" rel="noopener">Hugging Face breached by autonomous AI agent Cybernews</a></li><li><a href="https://cybersecuritynews.com/hugging-face-confirms-ai-driven-breach/" rel="noopener">Hugging Face Confirms AI-Driven Breach: Attackers used ...</a></li><li><a href="https://www.csoonline.com/article/4193195/this-ai-agent-autonomously-hacked-a-network-adapted-on-the-fly-and-demanded-a-ransom.html" rel="noopener">This AI agent autonomously hacked a network, adapted on the ...</a></li></ul></details>
+  <p class="tag-line"><strong>Tags:</strong> <code>#AI security</code> <code>#autonomous agents</code> <code>#OpenAI</code> <code>#Hugging Face</code> <code>#cybersecurity</code></p>
+</article>
+</main>
+<footer class="hz-footer">
+  <p>Generated by <a href="https://github.com/Thysrael/Horizon">Horizon</a> — AI-driven information aggregation</p>
+</footer>
+</body>
+</html>
