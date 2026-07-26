@@ -5,148 +5,125 @@ date: 2026-07-26
 lang: en
 ---
 
-> From 28 items, 6 important content pieces were selected
+> From 26 items, 5 important content pieces were selected
 
 ---
 
-1. [Sglang v0.5.16: DSpark Speculative Decoding and Inkling Support](#item-1) ⭐️ 9.0/10
-2. [Open-weight AI is having its Kubernetes moment](#item-2) ⭐️ 9.0/10
-3. [Ruff v0.16.0 expands default lint rules from 59 to 413](#item-3) ⭐️ 9.0/10
-4. [vLLM v0.26.0 Adds Inkling Model, DeepSeek-V4 Optimizations](#item-4) ⭐️ 8.0/10
-5. [Can AMD Break NVIDIA&\#x27;s CUDA Moat? Analysis of Strategies and Challenges](#item-5) ⭐️ 8.0/10
-6. [Microsoft to Use TPM Chips to Block Pirated Windows Activation](#item-6) ⭐️ 8.0/10
+1. [vLLM v0.26.0 Released with New Inkling Model and DeepSeek-V4 Optimizations](#item-1) ⭐️ 8.0/10
+2. [New Context Engineering Rules for Claude 5](#item-2) ⭐️ 8.0/10
+3. [Open-weight AI parallels Kubernetes as infrastructure standard](#item-3) ⭐️ 8.0/10
+4. [Ruff v0.16.0 enables 413 rules by default](#item-4) ⭐️ 8.0/10
+5. [Ctrip Announces 19 Corrective Measures After SAMR Antitrust Penalty](#item-5) ⭐️ 8.0/10
 
 ---
 
 <a id="item-1"></a>
-## [Sglang v0.5.16: DSpark Speculative Decoding and Inkling Support](https://github.com/sgl-project/sglang/releases/tag/v0.5.16) ⭐️ 9.0/10
+## [vLLM v0.26.0 Released with New Inkling Model and DeepSeek-V4 Optimizations](https://github.com/vllm-project/vllm/releases/tag/v0.26.0) ⭐️ 8.0/10
 
-Sglang v0.5.16 introduces the DSpark confidence-driven speculative decoding algorithm, achieving 383.7 tok/s on DeepSeek-V4-Pro, and adds support for the 975B-parameter multimodal MoE model Inkling, reaching up to 71.7k tok/s input throughput on Blackwell hardware. This release significantly advances LLM inference performance with a novel speculative decoding method and support for one of the largest open-weight multimodal models, benefiting both research and production deployments. DSpark uses semi-autoregressive drafting with confidence-based verification windows, while Inkling is a 975B MoE with 41B active parameters, combining sliding-window, full, and Mamba2 linear attention; NVFP4 GEMM now requires FlashInfer.
+vLLM v0.26.0 introduces the new Inkling model family with full support, significant performance improvements for DeepSeek-V4 \(up to 2.94% E2E TPOT gains\), and fp32 lm\_head support for generation models via head\_dtype. The release also includes flexible attention backends, KV offloading maturation, and a Rust frontend with multimodal capabilities. This release significantly expands vLLM&\#x27;s model support with the new Inkling family and deep performance optimizations for DeepSeek-V4, reinforcing vLLM as a leading open-source inference engine. The fp32 lm\_head support and flexible attention backends increase accuracy and adaptability for diverse deployment scenarios. Inkling is a 975B-parameter Mixture-of-Experts model with 41B active parameters and up to 1M token context. The release includes 411 commits from 212 contributors, with notable technical additions like piecewise CUDA graph support for Inkling and Hopper FA4 relative attention.
 
-github · Qiaolin-Yu · Jul 25, 00:13
+github · khluu · Jul 25, 10:38
 
-**Background**: Speculative decoding accelerates LLM inference by using a fast draft model to generate candidate tokens that are verified in parallel by the target model. Mixture-of-Experts \(MoE\) models like Inkling activate only a subset of parameters per token, enabling high capacity with manageable compute. Blackwell is NVIDIA&\#x27;s latest GPU architecture optimized for large-scale AI workloads.
+**Background**: vLLM is an open-source high-throughput LLM inference engine. Inkling is a new open-weights model from Thinking Machines Lab, a 975B-parameter MoE transformer trained on 45 trillion tokens. DeepSeek-V4 is a popular LLM that benefits from the specialized routing kernel and fused operations in this release.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://www.marktechpost.com/2026/07/15/thinking-machines-lab-releases-inkling-a-975b-parameter-open-weights-multimodal-moe-with-41b-active-parameters-and-controllable-thinking-effort/">Thinking Machines Lab Releases Inkling: A 975B-Parameter Open-Weights Multimodal MoE With 41B Active Parameters And Controllable Thinking Effort - MarkTechPost</a></li>
-<li><a href="https://hyper.ai/en/papers/DSpark">DSpark : Confidence-Scheduled Speculative Decoding with... | HyperAI</a></li>
 <li><a href="https://thinkingmachines.ai/news/introducing-inkling/">Inkling: Our Open-Weights Model - Thinking Machines Lab</a></li>
+<li><a href="https://docs.vllm.ai/en/latest/design/cuda_graphs/">CUDA Graphs - vLLM</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#speculative decoding`, `#LLM inference`, `#sglang`, `#MoE`, `#high-performance computing`
+**Tags**: `#vLLM`, `#LLM inference`, `#release`, `#performance`, `#AI`
 
 ---
 
 <a id="item-2"></a>
-## [Open-weight AI is having its Kubernetes moment](https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/) ⭐️ 9.0/10
+## [New Context Engineering Rules for Claude 5](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models) ⭐️ 8.0/10
 
-A blog post argues that open-weight AI models are becoming the industry standard, similar to how Kubernetes became the standard for container orchestration. This shift is driven by the need for cost baselines and collaborative model development. The rise of open-weight models could reshape AI pricing, regulation, and development, making AI more accessible and collaborative, akin to the open-source software movement. This parallels the shift that Kubernetes brought to cloud computing. The blog compares the current AI landscape to the early days of Kubernetes, highlighting that open-weight models provide a baseline for inference costs. However, unlike open-source software, open-weight models often lack training code, leading to debates about true openness.
+Anthropic has released new guidelines for context engineering specifically for Claude 5, detailing strategies to optimize prompts and manage memory effectively. The guidelines emphasize structured context formatting and recommend leveraging Claude&\#x27;s automemory feature. These rules influence how developers build reliable AI agents with Claude 5, but they also raise concerns about increased dependency on Anthropic-specific tooling and potential issues with automemory reliability. The community reception is mixed, highlighting trade-offs between performance improvements and flexibility. The new guidelines reportedly include techniques for preventing automemory overreach, such as suppressing unwanted memory writes, and recommend verbose instructions for task context. However, community members report that Claude 5&\#x27;s automemory can still produce nonsensical leaps and that token usage may increase due to initial failures.
+
+hackernews · mellosouls · Jul 25, 20:42 · [Discussion](https://news.ycombinator.com/item?id=49051361)
+
+**Background**: Context engineering is the practice of designing and maintaining the optimal set of tokens provided to an LLM during inference, including prompts and any additional context retrieved from memory. It goes beyond basic prompt engineering by managing how an AI agent retrieves and uses long-term memory, which is critical for complex, multi-step tasks. Anthropic has published specific guidance for Claude 5 to improve reliability and consistency in agent workflows.
+
+<details><summary>References</summary>
+<ul>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents \ Anthropic</a></li>
+<li><a href="https://github.com/anthropics/claude-code/issues/44829">Feature request: Suppress auto-memory system prompt when autoMemoryEnabled=false · Issue #44829 · anthropics/claude-code</a></li>
+
+</ul>
+</details>
+
+**Discussion**: Commenters express skepticism about the new rules, viewing them as a move toward vendor lock-in through Anthropic-specific memory features. Some report practical problems with automemory, such as accidental deletions and excessive token consumption when the model fails initially. Others compare the verbose instruction style unfavorably to simpler conversational approaches.
+
+**Tags**: `#context engineering`, `#Claude 5`, `#LLM`, `#Anthropic`, `#prompt engineering`
+
+---
+
+<a id="item-3"></a>
+## [Open-weight AI parallels Kubernetes as infrastructure standard](https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/) ⭐️ 8.0/10
+
+An article argues that open-weight AI models are following the same trajectory as Kubernetes, becoming the default infrastructure layer for AI deployment. The piece highlights how open-weight models offer a baseline for inference costs and foster collaborative development, similar to Kubernetes&\#x27; role in container orchestration. This comparison matters because it suggests that open-weight models could standardize AI infrastructure, reducing vendor lock-in and enabling broader adoption. If open-weight models become the de facto standard, they could lower costs and spur innovation across industries, much like Kubernetes did for cloud-native computing. Open-weight models differ from open-source AI in that they lack training code and data, but they still allow free use and modification of the model weights. The article notes that American labs need to release competitive open-weight models under permissive licenses for startups to build upon, echoing the Kubernetes community&\#x27;s collaborative model.
 
 hackernews · tknaup · Jul 25, 14:49 · [Discussion](https://news.ycombinator.com/item?id=49048034)
 
-**Background**: Open-weight AI models are those whose trained parameters \(weights\) are publicly released, allowing anyone to download and use them. This is different from open-source AI, which also includes training code and data. The Kubernetes analogy refers to how a collaborative open-source project became the de facto standard for container management, suggesting a similar path for open-weight AI.
+**Background**: An open-weight model is an AI model whose parameters \(weights\) are publicly released, allowing anyone to download, use, and modify them. However, unlike open-source software, open-weight models typically do not include the training code or dataset. Kubernetes is an open-source container orchestration platform that became the industry standard for deploying and managing containerized applications. The comparison suggests that open-weight models could similarly become the default infrastructure layer for AI workloads, providing a common foundation for building and deploying models.
 
 <details><summary>References</summary>
 <ul>
 <li><a href="https://hai.stanford.edu/ai-definitions/what-is-an-open-weight-model">What is an Open-Weight Model? - Stanford HAI</a></li>
 <li><a href="https://opensource.org/ai/open-weights">Open Weights: not quite what you’ve been told</a></li>
-<li><a href="https://opensourcesai.com/guides/open-weight-vs-open-source-ai/">Open Weight vs Open Source AI | OpenSourcesAI</a></li>
+<li><a href="https://promptmetheus.com/resources/llm-knowledge-base/open-weights-model">Open-weights Model | LLM Knowledge Base</a></li>
 
 </ul>
 </details>
 
-**Discussion**: Commenters discuss the feasibility of banning models by origin, arguing that weights are just numbers and cannot be traced. They also critique the &\#x27;tokenomics&\#x27; of AI pricing, noting that open-weight models provide a sanity check on costs. Some express hope for collaborative model development similar to Linux, where companies contribute to a shared open model.
+**Discussion**: Commenters discuss the feasibility of banning Chinese models, noting that weights are just numbers and origin is untraceable. Some highlight the volatility of AI pricing \(tokenomics\) and argue that open-weight models can provide a cost baseline. Others envision a future where companies collaborate on a shared open-weight model, similar to Linux or Kubernetes, to reduce duplication of effort.
 
-**Tags**: `#open-weight`, `#AI`, `#Kubernetes`, `#open source`, `#regulation`
-
----
-
-<a id="item-3"></a>
-## [Ruff v0.16.0 expands default lint rules from 59 to 413](https://simonwillison.net/2026/Jul/25/ruff/#atom-everything) ⭐️ 9.0/10
-
-Ruff v0.16.0, released on July 23, 2026, increased the default set of lint rules from 59 to 413, causing breaking changes in existing CI pipelines that rely on unpinned ruff dependencies. This dramatic expansion means that many Python projects will encounter hundreds of new warnings and errors during linting, significantly improving code quality but requiring immediate attention from developers to update their codebases. The number of rules in Ruff has grown from 708 to 968 since v0.1.0, and many of the newly enabled rules catch syntax errors and runtime errors that were previously not flagged by default.
-
-rss · Simon Willison · Jul 25, 22:44
-
-**Background**: Ruff is an extremely fast Python linter and code formatter written in Rust, designed as a drop-in replacement for tools like Flake8, isort, and Black. It is developed by Astral, a company focused on high-performance Python tooling. The default rule set had not been updated since v0.1.0, and this release aligns the defaults with the tool&\#x27;s growing capabilities.
-
-<details><summary>References</summary>
-<ul>
-<li><a href="https://docs.astral.sh/ruff/linter/">The Ruff Linter | Ruff - Astral</a></li>
-<li><a href="https://github.com/astral-sh/ruff">GitHub - astral-sh/ruff: An extremely fast Python linter and ... ruff · PyPI Ruff - Astral Ruff: Complete Guide to Python&#x27;s Fastest Linter | pydevtools GitHub - sartcod/ruff: An extremely fast Python linter and ... Ruff: A Modern Python Linter for Error-Free and Maintainable ...</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#Python`, `#Ruff`, `#linting`, `#development tools`, `#breaking change`
+**Tags**: `#open-weight AI`, `#Kubernetes`, `#open source`, `#AI models`, `#infrastructure`
 
 ---
 
 <a id="item-4"></a>
-## [vLLM v0.26.0 Adds Inkling Model, DeepSeek-V4 Optimizations](https://github.com/vllm-project/vllm/releases/tag/v0.26.0) ⭐️ 8.0/10
+## [Ruff v0.16.0 enables 413 rules by default](https://simonwillison.net/2026/Jul/25/ruff/#atom-everything) ⭐️ 8.0/10
 
-vLLM v0.26.0 introduces full support for the Inkling model family from Thinking Machines Lab, significant performance improvements for DeepSeek-V4, fp32 lm\_head support via head\_dtype, and a flexible attention backend selectable per KV-cache group. This release consolidates vLLM&\#x27;s position as the leading open-source LLM inference engine by supporting cutting-edge models like Inkling \(1T parameters, multimodal\) and delivering vendor-specific optimizations for DeepSeek-V4 across NVIDIA, AMD, and Intel GPUs. The release includes 411 commits from 212 contributors, with features such as piecewise CUDA graph support for Inkling, a specialized routing kernel for DeepSeek-V4, and ModelOpt NVFP4 quantization for Blackwell GPUs. The attention backend can now be selected per KV-cache group, and sliding-window support is an explicit backend capability.
+Ruff v0.16.0 increased the number of default lint rules from 59 to 413, causing breaking changes for projects using unpinned dependencies. This release includes rules from new categories like B, UP, and RUF. This dramatic expansion of default rules significantly improves code quality checks for Python developers, catching severe issues like syntax errors and runtime errors without requiring additional configuration. However, it may cause CI failures for projects that rely on the previous smaller rule set. The update includes rules that flag syntax errors \(PLE0118\) and immediate runtime errors \(PLE0100\). Projects with comprehensive test suites can safely apply automated fixes using \`ruff check . --fix --unsafe-fixes\`, as demonstrated by the author on three major projects.
 
-github · khluu · Jul 25, 10:38
+rss · Simon Willison · Jul 25, 22:44
 
-**Background**: vLLM is a high-throughput, low-latency inference engine for large language models, widely used in production. The Inkling model is a 1T-parameter multimodal model from Thinking Machines Lab that uses novel architecture components like relative attention, short convolution, and shared expert sinks. FlashAttention-4 \(FA4\) is the latest iteration of the flash attention algorithm that improves performance on Hopper GPUs through kernel pipelining.
+**Background**: Ruff is a fast Python linter and code formatter written in Rust, developed by Astral. Before v0.16.0, the default rule set had remained largely unchanged since v0.1.0, even as the total number of rules grew from 708 to 968. The new default rules aim to bring attention to severe issues that were previously not enabled by default, making Ruff more effective out of the box.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://vllm.ai/blog/2026-07-15-inkling">TML Inkling on vLLM: Day-0 Support with Optimized Performance</a></li>
-<li><a href="https://modal.com/blog/reverse-engineer-flash-attention-4">We reverse-engineered Flash Attention 4</a></li>
-<li><a href="https://build.nvidia.com/spark/nvfp4-quantization">NVFP4 Quantization | DGX Spark</a></li>
+<li><a href="https://docs.astral.sh/ruff/rules/">Rules | Ruff - Astral</a></li>
+<li><a href="https://docs.astral.sh/ruff/rules/load-before-global-declaration/">load-before-global-declaration (PLE0118) | Ruff</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#vLLM`, `#LLM inference`, `#performance`, `#release`, `#optimization`
+**Tags**: `#ruff`, `#python`, `#linting`, `#astral`
 
 ---
 
 <a id="item-5"></a>
-## [Can AMD Break NVIDIA&\#x27;s CUDA Moat? Analysis of Strategies and Challenges](https://newsletter.semianalysis.com/p/can-amd-break-the-cuda-moat-amd-advancing) ⭐️ 8.0/10
+## [Ctrip Announces 19 Corrective Measures After SAMR Antitrust Penalty](https://mp.weixin.qq.com/s/6pfOO4iorcdUFb2zLNhFSw) ⭐️ 8.0/10
 
-A detailed analysis from SemiAnalysis examines AMD&\#x27;s efforts to challenge NVIDIA&\#x27;s CUDA dominance, highlighting strategies like agentic kernel generation, software quality improvements, and the Helios MI455X platform, while also discussing production issues and financial engineering tactics. This analysis matters because it sheds light on whether AMD can realistically compete in the AI accelerator market, which is currently dominated by NVIDIA&\#x27;s CUDA ecosystem. The outcome will affect AI computing costs, innovation pace, and the balance of power in the GPU industry. The analysis covers agentic kernel generation — using LLM agents to automate kernel optimization — as a potential software moat. It also details the Helios rack \(72 MI455X GPUs, 18 Venice CPUs, 2.9 exaflops\) and notes that MI455X has 432GB HBM4 but Infinity Fabric bandwidth \(896 GB/s\) trails NVIDIA NVLink 6 \(3.6 TB/s\).
+On July 25, 2026, Ctrip announced 19 corrective measures after receiving an antitrust penalty from China&\#x27;s State Administration for Market Regulation \(SAMR\). The measures include ending exclusive cooperation, canceling unfair &\#x27;lowest price across the entire network&\#x27; requirements, and eliminating certain promotional categories. This action reflects China&\#x27;s continued antitrust enforcement in the tech sector, specifically targeting anti-competitive practices in online travel. It sets a precedent for other platforms using exclusive agreements and price parity clauses, potentially reshaping industry practices. Key measures include ending the &\#x27;first-level authorized distribution \(special card\)&\#x27; model, removing the &\#x27;Smart Selection Deals&\#x27; category, and stopping demands for &\#x27;lowest price across the entire network.&\#x27; Ctrip also commits to establishing a new traffic distribution mechanism and strengthening antitrust compliance management.
 
-rss · Semianalysis · Jul 25, 00:33
+telegram · zaihuapd · Jul 25, 11:56
 
-**Background**: NVIDIA&\#x27;s CUDA platform has established a strong moat through its mature software ecosystem and extensive library support, making it difficult for competitors like AMD to gain traction in AI workloads. AMD is trying to counter this with hardware improvements, open-source software initiatives, and now agentic kernel generation to automate and optimize GPU code.
+**Background**: Ctrip is a leading online travel agency in China. In recent years, Chinese regulators have intensified antitrust enforcement, targeting practices like exclusive deals and most-favored-nation clauses that harm competition. SAMR&\#x27;s penalty requires Ctrip to rectify these behaviors within a set timeframe, following similar actions against other tech giants.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://www.emergentmind.com/topics/agentic-kernel-generation">Agentic Kernel Generation</a></li>
-<li><a href="https://arxiv.org/html/2601.15727">Towards Automated Kernel Generation in the Era of LLMs</a></li>
-<li><a href="https://www.servethehome.com/amds-epyc-venice-instinct-mi455x-helios-hardware-on-display-for-first-time-at-ces-2026/">AMD’s EPYC Venice, Instinct MI 455 X , &amp; Helios ... - ServeTheHome</a></li>
+<li><a href="https://www.zaobao.com.sg/news/china/story20260725-9419359">涉垄断被罚后 携程确定立即停止独家合作 | 联合早报</a></li>
+<li><a href="https://www.ithome.com/0/981/515.htm">携程集团就市场监管总局行政处罚决定公布 19 项整改措施：停止独家合...</a></li>
+<li><a href="https://news.qq.com/rain/a/20260117A01RKF00">携程合作模式的三层逻辑：反垄断如何重塑酒店分销权力天平？</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#AI hardware`, `#GPU computing`, `#CUDA`, `#AMD`, `#software ecosystem`
-
----
-
-<a id="item-6"></a>
-## [Microsoft to Use TPM Chips to Block Pirated Windows Activation](https://www.techspot.com/news/113232-microsoft-using-tpm-chips-crack-down-pirated-windows.html) ⭐️ 8.0/10
-
-Microsoft is adding TPM-based hardware verification to its KMS activation system, requiring KMS servers to have a certified and unaltered hardware identity before processing volume activation requests. This move could shut down widely used KMS-based piracy tools like Online KMS, which rely on fake servers to activate Windows every 180 days, significantly impacting enterprise software licensing enforcement. The TPM proof feature will become mandatory starting from the next version of Windows Server, and Windows Server 2025 will receive preparatory prompts from August 2026. However, the Massgrave group claims its TSforge method can bypass Microsoft&\#x27;s entire DRM activation architecture.
-
-telegram · zaihuapd · Jul 25, 15:55
-
-**Background**: KMS \(Key Management Service\) is a volume activation technology used by Microsoft for enterprise deployments, allowing organizations to activate Windows and Office within their network without connecting to Microsoft. Pirated versions have long exploited KMS by setting up fake KMS servers that respond to activation requests. TPM \(Trusted Platform Module\) is a hardware chip that provides secure cryptographic functions, and TPM proof is a mechanism that ensures data structures are signed with a unique secret, preventing tampering.
-
-<details><summary>References</summary>
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys">Key Management Services ( KMS ) client activation ... | Microsoft Learn</a></li>
-<li><a href="https://massgrave.dev/">Microsoft Activation Scripts | MAS</a></li>
-<li><a href="https://www.encryptionconsulting.com/introducing-the-tpm/">The cost effective architecture of TPM | Encryption Consulting</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#Windows`, `#TPM`, `#anti-piracy`, `#KMS`, `#security`
+**Tags**: `#antitrust`, `#regulation`, `#Ctrip`, `#online travel`, `#China tech`
 
 ---

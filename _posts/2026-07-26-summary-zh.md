@@ -5,148 +5,125 @@ date: 2026-07-26
 lang: zh
 ---
 
-> 从 28 条内容中筛选出 6 条重要资讯。
+> 从 26 条内容中筛选出 5 条重要资讯。
 
 ---
 
-1. [Sglang v0.5.16：引入 DSpark 推测解码与 Inkling 支持](#item-1) ⭐️ 9.0/10
-2. [开放权重 AI 迎来其 Kubernetes 时刻](#item-2) ⭐️ 9.0/10
-3. [Ruff v0.16.0 默认规则从 59 条扩展到 413 条](#item-3) ⭐️ 9.0/10
-4. [vLLM v0.26.0 新增 Inkling 模型和 DeepSeek-V4 优化](#item-4) ⭐️ 8.0/10
-5. [AMD 能否打破 NVIDIA 的 CUDA 护城河？战略与挑战分析](#item-5) ⭐️ 8.0/10
-6. [微软将借 TPM 芯片封堵盗版 Windows 激活](#item-6) ⭐️ 8.0/10
+1. [vLLM v0.26.0 发布：支持 Inkling 模型及 DeepSeek-V4 优化](#item-1) ⭐️ 8.0/10
+2. [Claude 5 的上下文工程新规则](#item-2) ⭐️ 8.0/10
+3. [开放权重人工智能模仿 Kubernetes 成为基础设施标准](#item-3) ⭐️ 8.0/10
+4. [Ruff v0.16.0 默认启用 413 条规则](#item-4) ⭐️ 8.0/10
+5. [携程被罚后公布 19 项整改措施](#item-5) ⭐️ 8.0/10
 
 ---
 
 <a id="item-1"></a>
-## [Sglang v0.5.16：引入 DSpark 推测解码与 Inkling 支持](https://github.com/sgl-project/sglang/releases/tag/v0.5.16) ⭐️ 9.0/10
+## [vLLM v0.26.0 发布：支持 Inkling 模型及 DeepSeek-V4 优化](https://github.com/vllm-project/vllm/releases/tag/v0.26.0) ⭐️ 8.0/10
 
-Sglang v0.5.16 引入了基于置信度的 DSpark 推测解码算法，在 DeepSeek-V4-Pro 上达到 383.7 tok/s，并支持 975B 参数的多模态 MoE 模型 Inkling，在 Blackwell 硬件上实现高达 71.7k tok/s 的输入吞吐量。 该版本通过新颖的推测解码方法和支持最大的开源多模态模型之一，显著提升了 LLM 推理性能，对研究及生产部署均有裨益。 DSpark 采用半自回归草稿生成与基于置信度的验证窗口，而 Inkling 是一个 975B 参数、41B 活跃参数的 MoE 模型，融合了滑动窗口、全注意力和 Mamba2 线性注意力；NVFP4 GEMM 现需依赖 FlashInfer。
+vLLM v0.26.0 引入了全新的 Inkling 模型家族，提供完整支持；对 DeepSeek-V4 进行了显著性能优化（端到端 TPOT 提升达 2.94%）；并通过 head\_dtype 支持生成模型的 fp32 lm\_head。此外，该版本还包含灵活注意力后端、KV 卸载功能成熟以及具备多模态能力的 Rust 前端。 该版本通过新 Inkling 模型家族和对 DeepSeek-V4 的深度性能优化，大幅扩展了 vLLM 的模型支持，巩固了其作为领先开源推理引擎的地位。fp32 lm\_head 支持和灵活注意力后端提高了部署的准确性和适应性。 Inkling 是一个 975B 参数的混合专家模型，41B 活跃参数，支持最多 1M token 上下文。该版本包含来自 212 位贡献者的 411 次提交，关键技术新增包括 Inkling 的 piecewise CUDA graph 支持和 Hopper FA4 相对注意力。
 
-github · Qiaolin-Yu · 7月25日 00:13
+github · khluu · 7月25日 10:38
 
-**背景**: 推测解码通过快速草稿模型生成候选 token，再由目标模型并行验证，从而加速 LLM 推理。Inkling 等混合专家模型（MoE）每个 token 仅激活部分参数，实现了高容量与可控计算。Blackwell 是 NVIDIA 最新的 GPU 架构，专为大规模 AI 工作负载优化。
+**背景**: vLLM 是一个开源的高吞吐 LLM 推理引擎。Inkling 是 Thinking Machines Lab 新推出的开放权重模型，是一个在 45 万亿 tokens 上训练的 975B 参数 MoE transformer。DeepSeek-V4 是一个流行的 LLM，在此版本中受益于专门的路由内核和融合操作。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://www.marktechpost.com/2026/07/15/thinking-machines-lab-releases-inkling-a-975b-parameter-open-weights-multimodal-moe-with-41b-active-parameters-and-controllable-thinking-effort/">Thinking Machines Lab Releases Inkling: A 975B-Parameter Open-Weights Multimodal MoE With 41B Active Parameters And Controllable Thinking Effort - MarkTechPost</a></li>
-<li><a href="https://hyper.ai/en/papers/DSpark">DSpark : Confidence-Scheduled Speculative Decoding with... | HyperAI</a></li>
 <li><a href="https://thinkingmachines.ai/news/introducing-inkling/">Inkling: Our Open-Weights Model - Thinking Machines Lab</a></li>
+<li><a href="https://docs.vllm.ai/en/latest/design/cuda_graphs/">CUDA Graphs - vLLM</a></li>
 
 </ul>
 </details>
 
-**标签**: `#speculative decoding`, `#LLM inference`, `#sglang`, `#MoE`, `#high-performance computing`
+**标签**: `#vLLM`, `#LLM inference`, `#release`, `#performance`, `#AI`
 
 ---
 
 <a id="item-2"></a>
-## [开放权重 AI 迎来其 Kubernetes 时刻](https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/) ⭐️ 9.0/10
+## [Claude 5 的上下文工程新规则](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models) ⭐️ 8.0/10
 
-一篇博客文章认为，开放权重 AI 模型正成为行业标准，类似于 Kubernetes 成为容器编排标准的过程。这一转变源于对成本基准和协作开发的需求。 开放权重模型的兴起可能重塑 AI 的定价、监管和开发方式，使 AI 更加开放和协作，类似于开源软件运动的影响。这与 Kubernetes 给云计算带来的转变相呼应。 该博客将当前 AI 格局与 Kubernetes 早期阶段进行比较，强调开放权重模型为推理成本提供了基准。但不同于开源软件，开放权重模型通常缺少训练代码，引发了关于真正开放性的讨论。
+Anthropic 发布了专门针对 Claude 5 的上下文工程新指南，详细说明了优化提示词和有效管理内存的策略。指南强调结构化上下文格式，并建议利用 Claude 的自动内存功能。 这些规则影响了开发者如何用 Claude 5 构建可靠的 AI 代理，但也引发了对 Anthropic 特定工具依赖增加以及自动内存可靠性潜在问题的担忧。社区反响不一，凸显了性能提升与灵活性之间的权衡。 新指南据说包括防止自动内存越界的技术，例如抑制不必要的内存写入，并推荐为任务上下文提供冗长指令。然而，社区成员报告称 Claude 5 的自动内存仍可能产生不合理的跳跃，且由于初始失败，token 使用量可能增加。
+
+hackernews · mellosouls · 7月25日 20:42 · [社区讨论](https://news.ycombinator.com/item?id=49051361)
+
+**背景**: 上下文工程是指在推理过程中设计并维护提供给 LLM 的最优 token 集合的实践，包括提示词和从内存中检索的任何额外上下文。它超越了基本的提示工程，通过管理 AI 代理如何检索和使用长期内存，对于复杂的多步骤任务至关重要。Anthropic 发布了针对 Claude 5 的具体指南，以提高代理工作流程的可靠性和一致性。
+
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents \ Anthropic</a></li>
+<li><a href="https://github.com/anthropics/claude-code/issues/44829">Feature request: Suppress auto-memory system prompt when autoMemoryEnabled=false · Issue #44829 · anthropics/claude-code</a></li>
+
+</ul>
+</details>
+
+**社区讨论**: 评论者对新规则表示怀疑，认为这是通过 Anthropic 特定的内存功能走向供应商锁定的举动。一些人报告了自动内存的实际问题，例如意外删除和模型初始失败时 token 消耗过多。另一些人将冗长的指令风格与更简单的对话方式进行了不利比较。
+
+**标签**: `#context engineering`, `#Claude 5`, `#LLM`, `#Anthropic`, `#prompt engineering`
+
+---
+
+<a id="item-3"></a>
+## [开放权重人工智能模仿 Kubernetes 成为基础设施标准](https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/) ⭐️ 8.0/10
+
+一篇文章认为，开放权重 AI 模型正沿着与 Kubernetes 相同的轨迹发展，成为 AI 部署的默认基础设施层。文章强调开放权重模型为推理成本提供了基准，并促进了协作开发，类似于 Kubernetes 在容器编排中的作用。 这一比较意义重大，因为它表明开放权重模型可能标准化 AI 基础设施，减少供应商锁定，并促进更广泛的采用。如果开放权重模型成为事实标准，它们可能降低成本并推动跨行业创新，就像 Kubernetes 对云原生计算所做的那样。 开放权重模型与开源 AI 的不同之处在于它们缺少训练代码和数据，但仍允许自由使用和修改模型权重。文章指出，美国实验室需要在宽松许可下发布有竞争力的开放权重模型，以便初创公司在此基础上构建，这与 Kubernetes 社区的协作模式相呼应。
 
 hackernews · tknaup · 7月25日 14:49 · [社区讨论](https://news.ycombinator.com/item?id=49048034)
 
-**背景**: 开放权重 AI 模型是指其训练后的参数（权重）公开发布，任何人都可以下载和使用。这与开源 AI 不同，后者还包括训练代码和数据。Kubernetes 的类比指的是一个协作的开源项目如何成为容器管理的事实标准，暗示开放权重 AI 可能走类似的道路。
+**背景**: 开放权重模型是一种其参数（权重）公开发布的 AI 模型，允许任何人下载、使用和修改。然而，与开源软件不同，开放权重模型通常不包含训练代码或数据集。Kubernetes 是一个开源容器编排平台，已成为部署和管理容器化应用的行业标准。这一比较表明，开放权重模型也可能类似地成为 AI 工作负载的默认基础设施层，为构建和部署模型提供共同基础。
 
 <details><summary>参考链接</summary>
 <ul>
 <li><a href="https://hai.stanford.edu/ai-definitions/what-is-an-open-weight-model">What is an Open-Weight Model? - Stanford HAI</a></li>
 <li><a href="https://opensource.org/ai/open-weights">Open Weights: not quite what you’ve been told</a></li>
-<li><a href="https://opensourcesai.com/guides/open-weight-vs-open-source-ai/">Open Weight vs Open Source AI | OpenSourcesAI</a></li>
+<li><a href="https://promptmetheus.com/resources/llm-knowledge-base/open-weights-model">Open-weights Model | LLM Knowledge Base</a></li>
 
 </ul>
 </details>
 
-**社区讨论**: 评论者讨论了按来源禁止模型的可行性，认为权重只是数字且无法追溯。他们还批评了 AI 定价的&\#x27;代币经济学&\#x27;，指出开放权重模型为成本提供了合理性检查。一些人希望出现类似 Linux 的协作模型开发，公司们共同贡献于一个共享的开放模型。
+**社区讨论**: 评论者讨论了禁止中国模型的可行性，指出权重只是数字，其来源无法追溯。一些人强调了 AI 定价（代币经济学）的波动性，并认为开放权重模型可以提供成本基准。其他人设想未来公司合作开发共享的开放权重模型，类似于 Linux 或 Kubernetes，以减少重复劳动。
 
-**标签**: `#open-weight`, `#AI`, `#Kubernetes`, `#open source`, `#regulation`
-
----
-
-<a id="item-3"></a>
-## [Ruff v0.16.0 默认规则从 59 条扩展到 413 条](https://simonwillison.net/2026/Jul/25/ruff/#atom-everything) ⭐️ 9.0/10
-
-Ruff v0.16.0 于 2026 年 7 月 23 日发布，将默认启用的 lint 规则从 59 条增加到 413 条，导致依赖未锁定 ruff 依赖的现有 CI 流水线出现破坏性变更。 这一大幅扩展意味着许多 Python 项目在 lint 过程中会遇到数百条新的警告和错误，显著提升代码质量，但也需要开发者立即关注并更新代码库。 自 v0.1.0 以来，Ruff 中的规则总数从 708 条增加到 968 条，许多新启用的规则能捕获之前默认未标记的语法错误和运行时错误。
-
-rss · Simon Willison · 7月25日 22:44
-
-**背景**: Ruff 是一个用 Rust 编写的超快速 Python 代码检查器和格式化工具，旨在替代 Flake8、isort 和 Black 等工具。它由 Astral 公司开发，该公司专注于高性能 Python 工具。默认规则集自 v0.1.0 以来未更新，此次发布使默认规则与工具不断增长的能力保持一致。
-
-<details><summary>参考链接</summary>
-<ul>
-<li><a href="https://docs.astral.sh/ruff/linter/">The Ruff Linter | Ruff - Astral</a></li>
-<li><a href="https://github.com/astral-sh/ruff">GitHub - astral-sh/ruff: An extremely fast Python linter and ... ruff · PyPI Ruff - Astral Ruff: Complete Guide to Python&#x27;s Fastest Linter | pydevtools GitHub - sartcod/ruff: An extremely fast Python linter and ... Ruff: A Modern Python Linter for Error-Free and Maintainable ...</a></li>
-
-</ul>
-</details>
-
-**标签**: `#Python`, `#Ruff`, `#linting`, `#development tools`, `#breaking change`
+**标签**: `#open-weight AI`, `#Kubernetes`, `#open source`, `#AI models`, `#infrastructure`
 
 ---
 
 <a id="item-4"></a>
-## [vLLM v0.26.0 新增 Inkling 模型和 DeepSeek-V4 优化](https://github.com/vllm-project/vllm/releases/tag/v0.26.0) ⭐️ 8.0/10
+## [Ruff v0.16.0 默认启用 413 条规则](https://simonwillison.net/2026/Jul/25/ruff/#atom-everything) ⭐️ 8.0/10
 
-vLLM v0.26.0 引入了对 Thinking Machines Lab 的 Inkling 模型家族的完整支持，对 DeepSeek-V4 进行了显著的性能优化，通过 head\_dtype 支持 fp32 lm\_head，以及可按 KV-cache 组选择的自定义注意力后端。 此次发布巩固了 vLLM 作为领先开源大模型推理引擎的地位，支持了 Inkling（1T 参数、多模态）等前沿模型，并针对 DeepSeek-V4 在 NVIDIA、AMD 和 Intel GPU 上提供了供应商特定的优化。 此次发布包含来自 212 位贡献者的 411 次提交，新功能包括 Inkling 的分段 CUDA 图支持、DeepSeek-V4 的专用路由内核，以及针对 Blackwell GPU 的 ModelOpt NVFP4 量化。注意力后端现在可按 KV-cache 组选择，滑动窗口支持也成为显式后端能力。
+Ruff v0.16.0 将默认 lint 规则从 59 条增加到 413 条，导致使用未固定依赖项的项目出现破坏性变更。此版本包括了来自 B、UP 和 RUF 等新类别的规则。 默认规则的急剧扩展显著提升了 Python 开发者的代码质量检查能力，无需额外配置即可捕获语法错误和运行时错误等严重问题。然而，这可能导致依赖先前较小规则集的项目出现 CI 失败。 此更新包括标记语法错误（PLE0118）和即时运行时错误（PLE0100）的规则。拥有全面测试套件的项目可以安全地使用 \`ruff check . --fix --unsafe-fixes\` 应用自动化修复，正如作者在三个主要项目上演示的那样。
 
-github · khluu · 7月25日 10:38
+rss · Simon Willison · 7月25日 22:44
 
-**背景**: vLLM 是一个用于大语言模型的高吞吐量、低延迟推理引擎，广泛应用于生产环境。Inkling 模型是 Thinking Machines Lab 推出的 1T 参数多模态模型，采用了相对注意力、短卷积和共享专家汇聚等新颖架构组件。FlashAttention-4 \(FA4\) 是注意力算法的最新迭代，通过内核流水线在 Hopper GPU 上提升了性能。
+**背景**: Ruff 是一个用 Rust 编写的快速 Python linter 和代码格式化工具，由 Astral 开发。在 v0.16.0 之前，默认规则集自 v0.1.0 以来基本未变，尽管规则总数从 708 条增长到 968 条。新的默认规则旨在引起对先前默认未启用的严重问题的关注，使 Ruff 开箱即用更有效。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://vllm.ai/blog/2026-07-15-inkling">TML Inkling on vLLM: Day-0 Support with Optimized Performance</a></li>
-<li><a href="https://modal.com/blog/reverse-engineer-flash-attention-4">We reverse-engineered Flash Attention 4</a></li>
-<li><a href="https://build.nvidia.com/spark/nvfp4-quantization">NVFP4 Quantization | DGX Spark</a></li>
+<li><a href="https://docs.astral.sh/ruff/rules/">Rules | Ruff - Astral</a></li>
+<li><a href="https://docs.astral.sh/ruff/rules/load-before-global-declaration/">load-before-global-declaration (PLE0118) | Ruff</a></li>
 
 </ul>
 </details>
 
-**标签**: `#vLLM`, `#LLM inference`, `#performance`, `#release`, `#optimization`
+**标签**: `#ruff`, `#python`, `#linting`, `#astral`
 
 ---
 
 <a id="item-5"></a>
-## [AMD 能否打破 NVIDIA 的 CUDA 护城河？战略与挑战分析](https://newsletter.semianalysis.com/p/can-amd-break-the-cuda-moat-amd-advancing) ⭐️ 8.0/10
+## [携程被罚后公布 19 项整改措施](https://mp.weixin.qq.com/s/6pfOO4iorcdUFb2zLNhFSw) ⭐️ 8.0/10
 
-SemiAnalysis 发布了一份详细分析，探讨 AMD 挑战 NVIDIA CUDA 霸主地位的努力，重点介绍了代理内核生成、软件质量改进以及 Helios MI455X 平台等策略，同时也讨论了生产问题和金融工程手段。 这项分析之所以重要，是因为它揭示了 AMD 是否能在目前由 NVIDIA CUDA 生态系统主导的 AI 加速器市场中实现有效竞争。其结果将影响 AI 计算成本、创新速度以及 GPU 行业的权力平衡。 分析涵盖了代理内核生成——利用 LLM 代理自动优化内核——作为潜在的软件护城河。还详细介绍了 Helios 机架（72 个 MI455X GPU、18 个 Venice CPU、2.9 exaflops），并指出 MI455X 拥有 432GB HBM4，但 Infinity Fabric 带宽（896 GB/s）落后于 NVIDIA NVLink 6（3.6 TB/s）。
+2026 年 7 月 25 日，携程在收到国家市场监督管理总局的反垄断处罚后，宣布了 19 项整改措施。这些措施包括停止独家合作、取消不合理的&\#x27;全网最低价&\#x27;要求以及下架部分促销类别。 这一行动反映了中国在科技领域持续的反垄断执法，特别是针对在线旅游行业中的反竞争行为。它为其他使用独家协议和价格平价条款的平台树立了先例，可能重塑行业实践。 关键措施包括全面下线&\#x27;一级委托分销（特牌）&\#x27;合作模式、取消&\#x27;智选特惠&\#x27;等促销类别，并停止要求&\#x27;全网最低价&\#x27;。携程还承诺建立新的流量分配机制，并加强反垄断合规管理体系建设。
 
-rss · Semianalysis · 7月25日 00:33
+telegram · zaihuapd · 7月25日 11:56
 
-**背景**: NVIDIA 的 CUDA 平台通过成熟的软件生态系统和丰富的库支持建立了强大的护城河，使得 AMD 等竞争对手在 AI 工作负载中难以取得进展。AMD 正试图通过硬件改进、开源软件计划以及现在的代理内核生成来应对，以自动化和优化 GPU 代码。
+**背景**: 携程是中国领先的在线旅游平台。近年来，中国监管机构加强了反垄断执法，针对独家交易和最惠国待遇条款等损害竞争的行为。国家市场监管总局的处罚要求携程在规定时间内纠正这些行为，此前已有类似针对其他科技巨头的行动。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://www.emergentmind.com/topics/agentic-kernel-generation">Agentic Kernel Generation</a></li>
-<li><a href="https://arxiv.org/html/2601.15727">Towards Automated Kernel Generation in the Era of LLMs</a></li>
-<li><a href="https://www.servethehome.com/amds-epyc-venice-instinct-mi455x-helios-hardware-on-display-for-first-time-at-ces-2026/">AMD’s EPYC Venice, Instinct MI 455 X , &amp; Helios ... - ServeTheHome</a></li>
+<li><a href="https://www.zaobao.com.sg/news/china/story20260725-9419359">涉垄断被罚后 携程确定立即停止独家合作 | 联合早报</a></li>
+<li><a href="https://www.ithome.com/0/981/515.htm">携程集团就市场监管总局行政处罚决定公布 19 项整改措施：停止独家合...</a></li>
+<li><a href="https://news.qq.com/rain/a/20260117A01RKF00">携程合作模式的三层逻辑：反垄断如何重塑酒店分销权力天平？</a></li>
 
 </ul>
 </details>
 
-**标签**: `#AI hardware`, `#GPU computing`, `#CUDA`, `#AMD`, `#software ecosystem`
-
----
-
-<a id="item-6"></a>
-## [微软将借 TPM 芯片封堵盗版 Windows 激活](https://www.techspot.com/news/113232-microsoft-using-tpm-chips-crack-down-pirated-windows.html) ⭐️ 8.0/10
-
-微软正在为其 KMS 批量激活系统加入基于 TPM 芯片的硬件验证，要求 KMS 服务器必须先确认其硬件身份经微软认证且未被篡改，之后才能处理批量激活请求。 这一举措可能封杀广泛使用的基于 KMS 的盗版工具（如 Online KMS），这些工具依赖伪造服务器每 180 天激活 Windows，将对企业软件许可的执行产生重大影响。 TPM 证明功能将从下一版 Windows Server 起成为强制要求，自 2026 年 8 月起 Windows Server 2025 将收到准备提示。但 Massgrave 组织声称其 TSforge 方法可绕过微软整个 DRM 激活架构。
-
-telegram · zaihuapd · 7月25日 15:55
-
-**背景**: KMS（密钥管理服务）是微软用于企业部署的批量激活技术，允许组织在其网络内部激活 Windows 和 Office 而无需连接微软。盗版版本长期通过设置伪造的 KMS 服务器来响应激活请求以进行利用。TPM（可信平台模块）是一种提供安全加密功能的硬件芯片，TPM 证明是一种确保数据结构使用唯一秘密进行签名的机制，可防止篡改。
-
-<details><summary>参考链接</summary>
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys">Key Management Services ( KMS ) client activation ... | Microsoft Learn</a></li>
-<li><a href="https://massgrave.dev/">Microsoft Activation Scripts | MAS</a></li>
-<li><a href="https://www.encryptionconsulting.com/introducing-the-tpm/">The cost effective architecture of TPM | Encryption Consulting</a></li>
-
-</ul>
-</details>
-
-**标签**: `#Windows`, `#TPM`, `#anti-piracy`, `#KMS`, `#security`
+**标签**: `#antitrust`, `#regulation`, `#Ctrip`, `#online travel`, `#China tech`
 
 ---
