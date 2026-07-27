@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-27T03:30:17.306929+00:00",
+  "updated_at": "2026-07-27T04:19:25.472764+00:00",
   "stats": {
     "total_posts": 2,
     "languages": [
@@ -7,36 +7,36 @@
       "zh"
     ],
     "all_tags": [
-      "privacy",
       "software engineering",
-      "postgresql",
+      "PostgreSQL",
       "visualization",
       "database internals",
-      "simulation",
-      "grapheneOS",
-      "border security",
-      "legal",
-      "security",
-      "data-oriented design",
-      "performance optimization",
-      "cache optimization",
-      "AI",
-      "productivity",
-      "developer tools",
-      "burnout",
-      "cookie banners",
-      "EU regulation",
-      "web standards",
-      "user experience",
+      "open source",
       "hypercard",
       "retrocomputing",
+      "creative-tools",
       "interactive-media",
-      "software-development",
-      "token markets",
+      "GrapheneOS",
+      "border search",
+      "digital rights",
+      "phone security",
+      "legal",
+      "proof automation",
+      "theorem proving",
+      "formal verification",
+      "AI-assisted programming",
+      "Lean",
+      "data-oriented design",
+      "game development",
+      "performance optimization",
+      "ai-tokens",
       "fraud",
-      "AI credits",
-      "subscription models",
-      "abuse"
+      "api-economics",
+      "cloud-credits",
+      "subscription-models",
+      "privacy",
+      "cookie consent",
+      "EU regulation"
     ]
   },
   "items": [
@@ -210,104 +210,141 @@
       "date": "2026-07-27",
       "lang": "zh",
       "url": "posts/2026-07-27-zh.html",
-      "item_count": 7,
-      "total_fetched": 13,
+      "item_count": 9,
+      "total_fetched": 14,
       "top_score": 8.0,
       "items": [
         {
-          "title": "PGSimCity：交互式可视化PostgreSQL内部机制",
+          "title": "PGSimCity 交互式可视化 PostgreSQL 内部机制",
           "score": 8.0,
           "tags": [
-            "postgresql",
+            "PostgreSQL",
             "visualization",
             "database internals",
-            "simulation"
+            "open source"
           ],
-          "summary": "PGSimCity是一款交互式模拟工具，可视化展示PostgreSQL的内部工作原理，包括查询在系统中的流动和后台进程的运行。 该工具让复杂数据库内部机制变得通俗易懂，降低了PostgreSQL的学习门槛，并可能激发其他系统类似可视化方案的开发。 该模拟工具开源且运行在浏览器中，但用户反馈自动导览因变化过快且缺乏交互性而让人感到困惑。",
+          "summary": "PGSimCity 是一个交互式可视化工具，通过动态城市比喻展示 PostgreSQL 的内部流程，包括查询解析、计划、执行以及后台活动。 该工具让理解复杂数据库内部机制更加直观，有助于开发者和 DBA 直观学习 PostgreSQL 架构。其开源特性也鼓励在云计算、Kubernetes 等其他领域复用。 该可视化使用类似《模拟城市》的建筑和交通比喻来表示进程，但社区反馈认为自动导览信息量过大，建议增加交互性。该项目是开源的，托管在 GitHub 上。",
           "source_type": "hackernews",
+          "og_image": "https://nikolays.github.io/PGSimCity/og.png",
           "published_at": "2026-07-27T00:19:04+00:00"
         },
         {
-          "title": "GrapheneOS用户因胁迫密码擦除手机在边境被起诉",
+          "title": "Decker 在现代平台上复兴 HyperCard",
           "score": 8.0,
           "tags": [
-            "privacy",
-            "grapheneOS",
-            "border security",
-            "legal",
-            "security"
+            "hypercard",
+            "retrocomputing",
+            "creative-tools",
+            "interactive-media"
           ],
-          "summary": "一名美国公民在亚特兰大机场安检时，其搭载GrapheneOS系统的手机自动擦除数据，他因此被指控销毁证据。该擦除很可能由胁迫密码触发。 此案突出了在边境使用胁迫密码的法律风险——擦除设备可能被视作篡改证据，并凸显了隐私功能与边境搜查法律之间的紧张关系。 涉事手机运行GrapheneOS系统，该系统支持使用不同的密码在胁迫下擦除设备；事件发生在哈兹菲尔德-杰克逊亚特兰大国际机场的二次检查期间。",
+          "summary": "Decker 是一个新平台，它在现代操作系统上重新诠释了经典的 HyperCard，允许用户通过卡片式界面和脚本语言轻松创建交互式文档和应用程序。 通过复兴 HyperCard 既易用又强大的范式，Decker 可能为新一代用户带来直观的互动媒体创作工具，填补了现代创意工具中往往缺乏这种简单性的空白。 Decker 强调现代兼容性和精简设计，但一些社区反馈认为其‘另类’的美学可能妨碍实用性。该项目已在 Hacker News 上被多次讨论，显示了持续的兴趣。",
           "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T18:23:06+00:00"
+        },
+        {
+          "title": "美国公民因GrapheneOS手机在边境检查中被擦除数据而被起诉",
+          "score": 8.0,
+          "tags": [
+            "GrapheneOS",
+            "border search",
+            "digital rights",
+            "phone security",
+            "legal"
+          ],
+          "summary": "一名美国公民在边境检查中，他的GrapheneOS手机因输入胁迫密码而自动恢复出厂设置，导致他被起诉。 此案凸显了使用胁迫密码等反取证功能的法律风险，尤其是在执法机构拥有广泛搜查权力的边境。它可能为旅行者的隐私和安全实践树立先例。 手机在用户接受边境官员询问时，胁迫密码触发了恢复出厂设置，导致用户被指控妨碍司法或销毁证据。GrapheneOS是一款注重隐私的安卓系统，提供此类安全功能。",
+          "source_type": "hackernews",
+          "og_image": null,
           "published_at": "2026-07-26T22:21:41+00:00"
         },
         {
-          "title": "Mike Acton的数据导向设计介绍",
+          "title": "证明自动化成为实际现实",
+          "score": 8.0,
+          "tags": [
+            "proof automation",
+            "theorem proving",
+            "formal verification",
+            "AI-assisted programming",
+            "Lean"
+          ],
+          "summary": "一篇博客文章和Hacker News上的讨论指出，证明自动化已经到来，Lean和Verus等实用工具使得大规模形式化验证成为可能。 这一转变可能从根本上改变软件开发，用机器检查的证明取代大量传统测试，从而减少错误并提高可靠性。它也标志着一种新范式的到来，即编程语言原生嵌入定理证明器，并辅以人工智能。 讨论中提到了具体项目，如针对Rust的Verus、用于基准测试自动定理证明代理的OpenATP，以及谷歌使用Fiat Crypto + CryptOpt部署的已验证加密例程。作者的帖子包含一个“旁注：已验证汇编”，表明这些技术已投入生产。",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T20:53:26+00:00"
+        },
+        {
+          "title": "面向数据设计的PDF引起社区关注",
           "score": 8.0,
           "tags": [
             "data-oriented design",
-            "software engineering",
+            "game development",
             "performance optimization",
-            "cache optimization"
+            "software engineering"
           ],
-          "summary": "Mike Acton关于数据导向设计（DOD）的基础演示强调在设计算法时优先考虑数据，关注缓存效率和数据布局。 这种方法对于高性能软件至关重要，尤其是在游戏开发中，缓存未命中会严重影响速度。它挑战了传统的面向对象设计，并影响了现代性能工程。 该PDF托管在gamedevs.org上，引发了活跃的社区讨论（128分，38条评论），争论DOD是否只是缓存感知算法或数组编程的重新包装。Mike Acton还在GitHub上发布了面向数据编程的LLM技能。",
+          "summary": "Mike Acton 撰写的一篇介绍面向数据设计（DoD）的PDF在游戏论坛上被分享，引发了关于其原则和实际应用的讨论。 面向数据设计对于缓存敏感型应用（如游戏引擎）的性能优化至关重要，该资源为工程师提供了基础理解。 该PDF强调从数据布局和变换开始而不是代码结构，在游戏开发和系统编程社区中被广泛引用。",
           "source_type": "hackernews",
+          "og_image": null,
           "published_at": "2026-07-26T18:11:16+00:00"
         },
         {
-          "title": "AI超能力：专注与跟进",
+          "title": "AI token转售与欺诈的隐秘市场",
           "score": 8.0,
+          "tags": [
+            "ai-tokens",
+            "fraud",
+            "api-economics",
+            "cloud-credits",
+            "subscription-models"
+          ],
+          "summary": "Vectoral的一篇文章揭露了一个隐秘市场：转售商利用API定价方案、云服务免费额度和订阅漏洞，通过代理流量和计费滥用等方式低价获取AI token并加价转售牟利。 这破坏了AI API提供商的商业模式，导致重大经济损失，并为合法用户造成不公平竞争。它凸显了当前定价和防欺诈系统中的漏洞，亟待解决。 转售商使用隧道流量通过端点、滥用AWS/Azure的免费额度、以及利用固定价格但成本变动的订阅模型等技术。像Vectoral和WorkOS这样的公司提供检测和阻止这种代理流量的解决方案。",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T15:17:06+00:00"
+        },
+        {
+          "title": "欧盟提议用浏览器级隐私设置取代Cookie横幅",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "cookie consent",
+            "EU regulation",
+            "web standards",
+            "browser"
+          ],
+          "summary": "欧盟委员会提出一项解决方案，允许用户在浏览器中直接设置隐私偏好，并自动传达给网站，从而消除Cookie横幅。 这有望大幅改善网络用户体验，消除最常见的烦恼之一——Cookie同意横幅，同时仍能遵守GDPR等隐私法规。 该提案让人想起上世纪90年代末的P3P标准，后者因缺乏主流浏览器采纳和企业利益而失败。新方法可能利用Global Privacy Control（GPC）等现代技术。",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T11:53:17+00:00"
+        },
+        {
+          "title": "设计即妥协：一场哲学辩论",
+          "score": 7.0,
+          "tags": [
+            "design",
+            "compromise",
+            "trade-offs",
+            "philosophy",
+            "Hacker News"
+          ],
+          "summary": "Stephango的一篇文章指出设计本质上是妥协的过程，在Hacker News上引发了关于妥协究竟是必需品还是问题范围界定不当的信号的细致讨论。 这场讨论对设计师和工程师来说意义重大，因为它挑战了‘完美设计’的常见理想，并突出了塑造现实产品的实际约束，从而影响团队如何处理权衡取舍。 该文章在Hacker News上获得了210分和76条评论，参与度很高。评论者表达了多样化的观点，从完全同意其前提到根本不同意，有人认为妥协是最后的手段，更好的范围界定可以避免妥协。",
+          "source_type": "hackernews",
+          "og_image": "https://stephango.com/assets/covers/design-is-compromise.png",
+          "published_at": "2026-07-26T15:51:12+00:00"
+        },
+        {
+          "title": "新AI超能力：专注与执行力",
+          "score": 7.0,
           "tags": [
             "AI",
             "productivity",
             "software engineering",
-            "developer tools",
-            "burnout"
+            "burnout",
+            "focus"
           ],
-          "summary": "Rick Manelius 博客上的一篇文章指出，AI 工具能让开发者更有效地专注和跟进项目，但也警告了项目碎片化和倦怠等风险。 这很重要，因为它捕捉了开发者社区中关于AI对生产力和心理健康双重影响的真实辩论，影响团队如何采用AI工具。 文章强调AI有助于减少配置和环境问题的认知负担，但也鼓励了一种可能导致许多未完成项目的“氛围编程”文化。",
+          "summary": "Rick Manelius 发表文章指出，人工智能可以通过卸载常规任务来增强专注力和执行力，但警告过度依赖可能导致倦怠和工作碎片化。 随着AI工具嵌入软件工程，理解它们对生产力和幸福感的双重影响对于可持续工作实践至关重要。 该文章在Hacker News上获得171分和50条评论，表明社区参与度很高。它特别警告了“氛围编码”趋势，即未完成项目不断积累。",
           "source_type": "hackernews",
+          "og_image": "https://substackcdn.com/image/fetch/$s_!R31O!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7a57282a-143c-41d8-a777-084d8e097340_498x498.gif",
           "published_at": "2026-07-26T13:13:03+00:00"
-        },
-        {
-          "title": "欧盟委员会提议浏览器级隐私偏好以终结Cookie横幅",
-          "score": 8.0,
-          "tags": [
-            "privacy",
-            "cookie banners",
-            "EU regulation",
-            "web standards",
-            "user experience"
-          ],
-          "summary": "欧盟委员会提出了一项新的浏览器级隐私偏好设置，允许用户一次性设置其Cookie同意偏好，从而消除在每个网站上反复出现的Cookie横幅。 如果实施，这可能会通过为用户提供一种简单、受法律认可的方式来表达其隐私偏好，从而彻底改变网络隐私状况，可能终结烦人的Cookie横幅时代。 该提案利用了Global Privacy Control（GPC）规范等现有技术，该规范通过HTTP头或JavaScript发送信号以指示用户的退出偏好。",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T11:53:17+00:00"
-        },
-        {
-          "title": "Decker 让 HyperCard 在现代平台上重生",
-          "score": 7.0,
-          "tags": [
-            "hypercard",
-            "retrocomputing",
-            "interactive-media",
-            "software-development"
-          ],
-          "summary": "Decker 是一个现代平台，重现了苹果经典软件 HyperCard 的体验，让用户通过简单直观的界面构建交互式多媒体堆栈。 HyperCard 启发了一代创作者和小型企业，Decker 旨在现代环境中保留这种易用、用户驱动的开发理念，有望复兴被忽视的软件开发方式。 Decker 强调 1-bit 图形和复古美学，同时融入 Web 标准等现代技术以确保广泛的可访问性。它仍处于早期开发阶段，自 2022 年以来已多次在 Hacker News 上被提及。",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T18:23:06+00:00"
-        },
-        {
-          "title": "Token中继市场助长AI积分欺诈与转售",
-          "score": 7.0,
-          "tags": [
-            "token markets",
-            "fraud",
-            "AI credits",
-            "subscription models",
-            "abuse"
-          ],
-          "summary": "Vectoral的一篇博客文章详细介绍了Token中继市场如何被用来转售通过欺诈获得的AI积分，包括滥用免费云积分和被盗支付工具。 这凸显了围绕AI令牌不断增长的地下经济，威胁AI公司的订阅模式，并为欺诈者创造不公平的竞争优势。 该市场涉及高度老练的行为者，他们通过滥用计费系统、盗用信用卡和接管账户来拼凑折扣令牌，然后以极低的成本转售。",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T15:17:06+00:00"
         }
       ]
     },
@@ -315,104 +352,141 @@
       "date": "2026-07-27",
       "lang": "en",
       "url": "posts/2026-07-27-en.html",
-      "item_count": 7,
-      "total_fetched": 13,
+      "item_count": 9,
+      "total_fetched": 14,
       "top_score": 8.0,
       "items": [
         {
-          "title": "PGSimCity: Interactive Visualization of PostgreSQL Internals",
+          "title": "PGSimCity visualizes PostgreSQL internals interactively",
           "score": 8.0,
           "tags": [
-            "postgresql",
+            "PostgreSQL",
             "visualization",
             "database internals",
-            "simulation"
+            "open source"
           ],
-          "summary": "PGSimCity is an interactive simulation that visualizes the inner workings of PostgreSQL, showing how queries flow through the system and how background processes operate. This tool makes complex database internals accessible to a broader audience, reducing the learning curve for PostgreSQL and potentially inspiring similar visualizations for other systems. The simulation is open-source and runs in the browser, but users report that the auto-advancing tour can be overwhelming due to rapid changes and lack of interactivity.",
+          "summary": "PGSimCity is an interactive visualization tool that illustrates PostgreSQL's internal processes, including query parsing, planning, execution, and background activities, using a dynamic city simile. This tool makes understanding complex database internals more accessible, which can help developers and DBAs learn PostgreSQL architecture intuitively. Its open-source nature also encourages reuse in other domains like cloud computing and Kubernetes. The visualization uses a SimCity-like analogy with buildings and traffic to represent processes, but community feedback suggests the automatic tour can be overwhelming and could benefit from more interactivity. The project is open-source and available on GitHub.",
           "source_type": "hackernews",
+          "og_image": "https://nikolays.github.io/PGSimCity/og.png",
           "published_at": "2026-07-27T00:19:04+00:00"
         },
         {
-          "title": "GrapheneOS user charged after duress PIN wipes phone at border",
+          "title": "Decker Revives HyperCard for Modern Platforms",
           "score": 8.0,
           "tags": [
-            "privacy",
-            "grapheneOS",
-            "border security",
-            "legal",
-            "security"
+            "hypercard",
+            "retrocomputing",
+            "creative-tools",
+            "interactive-media"
           ],
-          "summary": "A US citizen was charged with destruction of evidence after his GrapheneOS phone auto-wiped during a search at Atlanta's airport, likely triggered by a duress PIN. This case highlights the legal risks of using duress PINs at borders, where wiping a device may be construed as evidence tampering, and underscores the tension between privacy features and compliance with border search laws. The phone ran GrapheneOS, which supports separate PINs that wipe the device under duress; the incident occurred during a secondary inspection at Hartsfield-Jackson Atlanta International Airport.",
+          "summary": "Decker is a new platform that reimagines the classic HyperCard for modern operating systems, enabling users to easily create interactive documents and applications with a card-based interface and a scripting language. By reviving the accessible yet powerful paradigm of HyperCard, Decker could bring intuitive interactive media creation to a new generation, filling a gap in modern creative tools that often lack such simplicity. Decker emphasizes modern compatibility and a streamlined design, though some community feedback suggests the 'quirky' aesthetics may hinder utility. The project has been discussed multiple times on Hacker News, indicating sustained interest.",
           "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T18:23:06+00:00"
+        },
+        {
+          "title": "US citizen charged after GrapheneOS phone wipes at border search",
+          "score": 8.0,
+          "tags": [
+            "GrapheneOS",
+            "border search",
+            "digital rights",
+            "phone security",
+            "legal"
+          ],
+          "summary": "A United States citizen was charged after his GrapheneOS phone, configured to factory reset upon entering a duress PIN, wiped itself during a border search by customs officers. This case highlights the legal risks of using anti-forensic features like duress PINs, especially at borders where law enforcement has broad search authority. It could set a precedent affecting privacy and security practices for travelers. The phone's duress PIN triggered a factory reset while the owner was questioned by border officers, leading to charges of obstruction or destruction of evidence. GrapheneOS is a privacy-focused Android-based operating system that offers such security features.",
+          "source_type": "hackernews",
+          "og_image": null,
           "published_at": "2026-07-26T22:21:41+00:00"
         },
         {
-          "title": "Introduction to Data-Oriented Design by Mike Acton",
+          "title": "Proof Automation Becomes a Practical Reality",
+          "score": 8.0,
+          "tags": [
+            "proof automation",
+            "theorem proving",
+            "formal verification",
+            "AI-assisted programming",
+            "Lean"
+          ],
+          "summary": "A blog post and Hacker News discussion argue that proof automation has arrived, with practical tools like Lean and Verus enabling large-scale formal verification. This shift could fundamentally change software development by replacing much of traditional testing with machine-checked proofs, reducing bugs and increasing reliability. It also signals a new paradigm where programming languages natively embed theorem provers, assisted by AI. The discussion mentions specific projects like Verus for Rust, OpenATP for benchmarking ATP agents, and Google's deployment of verified crypto routines using Fiat Crypto + CryptOpt. The author's post includes an 'Aside: verified assembly' suggesting such techniques are already in production.",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T20:53:26+00:00"
+        },
+        {
+          "title": "Introduction to Data-Oriented Design PDF Gains Community Attention",
           "score": 8.0,
           "tags": [
             "data-oriented design",
-            "software engineering",
+            "game development",
             "performance optimization",
-            "cache optimization"
+            "software engineering"
           ],
-          "summary": "Mike Acton's foundational presentation on data-oriented design (DOD) emphasizes putting data first when designing algorithms, focusing on cache efficiency and data layout. This approach is critical for high-performance software, especially in game development, where cache misses significantly impact speed. It challenges traditional object-oriented design and has influenced modern performance engineering. The PDF is hosted on gamedevs.org and has sparked active community discussion (128 points, 38 comments) debating whether DOD is merely a rebranding of cache-aware algorithms or array programming. Mike Acton has also released an LLM skill for data-oriented programming on GitHub.",
+          "summary": "A PDF by Mike Acton introducing data-oriented design (DoD) has been shared on a gaming forum, sparking discussion about its principles and practical applications. Data-oriented design is crucial for performance optimization in cache-sensitive applications like game engines, and this resource provides a foundational understanding for engineers. The PDF emphasizes starting with data layout and transformations rather than code structure, and is widely referenced in game development and systems programming communities.",
           "source_type": "hackernews",
+          "og_image": null,
           "published_at": "2026-07-26T18:11:16+00:00"
         },
         {
-          "title": "AI Superpowers: Focus and Followthrough",
+          "title": "The Hidden Market of AI Token Reselling and Fraud",
           "score": 8.0,
+          "tags": [
+            "ai-tokens",
+            "fraud",
+            "api-economics",
+            "cloud-credits",
+            "subscription-models"
+          ],
+          "summary": "An article from Vectoral exposes a hidden market where resellers exploit API pricing schemes, free cloud credits, and subscription loopholes to profit by reselling AI tokens at a discount, often through proxy traffic and billing abuse. This undermines the business models of AI API providers, leads to significant financial losses, and creates unfair competition for legitimate users. It highlights vulnerabilities in current pricing and fraud prevention systems that need to be addressed. Resellers use techniques such as tunneling traffic through endpoints, abusing free credits from AWS/Azure, and exploiting subscription models that have fixed prices but variable costs. Companies like Vectoral and WorkOS offer solutions to detect and block such proxy traffic.",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T15:17:06+00:00"
+        },
+        {
+          "title": "EU Proposes Browser-Level Privacy to Replace Cookie Banners",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "cookie consent",
+            "EU regulation",
+            "web standards",
+            "browser"
+          ],
+          "summary": "The European Commission has proposed a solution to eliminate cookie banners by allowing users to set privacy preferences directly in their browser, which would then be communicated to websites automatically. This could drastically improve user experience across the web by removing one of the most common annoyances—cookie consent banners—while still complying with privacy regulations like GDPR. The proposal is reminiscent of the earlier P3P standard from the late 1990s, which failed due to lack of adoption by major browsers and corporate interests. The new approach may leverage modern technologies like Global Privacy Control (GPC).",
+          "source_type": "hackernews",
+          "og_image": null,
+          "published_at": "2026-07-26T11:53:17+00:00"
+        },
+        {
+          "title": "Design is Compromise: A Philosophical Debate",
+          "score": 7.0,
+          "tags": [
+            "design",
+            "compromise",
+            "trade-offs",
+            "philosophy",
+            "Hacker News"
+          ],
+          "summary": "An article by Stephango argues that design inherently involves compromise, sparking a nuanced community debate on Hacker News about whether compromise is necessary or a sign of poor problem scoping. This discussion is significant for designers and engineers because it challenges the common ideal of 'perfect' design and highlights the practical constraints that shape real-world products, influencing how teams approach trade-offs. The article has 210 points and 76 comments on Hacker News, indicating high engagement. Commenters express diverse views, from fully agreeing with the premise to fundamentally disagreeing, some arguing that compromise is a last resort and better scoping can avoid it.",
+          "source_type": "hackernews",
+          "og_image": "https://stephango.com/assets/covers/design-is-compromise.png",
+          "published_at": "2026-07-26T15:51:12+00:00"
+        },
+        {
+          "title": "The New AI Superpowers: Focus and Followthrough",
+          "score": 7.0,
           "tags": [
             "AI",
             "productivity",
             "software engineering",
-            "developer tools",
-            "burnout"
+            "burnout",
+            "focus"
           ],
-          "summary": "An article published on Rick Manelius's blog argues that AI tools enable developers to focus on and follow through on projects more effectively, but warns of risks like project fragmentation and burnout. This matters because it captures a real debate in the developer community about AI's dual impact on productivity and mental health, influencing how teams adopt AI tools. The article highlights that AI can help reduce cognitive load from configuration and environment issues, but also encourages a 'vibe-coding' culture that may lead to many incomplete projects.",
+          "summary": "Rick Manelius published an article arguing that AI can enhance focus and followthrough by offloading routine tasks, but warns that over-reliance may lead to burnout and fragmented work patterns. As AI tools become embedded in software engineering, understanding their dual impact on productivity and well-being is essential for sustainable work practices. The article received 171 points and 50 comments on Hacker News, indicating strong community engagement. It specifically cautions against the 'vibe coding' trend where unfinished projects accumulate.",
           "source_type": "hackernews",
+          "og_image": "https://substackcdn.com/image/fetch/$s_!R31O!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7a57282a-143c-41d8-a777-084d8e097340_498x498.gif",
           "published_at": "2026-07-26T13:13:03+00:00"
-        },
-        {
-          "title": "EU Commission Proposes Browser-Level Privacy Preference to End Cookie Banners",
-          "score": 8.0,
-          "tags": [
-            "privacy",
-            "cookie banners",
-            "EU regulation",
-            "web standards",
-            "user experience"
-          ],
-          "summary": "The EU Commission has proposed a new browser-level privacy preference that would allow users to set their cookie consent preferences once, eliminating the need for repeated cookie banners on every website. If implemented, this could revolutionize web privacy by giving users a simple, legally recognized way to express their privacy preferences across all sites, potentially ending the era of annoying cookie banners. The proposal leverages existing technology like the Global Privacy Control (GPC) specification, which sends a signal via HTTP headers or JavaScript to indicate the user's opt-out preference.",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T11:53:17+00:00"
-        },
-        {
-          "title": "Decker Revives HyperCard for Modern Platforms",
-          "score": 7.0,
-          "tags": [
-            "hypercard",
-            "retrocomputing",
-            "interactive-media",
-            "software-development"
-          ],
-          "summary": "Decker is a modern platform that recreates the experience of Apple's classic HyperCard, allowing users to build interactive multimedia stacks with a simple, intuitive interface. HyperCard inspired a generation of creators and small businesses, and Decker aims to preserve that accessible, user-driven development philosophy in a modern context, potentially reviving a neglected approach to software creation. Decker emphasizes 1-bit graphics and a retro aesthetic, while incorporating modern technologies like web standards to ensure broad accessibility. It is still in early development and has been featured on Hacker News multiple times since 2022.",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T18:23:06+00:00"
-        },
-        {
-          "title": "Token Relay Markets Enable AI Credit Fraud and Reselling",
-          "score": 7.0,
-          "tags": [
-            "token markets",
-            "fraud",
-            "AI credits",
-            "subscription models",
-            "abuse"
-          ],
-          "summary": "A blog post by Vectoral details how token relay markets are used to resell AI credits obtained through fraud, including abuse of free cloud credits and stolen payment instruments. This highlights a growing underground economy around AI tokens, threatening the subscription models of AI companies and creating unfair competitive advantages for fraudsters. The market involves highly sophisticated actors who cobble together discounted tokens through billing system abuse, stolen credit cards, and account takeovers, then resell them at a fraction of the cost.",
-          "source_type": "hackernews",
-          "published_at": "2026-07-26T15:17:06+00:00"
         }
       ]
     }

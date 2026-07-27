@@ -254,6 +254,9 @@ class HorizonOrchestrator:
             # 6. Search related stories + enrich with background knowledge (2nd AI pass)
             await self._enrich_important_items(important_items)
 
+            # 6.5 Extract OG images for website card wall (best-effort)
+            await self._extract_og_images(important_items)
+
             # 7. Generate and save daily summaries for each configured language
             today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             site_builder = SiteBuilder()
@@ -853,6 +856,24 @@ class HorizonOrchestrator:
         enricher = ContentEnricher(ai_client)
         await enricher.enrich_batch(items)
         self.console.print(f"   Enriched {len(items)} items\n")
+
+    async def _extract_og_images(self, items: List[ContentItem]) -> None:
+        """Extract OG images for website card display. Best-effort, non-blocking.
+
+        Args:
+            items: Important items to extract OG images for (modified in-place)
+        """
+        if not items:
+            return
+
+        self.console.print("🖼️  Extracting OG images...")
+        from .og_extractor import OgImageExtractor
+
+        extractor = OgImageExtractor()
+        await extractor.extract_batch(items)
+
+        found = sum(1 for it in items if it.metadata.get("og_image"))
+        self.console.print(f"   Found OG images for {found}/{len(items)} items\n")
 
     async def _analyze_content(self, items: List[ContentItem]) -> List[ContentItem]:
         """Analyze content items with AI.

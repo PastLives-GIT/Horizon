@@ -253,6 +253,7 @@ class SiteBuilder:
                     or ""
                 ),
                 "source_type": item.source_type.value,
+                "og_image": item.metadata.get("og_image"),
             }
             published = item.published_at
             if published:
