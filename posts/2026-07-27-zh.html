@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Horizon 每日速递 - 2026-07-27</title>
-<meta name="description" content="AI-curated daily digest — 7 items selected from 13">
+<meta name="description" content="AI-curated daily digest — 9 items selected from 14">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌅</text></svg>">
 <link rel="stylesheet" href="../assets/css/horizon.css">
 <script defer src="../assets/js/horizon.js"></script>
@@ -22,79 +22,99 @@
 <main class="hz-post">
 <header class="post-header">
   <h1>Horizon 每日速递 — 2026-07-27</h1>
-  <p class="post-epigraph">从 13 条内容中筛选出 7 条重要资讯。</p>
+  <p class="post-epigraph">从 14 条内容中筛选出 9 条重要资讯。</p>
 </header>
 <nav class="post-toc" aria-label="今日精选">
   <h2>今日精选</h2>
   <ol>
-    <li><a href="#item-1">PGSimCity：交互式可视化 PostgreSQL 内部机制</a> <span class="score-badge" data-tier="good">8.0</span></li>
-    <li><a href="#item-2">GrapheneOS 用户因胁迫密码擦除手机在边境被起诉</a> <span class="score-badge" data-tier="good">8.0</span></li>
-    <li><a href="#item-3">Mike Acton 的数据导向设计介绍</a> <span class="score-badge" data-tier="good">8.0</span></li>
-    <li><a href="#item-4">AI 超能力：专注与跟进</a> <span class="score-badge" data-tier="good">8.0</span></li>
-    <li><a href="#item-5">欧盟委员会提议浏览器级隐私偏好以终结 Cookie 横幅</a> <span class="score-badge" data-tier="good">8.0</span></li>
-    <li><a href="#item-6">Decker 让 HyperCard 在现代平台上重生</a> <span class="score-badge" data-tier="good">7.0</span></li>
-    <li><a href="#item-7">Token 中继市场助长 AI 积分欺诈与转售</a> <span class="score-badge" data-tier="good">7.0</span></li>
+    <li><a href="#item-1">PGSimCity 交互式可视化 PostgreSQL 内部机制</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-2">Decker 在现代平台上复兴 HyperCard</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-3">美国公民因 GrapheneOS 手机在边境检查中被擦除数据而被起诉</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-4">证明自动化成为实际现实</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-5">面向数据设计的 PDF 引起社区关注</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-6">AI token 转售与欺诈的隐秘市场</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-7">欧盟提议用浏览器级隐私设置取代 Cookie 横幅</a> <span class="score-badge" data-tier="good">8.0</span></li>
+    <li><a href="#item-8">设计即妥协：一场哲学辩论</a> <span class="score-badge" data-tier="good">7.0</span></li>
+    <li><a href="#item-9">新 AI 超能力：专注与执行力</a> <span class="score-badge" data-tier="good">7.0</span></li>
   </ol>
 </nav>
 <article class="hz-item" id="item-1">
-  <h2><a href="https://nikolays.github.io/PGSimCity/" target="_blank" rel="noopener">PGSimCity：交互式可视化 PostgreSQL 内部机制</a> <span class="score-badge" data-tier="good">8.0</span></h2>
-  <p class="item-summary">PGSimCity 是一款交互式模拟工具，可视化展示 PostgreSQL 的内部工作原理，包括查询在系统中的流动和后台进程的运行。 该工具让复杂数据库内部机制变得通俗易懂，降低了 PostgreSQL 的学习门槛，并可能激发其他系统类似可视化方案的开发。 该模拟工具开源且运行在浏览器中，但用户反馈自动导览因变化过快且缺乏交互性而让人感到困惑。</p>
+  <h2><a href="https://nikolays.github.io/PGSimCity/" target="_blank" rel="noopener">PGSimCity 交互式可视化 PostgreSQL 内部机制</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">PGSimCity 是一个交互式可视化工具，通过动态城市比喻展示 PostgreSQL 的内部流程，包括查询解析、计划、执行以及后台活动。 该工具让理解复杂数据库内部机制更加直观，有助于开发者和 DBA 直观学习 PostgreSQL 架构。其开源特性也鼓励在云计算、Kubernetes 等其他领域复用。 该可视化使用类似《模拟城市》的建筑和交通比喻来表示进程，但社区反馈认为自动导览信息量过大，建议增加交互性。该项目是开源的，托管在 GitHub 上。</p>
   <p class="source-line">hackernews · jonbaer · 7月27日 00:19 · <a href="https://news.ycombinator.com/item?id=49063754" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> PostgreSQL 是一个功能强大的开源关系型数据库管理系统，其内部组件包括解析器、规划器、执行器和缓冲缓存等。理解这些有助于优化数据库性能。</div>
-  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://www.postgresql.org/docs/current/internals.html" rel="noopener">PostgreSQL: Documentation: 18: Part VII. Internals</a></li></ul></details>
-  <div class="item-discussion"><strong>社区讨论:</strong> 评论者欣赏这种新颖的方式，但希望增加交互性，例如输入自定义查询或控制演示速度。有人建议该概念可应用于 Kubernetes 等其他领域。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#postgresql</code> <code>#visualization</code> <code>#database internals</code> <code>#simulation</code></p>
+  <div class="item-background"><strong>背景:</strong> PostgreSQL 内部机制包括解析器、优化器、执行器和存储引擎等组件，它们协同处理 SQL 查询。理解这些内部机制对性能调优和高级数据库管理至关重要。传统文档偏重文字，因此像 PGSimCity 这样的可视化工具对学习很有价值。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://www.postgresql.org/docs/current/internals.html" rel="noopener">PostgreSQL: Documentation: 18: Part VII. Internals</a></li><li><a href="https://dev.to/adeelahmed2k01/exploring-the-postgres-internals-a-guide-for-database-admins-and-system-developers-part-1-509i" rel="noopener">Exploring the Postgres Internals: A Guide for... - DEV Community</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 总体评价积极，用户赞赏其新颖的方法。但建议改进：减少视觉噪音、添加自定义查询输入以及增强交互性。有评论指出“SimCity”是 EA 的商标，建议改名以避免问题。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#PostgreSQL</code> <code>#visualization</code> <code>#database internals</code> <code>#open source</code></p>
 </article>
 <article class="hz-item" id="item-2">
-  <h2><a href="https://www.techspot.com/news/113236-us-prosecutors-charge-atlanta-man-after-grapheneos-phone.html" target="_blank" rel="noopener">GrapheneOS 用户因胁迫密码擦除手机在边境被起诉</a> <span class="score-badge" data-tier="good">8.0</span></h2>
-  <p class="item-summary">一名美国公民在亚特兰大机场安检时，其搭载 GrapheneOS 系统的手机自动擦除数据，他因此被指控销毁证据。该擦除很可能由胁迫密码触发。 此案突出了在边境使用胁迫密码的法律风险——擦除设备可能被视作篡改证据，并凸显了隐私功能与边境搜查法律之间的紧张关系。 涉事手机运行 GrapheneOS 系统，该系统支持使用不同的密码在胁迫下擦除设备；事件发生在哈兹菲尔德-杰克逊亚特兰大国际机场的二次检查期间。</p>
-  <p class="source-line">hackernews · eecc · 7月26日 22:21 · <a href="https://news.ycombinator.com/item?id=49063022" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> GrapheneOS 是一款基于 Android、注重隐私的开源移动操作系统，强调安全加固和用户控制。它允许用户设置“胁迫密码”或“紧急代码”，输入后能立即擦除设备以保护敏感数据。在美国边境，海关官员可能要求搜查电子设备，旅客虽可拒绝但可能面临拘留或没收。使用胁迫密码销毁证据可能被视为妨碍或毁灭证据，从而导致法律指控。</div>
-  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://grapheneos.org/" rel="noopener">GrapheneOS: the private and secure mobile OS</a></li></ul></details>
-  <div class="item-discussion"><strong>社区讨论:</strong> 社区评论观点不一：有人指出美国法律重视意图，胁迫密码可能被视为故意销毁；也有人认为用户必须承担此类安全选择的法律后果。建议包括使用诱饵操作系统（如 VeraCrypt 的隐藏卷），或在过境前手动擦除手机，之后再从备份恢复。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#privacy</code> <code>#grapheneOS</code> <code>#border security</code> <code>#legal</code> <code>#security</code></p>
+  <h2><a href="https://beyondloom.com/decker/" target="_blank" rel="noopener">Decker 在现代平台上复兴 HyperCard</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Decker 是一个新平台，它在现代操作系统上重新诠释了经典的 HyperCard，允许用户通过卡片式界面和脚本语言轻松创建交互式文档和应用程序。 通过复兴 HyperCard 既易用又强大的范式，Decker 可能为新一代用户带来直观的互动媒体创作工具，填补了现代创意工具中往往缺乏这种简单性的空白。 Decker 强调现代兼容性和精简设计，但一些社区反馈认为其‘另类’的美学可能妨碍实用性。该项目已在 Hacker News 上被多次讨论，显示了持续的兴趣。</p>
+  <p class="source-line">hackernews · tosh · 7月26日 18:23 · <a href="https://news.ycombinator.com/item?id=49060856" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> HyperCard 是苹果公司于 1987 年推出的一款革命性软件，允许用户创建由卡片构成的交互式‘堆栈’，包含文本、图像和按钮，并通过 HyperTalk 脚本语言进行编程。它广泛应用于从教育工具到小型商业应用的各个领域，但在 20 世纪 90 年代末被停止开发。Decker 旨在现代环境中重现这一体验，保留核心概念的同时更新平台。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://en.wikipedia.org/wiki/LiveCode" rel="noopener">LiveCode - Wikipedia</a></li><li><a href="https://medium.com/@markgrabe/before-the-web-did-anything-hypercard-did-everything-63431c5b8335" rel="noopener">Before the web did anything, Hypercard did everything | Medium</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 社区评论表达了对 HyperCard 的强烈怀旧之情，一些用户回忆了它的易用性和多功能性。另一些用户则欢迎 Decker 作为期待已久的工具，但也有人对其现代相关性和美学选择提出疑问。总体而言，讨论反映了积极的接受态度，同时也存在关于实际应用的担忧。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#hypercard</code> <code>#retrocomputing</code> <code>#creative-tools</code> <code>#interactive-media</code></p>
 </article>
 <article class="hz-item" id="item-3">
-  <h2><a href="https://www.gamedevs.org/uploads/introduction-to-data-oriented-design.pdf" target="_blank" rel="noopener">Mike Acton 的数据导向设计介绍</a> <span class="score-badge" data-tier="good">8.0</span></h2>
-  <p class="item-summary">Mike Acton 关于数据导向设计（DOD）的基础演示强调在设计算法时优先考虑数据，关注缓存效率和数据布局。 这种方法对于高性能软件至关重要，尤其是在游戏开发中，缓存未命中会严重影响速度。它挑战了传统的面向对象设计，并影响了现代性能工程。 该 PDF 托管在 gamedevs.org 上，引发了活跃的社区讨论（128 分，38 条评论），争论 DOD 是否只是缓存感知算法或数组编程的重新包装。Mike Acton 还在 GitHub 上发布了面向数据编程的 LLM 技能。</p>
-  <p class="source-line">hackernews · tosh · 7月26日 18:11 · <a href="https://news.ycombinator.com/item?id=49060724" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> 数据导向设计（DOD）是一种优化方法，围绕数据布局和访问模式组织程序，以最大化 CPU 缓存利用率。它由 Noel Llopis 在 2009 年正式命名，广泛应用于游戏引擎和实时系统。与面向对象设计不同，DOD 强调批量转换数据，而不是将状态封装在对象中。</div>
-  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://en.wikipedia.org/wiki/Data-oriented_design" rel="noopener">Data-oriented design - Wikipedia</a></li><li><a href="https://medium.com/mirum-budapest/introduction-to-data-oriented-programming-85b51b99572d" rel="noopener">Introduction to Data-Oriented Design | by Tamás Losonczi | Medium</a></li><li><a href="https://dataorienteddesign.com/dodbook.pdf" rel="noopener">Data-Oriented Design</a></li></ul></details>
-  <div class="item-discussion"><strong>社区讨论:</strong> 评论者普遍欣赏 DOD 对数据布局的关注，但有些人质疑其新颖性，称其为缓存感知算法或数组编程的重新包装。另一些人指出，当需求频繁变化时，应用 DOD 存在实际困难，因为前期的数据分析变得具有挑战性。讨论通过辩论实现权衡增加了深度。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#data-oriented design</code> <code>#software engineering</code> <code>#performance optimization</code> <code>#cache optimization</code></p>
+  <h2><a href="https://www.techspot.com/news/113236-us-prosecutors-charge-atlanta-man-after-grapheneos-phone.html" target="_blank" rel="noopener">美国公民因 GrapheneOS 手机在边境检查中被擦除数据而被起诉</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">一名美国公民在边境检查中，他的 GrapheneOS 手机因输入胁迫密码而自动恢复出厂设置，导致他被起诉。 此案凸显了使用胁迫密码等反取证功能的法律风险，尤其是在执法机构拥有广泛搜查权力的边境。它可能为旅行者的隐私和安全实践树立先例。 手机在用户接受边境官员询问时，胁迫密码触发了恢复出厂设置，导致用户被指控妨碍司法或销毁证据。GrapheneOS 是一款注重隐私的安卓系统，提供此类安全功能。</p>
+  <p class="source-line">hackernews · eecc · 7月26日 22:21 · <a href="https://news.ycombinator.com/item?id=49063022" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> GrapheneOS 是一款开源、强化安全的移动操作系统，旨在保护用户隐私。它允许用户设置胁迫密码，输入后设备会自动擦除数据以防止泄露。美国边境官员拥有广泛的电子设备搜查权力，在合法搜查期间故意销毁数据可能被视为妨碍司法。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://grapheneos.org/" rel="noopener">GrapheneOS: the private and secure mobile OS</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论者就使用胁迫密码是否合法或属于可疑行为展开辩论；有人将其比作销毁物证（如点燃行李箱）。另一些人建议使用类似 VeraCrypt 隐藏卷的诱饵系统，作为比胁迫密码更安全的替代方案。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#GrapheneOS</code> <code>#border search</code> <code>#digital rights</code> <code>#phone security</code> <code>#legal</code></p>
 </article>
 <article class="hz-item" id="item-4">
-  <h2><a href="https://www.rickmanelius.com/p/the-new-ai-superpowers-focus-and" target="_blank" rel="noopener">AI 超能力：专注与跟进</a> <span class="score-badge" data-tier="good">8.0</span></h2>
-  <p class="item-summary">Rick Manelius 博客上的一篇文章指出，AI 工具能让开发者更有效地专注和跟进项目，但也警告了项目碎片化和倦怠等风险。 这很重要，因为它捕捉了开发者社区中关于 AI 对生产力和心理健康双重影响的真实辩论，影响团队如何采用 AI 工具。 文章强调 AI 有助于减少配置和环境问题的认知负担，但也鼓励了一种可能导致许多未完成项目的“氛围编程”文化。</p>
-  <p class="source-line">hackernews · mooreds · 7月26日 13:13 · <a href="https://news.ycombinator.com/item?id=49057877" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> 像编码代理和聊天界面这样的 AI 辅助开发工具已经变得流行，允许开发者更快地生成代码。但这可能导致“氛围完成度”，即项目启动但未完成，同时增加因同时处理多个项目而导致的倦怠风险。</div>
-  <div class="item-discussion"><strong>社区讨论:</strong> 评论者分享了不同的经验：一些人通过使用 AI 摆脱琐碎任务，报告了更高的生产力和更低的倦怠感，而另一些人则观察到用不兼容的实现重新发明轮子的趋势，呼应了文章关于碎片化的警告。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#AI</code> <code>#productivity</code> <code>#software engineering</code> <code>#developer tools</code> <code>#burnout</code></p>
+  <h2><a href="https://www.imperialviolet.org/2026/07/26/zstd-lean.html" target="_blank" rel="noopener">证明自动化成为实际现实</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">一篇博客文章和 Hacker News 上的讨论指出，证明自动化已经到来，Lean 和 Verus 等实用工具使得大规模形式化验证成为可能。 这一转变可能从根本上改变软件开发，用机器检查的证明取代大量传统测试，从而减少错误并提高可靠性。它也标志着一种新范式的到来，即编程语言原生嵌入定理证明器，并辅以人工智能。 讨论中提到了具体项目，如针对 Rust 的 Verus、用于基准测试自动定理证明代理的 OpenATP，以及谷歌使用 Fiat Crypto + CryptOpt 部署的已验证加密例程。作者的帖子包含一个“旁注：已验证汇编”，表明这些技术已投入生产。</p>
+  <p class="source-line">hackernews · zdw · 7月26日 20:53 · <a href="https://news.ycombinator.com/item?id=49062291" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> 形式化验证使用数学证明来保证软件的正确性，但历史上由于劳动强度过大而难以广泛使用。证明自动化利用人工智能和先进的定理证明器来自动编写这些证明，从而使形式化验证更加易于使用。Lean 是一个证明助手，在数学和软件验证领域都越来越受欢迎。</div>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论普遍积极，用户对证明自动化表示看好。一位评论者预测未来的程序员将主要编写形式化规范，另一位则注意到关于使用大型语言模型进行定理证明的成本和可行性存在困惑。也有评论认识到已验证汇编已在某些公司大规模部署。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#proof automation</code> <code>#theorem proving</code> <code>#formal verification</code> <code>#AI-assisted programming</code> <code>#Lean</code></p>
 </article>
 <article class="hz-item" id="item-5">
-  <h2><a href="https://killthecookiebanner.eu/" target="_blank" rel="noopener">欧盟委员会提议浏览器级隐私偏好以终结 Cookie 横幅</a> <span class="score-badge" data-tier="good">8.0</span></h2>
-  <p class="item-summary">欧盟委员会提出了一项新的浏览器级隐私偏好设置，允许用户一次性设置其 Cookie 同意偏好，从而消除在每个网站上反复出现的 Cookie 横幅。 如果实施，这可能会通过为用户提供一种简单、受法律认可的方式来表达其隐私偏好，从而彻底改变网络隐私状况，可能终结烦人的 Cookie 横幅时代。 该提案利用了 Global Privacy Control（GPC）规范等现有技术，该规范通过 HTTP 头或 JavaScript 发送信号以指示用户的退出偏好。</p>
-  <p class="source-line">hackernews · rapnie · 7月26日 11:53 · <a href="https://news.ycombinator.com/item?id=49057175" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> Cookie 横幅是欧盟隐私法规（GDPR 和 ePrivacy 指令）的直接结果，要求网站在放置非必要 Cookie 之前获得知情同意。然而，大多数用户觉得这些横幅很烦人，经常不阅读就点击&#x27;接受&#x27;，削弱了法律的意图。拟议的浏览器级偏好旨在提供一种标准化、用户友好的方式来传达具有法律约束力的同意。Global Privacy Control 是一个现有的规范，用于数据销售退出，并得到 Brave 和 Firefox 等浏览器的支持。</div>
-  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://secureprivacy.ai/blog/global-privacy-control-gpc-compliance-audit" rel="noopener">Global Privacy Control (GPC): How to... | Secure Privacy Blog</a></li><li><a href="https://privacybadger.org/" rel="noopener">Privacy Badger | Electronic Frontier Foundation</a></li><li><a href="https://windowsreport.com/chrome-canary-now-supports-global-privacy-control/" rel="noopener">Chrome Canary now supports Global Privacy Control</a></li></ul></details>
-  <div class="item-discussion"><strong>社区讨论:</strong> 社区评论普遍积极，用户表示宽慰并希望这最终能终结 Cookie 横幅。一些评论者指出，即使是像伦敦交通局这样善意的网站也有侵扰性的横幅，而另一些人则质疑单一的全局偏好是否足以应对不同网站的场景。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#privacy</code> <code>#cookie banners</code> <code>#EU regulation</code> <code>#web standards</code> <code>#user experience</code></p>
+  <h2><a href="https://www.gamedevs.org/uploads/introduction-to-data-oriented-design.pdf" target="_blank" rel="noopener">面向数据设计的 PDF 引起社区关注</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Mike Acton 撰写的一篇介绍面向数据设计（DoD）的 PDF 在游戏论坛上被分享，引发了关于其原则和实际应用的讨论。 面向数据设计对于缓存敏感型应用（如游戏引擎）的性能优化至关重要，该资源为工程师提供了基础理解。 该 PDF 强调从数据布局和变换开始而不是代码结构，在游戏开发和系统编程社区中被广泛引用。</p>
+  <p class="source-line">hackernews · tosh · 7月26日 18:11 · <a href="https://news.ycombinator.com/item?id=49060724" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> 面向数据设计是一种优化方法，通过关注数据布局和访问模式来提高 CPU 缓存效率。它与面向对象设计相对，由 Noel Llopis 在 2009 年正式命名。该方法在性能至关重要的游戏开发中尤其相关。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://en.wikipedia.org/wiki/Data-oriented_design" rel="noopener">Data-oriented design - Wikipedia</a></li><li><a href="https://medium.com/mirum-budapest/introduction-to-data-oriented-programming-85b51b99572d" rel="noopener">Introduction to Data-Oriented Design | by Tamás Losonczi | Medium</a></li><li><a href="https://dataorienteddesign.com/dodmain.pdf" rel="noopener">Data-Oriented Design</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论者讨论了将数据放在首位的核心思想，一些人指出由于需求变更带来的实际挑战。其他人质疑 DoD 是否仅仅是缓存感知编程或数组编程，同时有用户分享了 Mike Acton 关于面向数据编程的 LLM 技能。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#data-oriented design</code> <code>#game development</code> <code>#performance optimization</code> <code>#software engineering</code></p>
 </article>
 <article class="hz-item" id="item-6">
-  <h2><a href="https://beyondloom.com/decker/" target="_blank" rel="noopener">Decker 让 HyperCard 在现代平台上重生</a> <span class="score-badge" data-tier="good">7.0</span></h2>
-  <p class="item-summary">Decker 是一个现代平台，重现了苹果经典软件 HyperCard 的体验，让用户通过简单直观的界面构建交互式多媒体堆栈。 HyperCard 启发了一代创作者和小型企业，Decker 旨在现代环境中保留这种易用、用户驱动的开发理念，有望复兴被忽视的软件开发方式。 Decker 强调 1-bit 图形和复古美学，同时融入 Web 标准等现代技术以确保广泛的可访问性。它仍处于早期开发阶段，自 2022 年以来已多次在 Hacker News 上被提及。</p>
-  <p class="source-line">hackernews · tosh · 7月26日 18:23 · <a href="https://news.ycombinator.com/item?id=49060856" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> HyperCard 是由苹果公司在 1987 年发布的先驱性多媒体和超文本工具，它允许非程序员通过可视化卡片界面和名为 HyperTalk 的简单脚本语言创建交互式“堆栈”。它让用户无需传统编程技能就能构建从游戏到商业数据库的各种应用。Decker 旨在为当代用户重新捕捉这种易用性。</div>
-  <div class="item-discussion"><strong>社区讨论:</strong> 评论者表达了对 HyperCard 的强烈怀旧之情，许多人分享了其影响个人的故事。然而，也有人质疑 Decker 在 2026 年是否具有实际用途，认为它仍然是一个怀旧项目，而非可行的现代工具。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#hypercard</code> <code>#retrocomputing</code> <code>#interactive-media</code> <code>#software-development</code></p>
+  <h2><a href="https://vectoral.com/blog/token-relay-market" target="_blank" rel="noopener">AI token 转售与欺诈的隐秘市场</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">Vectoral 的一篇文章揭露了一个隐秘市场：转售商利用 API 定价方案、云服务免费额度和订阅漏洞，通过代理流量和计费滥用等方式低价获取 AI token 并加价转售牟利。 这破坏了 AI API 提供商的商业模式，导致重大经济损失，并为合法用户造成不公平竞争。它凸显了当前定价和防欺诈系统中的漏洞，亟待解决。 转售商使用隧道流量通过端点、滥用 AWS/Azure 的免费额度、以及利用固定价格但成本变动的订阅模型等技术。像 Vectoral 和 WorkOS 这样的公司提供检测和阻止这种代理流量的解决方案。</p>
+  <p class="source-line">hackernews · mlenhard · 7月26日 15:17 · <a href="https://news.ycombinator.com/item?id=49058993" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> AI token 是基于 API 的 AI 服务的使用单位，通常按 token 计费。云服务商常为新客户提供免费额度，这可通过注册多个账户被滥用。固定价格的订阅模型也容易被转售商过度使用，他们以盈利为目的转售访问权限。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://vectoral.com/" rel="noopener">Vectoral — Catch the proxies reselling your LLM tokens | Vectoral</a></li><li><a href="https://www.neura.market/blog/how-token-reselling-puts-your-ai-workflows-at-risk-in-2026" rel="noopener">How Token Reselling Puts Your AI Workflows at Risk... | Neura Market</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论者将其与广告欺诈相提并论，并指出参与者的高级手段，其中一人提到朋友的公司通过免费 AWS 额度以实际价格的 4%获得推理服务。另一人强调订阅模式是根本问题，WorkOS 的代表分享了他们的欺诈检测产品作为回应。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#ai-tokens</code> <code>#fraud</code> <code>#api-economics</code> <code>#cloud-credits</code> <code>#subscription-models</code></p>
 </article>
 <article class="hz-item" id="item-7">
-  <h2><a href="https://vectoral.com/blog/token-relay-market" target="_blank" rel="noopener">Token 中继市场助长 AI 积分欺诈与转售</a> <span class="score-badge" data-tier="good">7.0</span></h2>
-  <p class="item-summary">Vectoral 的一篇博客文章详细介绍了 Token 中继市场如何被用来转售通过欺诈获得的 AI 积分，包括滥用免费云积分和被盗支付工具。 这凸显了围绕 AI 令牌不断增长的地下经济，威胁 AI 公司的订阅模式，并为欺诈者创造不公平的竞争优势。 该市场涉及高度老练的行为者，他们通过滥用计费系统、盗用信用卡和接管账户来拼凑折扣令牌，然后以极低的成本转售。</p>
-  <p class="source-line">hackernews · mlenhard · 7月26日 15:17 · <a href="https://news.ycombinator.com/item?id=49058993" rel="noopener">社区讨论</a></p>
-  <div class="item-background"><strong>背景:</strong> Token 中继市场是二级市场，以折扣价格买卖 AI 服务积分（Token）。这些 Token 通常通过利用免费试用、被盗支付方式或受损账户欺诈获得。这种做法类似于在线广告行业中的广告欺诈，转售商交易打折的广告印象。</div>
-  <div class="item-discussion"><strong>社区讨论:</strong> 评论者分享了个人经验：一位曾从事广告欺诈工作的人指出存在同样的转售动态；另一位指出 AWS/Azure 的免费云积分是主要的滥用渠道；第三人批评订阅模型存在固有缺陷。WorkOS 的一位用户提到他们的产品 Radar 可以检测 AI 公司的 Token 欺诈。</div>
-  <p class="tag-line"><strong>标签:</strong> <code>#token markets</code> <code>#fraud</code> <code>#AI credits</code> <code>#subscription models</code> <code>#abuse</code></p>
+  <h2><a href="https://killthecookiebanner.eu/" target="_blank" rel="noopener">欧盟提议用浏览器级隐私设置取代 Cookie 横幅</a> <span class="score-badge" data-tier="good">8.0</span></h2>
+  <p class="item-summary">欧盟委员会提出一项解决方案，允许用户在浏览器中直接设置隐私偏好，并自动传达给网站，从而消除 Cookie 横幅。 这有望大幅改善网络用户体验，消除最常见的烦恼之一——Cookie 同意横幅，同时仍能遵守 GDPR 等隐私法规。 该提案让人想起上世纪 90 年代末的 P3P 标准，后者因缺乏主流浏览器采纳和企业利益而失败。新方法可能利用 Global Privacy Control（GPC）等现代技术。</p>
+  <p class="source-line">hackernews · rapnie · 7月26日 11:53 · <a href="https://news.ycombinator.com/item?id=49057175" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> Cookie 横幅在欧盟《通用数据保护条例》（GDPR）要求网站对非必要 Cookie 获得明确同意后变得无处不在。然而，用户常觉得它们干扰性强，习惯性地不阅读就点击“接受”，破坏了知情同意的原则。提议的浏览器级设置旨在将同意机制从每个网站的横幅转变为全局、持久的偏好。</div>
+  <details class="item-references"><summary>参考链接</summary><ul><li><a href="https://elementor.com/blog/10-best-how-prepare-website-eprivacy/" rel="noopener">10 Best How To Prepare Your Website For Eprivacy Regulation in 2026</a></li><li><a href="https://podcasts.apple.com/us/podcast/gpc-and-uooms-do-consumers-want-an-on-off-switch-or-a-dimmer/id1536859760?i=1000729658098" rel="noopener">GPC and UOOMS: Do Consumers Wa… - She Said Privacy/He Said...</a></li></ul></details>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论者指出类似的尝试（如 P3P）曾被企业利益扼杀，有些人认为强迫用户点击按钮不能构成知情同意。其他人则欢迎这一提案，认为这是生活质量的重大改进，同时建议默认设置应可针对每个网站自定义。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#privacy</code> <code>#cookie consent</code> <code>#EU regulation</code> <code>#web standards</code> <code>#browser</code></p>
+</article>
+<article class="hz-item" id="item-8">
+  <h2><a href="https://stephango.com/design-is-compromise" target="_blank" rel="noopener">设计即妥协：一场哲学辩论</a> <span class="score-badge" data-tier="good">7.0</span></h2>
+  <p class="item-summary">Stephango 的一篇文章指出设计本质上是妥协的过程，在 Hacker News 上引发了关于妥协究竟是必需品还是问题范围界定不当的信号的细致讨论。 这场讨论对设计师和工程师来说意义重大，因为它挑战了‘完美设计’的常见理想，并突出了塑造现实产品的实际约束，从而影响团队如何处理权衡取舍。 该文章在 Hacker News 上获得了 210 分和 76 条评论，参与度很高。评论者表达了多样化的观点，从完全同意其前提到根本不同意，有人认为妥协是最后的手段，更好的范围界定可以避免妥协。</p>
+  <p class="source-line">hackernews · ankitg12 · 7月26日 15:51 · <a href="https://news.ycombinator.com/item?id=49059367" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> 设计常常被浪漫化为寻找完美解决方案的过程，但在实践中，设计师和工程师面临时间、预算、技术和利益相关者需求等现实约束。妥协涉及在冲突需求之间进行权衡，这是设计中的一个常见但有争议的方面。这篇文章及其讨论探讨了妥协是不可避免的，还是问题分析不足的症状。</div>
+  <div class="item-discussion"><strong>社区讨论:</strong> 社区意见分歧：像 ChrisMarshallNY 这样的用户表示同意，认为妥协是一种常被误解为弱点的宝贵技能。而像 tikotus 这样的用户认为，在彻底的问题范围界定之后，妥协应该是最后的手段。Bryzaguy 则根本不同意，指出妥协并不等同于权衡，做出可能疏远部分用户的坚定决策可能更好。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#design</code> <code>#compromise</code> <code>#trade-offs</code> <code>#philosophy</code> <code>#Hacker News</code></p>
+</article>
+<article class="hz-item" id="item-9">
+  <h2><a href="https://www.rickmanelius.com/p/the-new-ai-superpowers-focus-and" target="_blank" rel="noopener">新 AI 超能力：专注与执行力</a> <span class="score-badge" data-tier="good">7.0</span></h2>
+  <p class="item-summary">Rick Manelius 发表文章指出，人工智能可以通过卸载常规任务来增强专注力和执行力，但警告过度依赖可能导致倦怠和工作碎片化。 随着 AI 工具嵌入软件工程，理解它们对生产力和幸福感的双重影响对于可持续工作实践至关重要。 该文章在 Hacker News 上获得 171 分和 50 条评论，表明社区参与度很高。它特别警告了“氛围编码”趋势，即未完成项目不断积累。</p>
+  <p class="source-line">hackernews · mooreds · 7月26日 13:13 · <a href="https://news.ycombinator.com/item?id=49057877" rel="noopener">社区讨论</a></p>
+  <div class="item-background"><strong>背景:</strong> 像 GitHub Copilot 和 Cursor 这样的 AI 编码助手能够快速生成代码，但也引发了关于质量、依赖性和倦怠的争论。该文章将专注力和执行力视为关键技能，AI 可以强化或削弱它们，具体取决于使用模式。</div>
+  <div class="item-discussion"><strong>社区讨论:</strong> 评论者分享了不同的体验：有人将 AI 用于副业项目和修复任务而未出现倦怠，也有人注意到不兼容的“又一个……”项目增多，加剧了碎片化。一位开发者描述了一种自律的工作流程：编写规范并将任务委托给代理以保持轻松投入。</div>
+  <p class="tag-line"><strong>标签:</strong> <code>#AI</code> <code>#productivity</code> <code>#software engineering</code> <code>#burnout</code> <code>#focus</code></p>
 </article>
 </main>
 <footer class="hz-footer">
