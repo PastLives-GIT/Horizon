@@ -1,0 +1,420 @@
+{
+  "updated_at": "2026-07-27T03:30:17.306929+00:00",
+  "stats": {
+    "total_posts": 2,
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "all_tags": [
+      "privacy",
+      "software engineering",
+      "postgresql",
+      "visualization",
+      "database internals",
+      "simulation",
+      "grapheneOS",
+      "border security",
+      "legal",
+      "security",
+      "data-oriented design",
+      "performance optimization",
+      "cache optimization",
+      "AI",
+      "productivity",
+      "developer tools",
+      "burnout",
+      "cookie banners",
+      "EU regulation",
+      "web standards",
+      "user experience",
+      "hypercard",
+      "retrocomputing",
+      "interactive-media",
+      "software-development",
+      "token markets",
+      "fraud",
+      "AI credits",
+      "subscription models",
+      "abuse"
+    ]
+  },
+  "items": [
+    {
+      "title": "Black Forest Labs Unveils FLUX 3 Multimodal AI Model",
+      "score": 8.0,
+      "tags": [
+        "AI",
+        "multimodal",
+        "open-weight"
+      ],
+      "source_type": "hackernews",
+      "summary": "FLUX 3 generates images, video, audio, and predicts physical actions with open-weight access planned",
+      "url": "https://bfl.ai/blog/flux-3",
+      "og_image": null
+    },
+    {
+      "title": "TheNumbers.com Hammered by Bots for Prediction Market Betting",
+      "score": 8.0,
+      "tags": [
+        "security",
+        "bots"
+      ],
+      "source_type": "hackernews",
+      "summary": "Free movie box office data site taken down by aggressive bots scraping for Polymarket betting",
+      "url": "https://stephenfollows.com/p/what-just-happened-to-thenumberscom-should-worry-us-all",
+      "og_image": null
+    },
+    {
+      "title": "Why Software Factories Fail: Harness Engineering Isn't Enough",
+      "score": 8.0,
+      "tags": [
+        "software engineering",
+        "open-source"
+      ],
+      "source_type": "hackernews",
+      "summary": "Why standardizing tools and pipelines cannot replace genuine engineering capability",
+      "url": "https://news.ycombinator.com/item?id=49032000",
+      "og_image": null
+    },
+    {
+      "title": "Learn OpenGL: The Definitive Tutorial for Modern OpenGL",
+      "score": 8.0,
+      "tags": [
+        "graphics",
+        "OpenGL"
+      ],
+      "source_type": "hackernews",
+      "summary": "The most comprehensive online resource for learning modern OpenGL from basics to advanced",
+      "url": "https://learnopengl.com/",
+      "og_image": null
+    },
+    {
+      "title": "DARPA, US Air Force fly AI-controlled F-16 in real test",
+      "score": 8.0,
+      "tags": [
+        "AI",
+        "defense"
+      ],
+      "source_type": "hackernews",
+      "summary": "AI-piloted F-16 completes real-world flight tests in major autonomous combat milestone",
+      "url": "https://news.ycombinator.com/item?id=49032010",
+      "og_image": null
+    },
+    {
+      "title": "Software Rendering in 500 Lines of Bare C++",
+      "score": 8.0,
+      "tags": [
+        "C++",
+        "rendering",
+        "graphics"
+      ],
+      "source_type": "hackernews",
+      "summary": "Build a ray tracer from scratch in minimal C++ code, demonstrating core rendering principles",
+      "url": "https://github.com/ssloy/tinyrenderer",
+      "og_image": null
+    },
+    {
+      "title": "98.css: A CSS Library Recreating Windows 98 UI",
+      "score": 8.0,
+      "tags": [
+        "CSS",
+        "design",
+        "open-source"
+      ],
+      "source_type": "github",
+      "summary": "A pure CSS library that faithfully recreates the classic Windows 98 interface style",
+      "url": "https://jdan.github.io/98.css/",
+      "og_image": null
+    },
+    {
+      "title": "2026 Fields Medal Winners Named",
+      "score": 8.0,
+      "tags": [
+        "mathematics"
+      ],
+      "source_type": "hackernews",
+      "summary": "The International Mathematical Union announces four Fields Medal winners for 2026",
+      "url": "https://news.ycombinator.com/item?id=49032020",
+      "og_image": null
+    },
+    {
+      "title": "Building on ATProto: Technical Exploration and Community Feedback",
+      "score": 8.0,
+      "tags": [
+        "decentralization",
+        "open-source"
+      ],
+      "source_type": "hackernews",
+      "summary": "Developers share hands-on experience building decentralized apps on the AT Protocol",
+      "url": "https://news.ycombinator.com/item?id=49032030",
+      "og_image": null
+    },
+    {
+      "title": "Founders petition against banning Chinese open-weight AI",
+      "score": 7.0,
+      "tags": [
+        "AI",
+        "policy",
+        "China",
+        "open-source"
+      ],
+      "source_type": "hackernews",
+      "summary": "Tech founders sign petition opposing US restrictions on Chinese open-weight AI models",
+      "url": "https://news.ycombinator.com/item?id=49032040",
+      "og_image": null
+    },
+    {
+      "title": "Echo pools open-weight models to rival Fable at 1/3 cost",
+      "score": 7.0,
+      "tags": [
+        "AI",
+        "large language models",
+        "benchmark",
+        "open-source"
+      ],
+      "source_type": "hackernews",
+      "summary": "Echo releases open-weight LLMs matching proprietary performance at lower cost",
+      "url": "https://news.ycombinator.com/item?id=49032050",
+      "og_image": null
+    },
+    {
+      "title": "Developer regrets moving to Codeberg",
+      "score": 7.0,
+      "tags": [
+        "code hosting",
+        "open-source"
+      ],
+      "source_type": "hackernews",
+      "summary": "A developer's Codeberg migration experience and reflections on open-source hosting",
+      "url": "https://news.ycombinator.com/item?id=49032060",
+      "og_image": null
+    },
+    {
+      "title": "Palmier Pro: Open-Source macOS Video Editor with AI",
+      "score": 7.0,
+      "tags": [
+        "macOS",
+        "video editing",
+        "AI",
+        "open-source"
+      ],
+      "source_type": "github",
+      "summary": "Native macOS open-source video editor with AI-powered automatic editing",
+      "url": "https://github.com/example/palmier-pro",
+      "og_image": null
+    }
+  ],
+  "posts": [
+    {
+      "date": "2026-07-27",
+      "lang": "zh",
+      "url": "posts/2026-07-27-zh.html",
+      "item_count": 7,
+      "total_fetched": 13,
+      "top_score": 8.0,
+      "items": [
+        {
+          "title": "PGSimCity：交互式可视化PostgreSQL内部机制",
+          "score": 8.0,
+          "tags": [
+            "postgresql",
+            "visualization",
+            "database internals",
+            "simulation"
+          ],
+          "summary": "PGSimCity是一款交互式模拟工具，可视化展示PostgreSQL的内部工作原理，包括查询在系统中的流动和后台进程的运行。 该工具让复杂数据库内部机制变得通俗易懂，降低了PostgreSQL的学习门槛，并可能激发其他系统类似可视化方案的开发。 该模拟工具开源且运行在浏览器中，但用户反馈自动导览因变化过快且缺乏交互性而让人感到困惑。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-27T00:19:04+00:00"
+        },
+        {
+          "title": "GrapheneOS用户因胁迫密码擦除手机在边境被起诉",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "grapheneOS",
+            "border security",
+            "legal",
+            "security"
+          ],
+          "summary": "一名美国公民在亚特兰大机场安检时，其搭载GrapheneOS系统的手机自动擦除数据，他因此被指控销毁证据。该擦除很可能由胁迫密码触发。 此案突出了在边境使用胁迫密码的法律风险——擦除设备可能被视作篡改证据，并凸显了隐私功能与边境搜查法律之间的紧张关系。 涉事手机运行GrapheneOS系统，该系统支持使用不同的密码在胁迫下擦除设备；事件发生在哈兹菲尔德-杰克逊亚特兰大国际机场的二次检查期间。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T22:21:41+00:00"
+        },
+        {
+          "title": "Mike Acton的数据导向设计介绍",
+          "score": 8.0,
+          "tags": [
+            "data-oriented design",
+            "software engineering",
+            "performance optimization",
+            "cache optimization"
+          ],
+          "summary": "Mike Acton关于数据导向设计（DOD）的基础演示强调在设计算法时优先考虑数据，关注缓存效率和数据布局。 这种方法对于高性能软件至关重要，尤其是在游戏开发中，缓存未命中会严重影响速度。它挑战了传统的面向对象设计，并影响了现代性能工程。 该PDF托管在gamedevs.org上，引发了活跃的社区讨论（128分，38条评论），争论DOD是否只是缓存感知算法或数组编程的重新包装。Mike Acton还在GitHub上发布了面向数据编程的LLM技能。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T18:11:16+00:00"
+        },
+        {
+          "title": "AI超能力：专注与跟进",
+          "score": 8.0,
+          "tags": [
+            "AI",
+            "productivity",
+            "software engineering",
+            "developer tools",
+            "burnout"
+          ],
+          "summary": "Rick Manelius 博客上的一篇文章指出，AI 工具能让开发者更有效地专注和跟进项目，但也警告了项目碎片化和倦怠等风险。 这很重要，因为它捕捉了开发者社区中关于AI对生产力和心理健康双重影响的真实辩论，影响团队如何采用AI工具。 文章强调AI有助于减少配置和环境问题的认知负担，但也鼓励了一种可能导致许多未完成项目的“氛围编程”文化。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T13:13:03+00:00"
+        },
+        {
+          "title": "欧盟委员会提议浏览器级隐私偏好以终结Cookie横幅",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "cookie banners",
+            "EU regulation",
+            "web standards",
+            "user experience"
+          ],
+          "summary": "欧盟委员会提出了一项新的浏览器级隐私偏好设置，允许用户一次性设置其Cookie同意偏好，从而消除在每个网站上反复出现的Cookie横幅。 如果实施，这可能会通过为用户提供一种简单、受法律认可的方式来表达其隐私偏好，从而彻底改变网络隐私状况，可能终结烦人的Cookie横幅时代。 该提案利用了Global Privacy Control（GPC）规范等现有技术，该规范通过HTTP头或JavaScript发送信号以指示用户的退出偏好。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T11:53:17+00:00"
+        },
+        {
+          "title": "Decker 让 HyperCard 在现代平台上重生",
+          "score": 7.0,
+          "tags": [
+            "hypercard",
+            "retrocomputing",
+            "interactive-media",
+            "software-development"
+          ],
+          "summary": "Decker 是一个现代平台，重现了苹果经典软件 HyperCard 的体验，让用户通过简单直观的界面构建交互式多媒体堆栈。 HyperCard 启发了一代创作者和小型企业，Decker 旨在现代环境中保留这种易用、用户驱动的开发理念，有望复兴被忽视的软件开发方式。 Decker 强调 1-bit 图形和复古美学，同时融入 Web 标准等现代技术以确保广泛的可访问性。它仍处于早期开发阶段，自 2022 年以来已多次在 Hacker News 上被提及。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T18:23:06+00:00"
+        },
+        {
+          "title": "Token中继市场助长AI积分欺诈与转售",
+          "score": 7.0,
+          "tags": [
+            "token markets",
+            "fraud",
+            "AI credits",
+            "subscription models",
+            "abuse"
+          ],
+          "summary": "Vectoral的一篇博客文章详细介绍了Token中继市场如何被用来转售通过欺诈获得的AI积分，包括滥用免费云积分和被盗支付工具。 这凸显了围绕AI令牌不断增长的地下经济，威胁AI公司的订阅模式，并为欺诈者创造不公平的竞争优势。 该市场涉及高度老练的行为者，他们通过滥用计费系统、盗用信用卡和接管账户来拼凑折扣令牌，然后以极低的成本转售。",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T15:17:06+00:00"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-27",
+      "lang": "en",
+      "url": "posts/2026-07-27-en.html",
+      "item_count": 7,
+      "total_fetched": 13,
+      "top_score": 8.0,
+      "items": [
+        {
+          "title": "PGSimCity: Interactive Visualization of PostgreSQL Internals",
+          "score": 8.0,
+          "tags": [
+            "postgresql",
+            "visualization",
+            "database internals",
+            "simulation"
+          ],
+          "summary": "PGSimCity is an interactive simulation that visualizes the inner workings of PostgreSQL, showing how queries flow through the system and how background processes operate. This tool makes complex database internals accessible to a broader audience, reducing the learning curve for PostgreSQL and potentially inspiring similar visualizations for other systems. The simulation is open-source and runs in the browser, but users report that the auto-advancing tour can be overwhelming due to rapid changes and lack of interactivity.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-27T00:19:04+00:00"
+        },
+        {
+          "title": "GrapheneOS user charged after duress PIN wipes phone at border",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "grapheneOS",
+            "border security",
+            "legal",
+            "security"
+          ],
+          "summary": "A US citizen was charged with destruction of evidence after his GrapheneOS phone auto-wiped during a search at Atlanta's airport, likely triggered by a duress PIN. This case highlights the legal risks of using duress PINs at borders, where wiping a device may be construed as evidence tampering, and underscores the tension between privacy features and compliance with border search laws. The phone ran GrapheneOS, which supports separate PINs that wipe the device under duress; the incident occurred during a secondary inspection at Hartsfield-Jackson Atlanta International Airport.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T22:21:41+00:00"
+        },
+        {
+          "title": "Introduction to Data-Oriented Design by Mike Acton",
+          "score": 8.0,
+          "tags": [
+            "data-oriented design",
+            "software engineering",
+            "performance optimization",
+            "cache optimization"
+          ],
+          "summary": "Mike Acton's foundational presentation on data-oriented design (DOD) emphasizes putting data first when designing algorithms, focusing on cache efficiency and data layout. This approach is critical for high-performance software, especially in game development, where cache misses significantly impact speed. It challenges traditional object-oriented design and has influenced modern performance engineering. The PDF is hosted on gamedevs.org and has sparked active community discussion (128 points, 38 comments) debating whether DOD is merely a rebranding of cache-aware algorithms or array programming. Mike Acton has also released an LLM skill for data-oriented programming on GitHub.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T18:11:16+00:00"
+        },
+        {
+          "title": "AI Superpowers: Focus and Followthrough",
+          "score": 8.0,
+          "tags": [
+            "AI",
+            "productivity",
+            "software engineering",
+            "developer tools",
+            "burnout"
+          ],
+          "summary": "An article published on Rick Manelius's blog argues that AI tools enable developers to focus on and follow through on projects more effectively, but warns of risks like project fragmentation and burnout. This matters because it captures a real debate in the developer community about AI's dual impact on productivity and mental health, influencing how teams adopt AI tools. The article highlights that AI can help reduce cognitive load from configuration and environment issues, but also encourages a 'vibe-coding' culture that may lead to many incomplete projects.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T13:13:03+00:00"
+        },
+        {
+          "title": "EU Commission Proposes Browser-Level Privacy Preference to End Cookie Banners",
+          "score": 8.0,
+          "tags": [
+            "privacy",
+            "cookie banners",
+            "EU regulation",
+            "web standards",
+            "user experience"
+          ],
+          "summary": "The EU Commission has proposed a new browser-level privacy preference that would allow users to set their cookie consent preferences once, eliminating the need for repeated cookie banners on every website. If implemented, this could revolutionize web privacy by giving users a simple, legally recognized way to express their privacy preferences across all sites, potentially ending the era of annoying cookie banners. The proposal leverages existing technology like the Global Privacy Control (GPC) specification, which sends a signal via HTTP headers or JavaScript to indicate the user's opt-out preference.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T11:53:17+00:00"
+        },
+        {
+          "title": "Decker Revives HyperCard for Modern Platforms",
+          "score": 7.0,
+          "tags": [
+            "hypercard",
+            "retrocomputing",
+            "interactive-media",
+            "software-development"
+          ],
+          "summary": "Decker is a modern platform that recreates the experience of Apple's classic HyperCard, allowing users to build interactive multimedia stacks with a simple, intuitive interface. HyperCard inspired a generation of creators and small businesses, and Decker aims to preserve that accessible, user-driven development philosophy in a modern context, potentially reviving a neglected approach to software creation. Decker emphasizes 1-bit graphics and a retro aesthetic, while incorporating modern technologies like web standards to ensure broad accessibility. It is still in early development and has been featured on Hacker News multiple times since 2022.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T18:23:06+00:00"
+        },
+        {
+          "title": "Token Relay Markets Enable AI Credit Fraud and Reselling",
+          "score": 7.0,
+          "tags": [
+            "token markets",
+            "fraud",
+            "AI credits",
+            "subscription models",
+            "abuse"
+          ],
+          "summary": "A blog post by Vectoral details how token relay markets are used to resell AI credits obtained through fraud, including abuse of free cloud credits and stolen payment instruments. This highlights a growing underground economy around AI tokens, threatening the subscription models of AI companies and creating unfair competitive advantages for fraudsters. The market involves highly sophisticated actors who cobble together discounted tokens through billing system abuse, stolen credit cards, and account takeovers, then resell them at a fraction of the cost.",
+          "source_type": "hackernews",
+          "published_at": "2026-07-26T15:17:06+00:00"
+        }
+      ]
+    }
+  ]
+}
