@@ -346,18 +346,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Feed item — a news column blurb */
-/* Text list by default: source · title · collapsed summary · score.
-   On hover the summary hides and a background layer fades in — the OG photo
-   if available, otherwise a brand gradient with a centered "Horizon" logo. */
-.feed-item {
-  position: relative;
-  overflow: hidden;
-  break-inside: avoid;
-  padding: 0 0 14px;
-  margin-bottom: 22px;
-  border-bottom: 1px solid var(--rule);
-  color: var(--ink);
-}
+ /* Text list by default: source · title · collapsed summary · score.
+    On hover the summary hides and a background layer fades in — the OG photo
+    if available, otherwise a brand gradient with a centered "Horizon" logo. */
+ .feed-item {
+   position: relative;
+   overflow: hidden;
+   break-inside: avoid;
+   padding: 0 0 14px;
+   margin-bottom: 22px;
+   border-bottom: 1px solid var(--rule);
+   color: var(--ink);
+   cursor: pointer;
+ }
 .feed-item:last-child { border-bottom: none; }
 
 /* Background layer revealed on hover (visibility hidden when faded out so
@@ -371,6 +372,20 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   background-size: cover; background-position: center;
 }
+
+/* Top-strong scrim gradient for .feed-item-bg (dark at top where text sits) */
+.feed-item-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,.88) 0%,
+    rgba(0,0,0,.5) 50%,
+    rgba(0,0,0,.62) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
 .feed-item:hover .feed-item-bg {
   opacity: 1;
   visibility: visible;
@@ -673,6 +688,19 @@ h1, h2, h3, h4, h5, h6 {
   aspect-ratio: 21 / 9;   /* stable image crop; not stretched, centered */
   min-height: 220px;      /* floor on narrow screens so text never clips */
   display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+/* Bottom-strong scrim gradient (dark at bottom where text sits, clear at top) */
+.lead-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(0,0,0,.78) 0%,
+    rgba(0,0,0,.4) 55%,
+    rgba(0,0,0,.08) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Darkening scrim on hover — content sits above it */
