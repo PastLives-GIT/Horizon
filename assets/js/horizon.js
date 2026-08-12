@@ -2,573 +2,680 @@
   'use strict';
 
   // ===================================================================
-  // requestAnimationFrame polyfill
-  // ===================================================================
-  window.requestAnimationFrame = (function () {
-    return window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (cb) { window.setTimeout(cb, 1000 / 60); };
-  })();
-
-  // ===================================================================
-  // CSS vendor prefix detection
-  // ===================================================================
-  var _vendorPrefix = (function () {
-    var vendors = ['webkit', 'Moz', 'ms'];
-    var style = document.body.style;
-    for (var i = 0; i < vendors.length; i++) {
-      if (style.hasOwnProperty(vendors[i] + 'Transform')) return vendors[i];
-    }
-    return '';
-  })();
-  var _transformKey = _vendorPrefix ? _vendorPrefix + 'Transform' : 'transform';
-  var _transformOriginKey = _vendorPrefix ? _vendorPrefix + 'TransformOrigin' : 'transformOrigin';
-  var _supports3d = (function () {
-    var s = document.createElement('div').style;
-    var v = ['webkit', 'Moz', 'ms', ''];
-    for (var i = 0; i < v.length; i++) {
-      if ((v[i] ? v[i] + 'Perspective' : 'perspective') in s) return true;
-    }
-    return false;
-  })();
-
-  // ===================================================================
-  // Point — a grid intersection that moves with mouse repulsion
-  // ===================================================================
-  function Point(ox, oy, maxDist) {
-    this.ox = this.x = ox || 0;
-    this.oy = this.y = oy || 0;
-    this.maxDist = maxDist || 60;
-  }
-
-  Point.prototype.update = function (mouse, range, offsetX, offsetY) {
-    var dx, dy, dist, f;
-    if (mouse) {
-      dx = mouse.x - this.x - offsetX;
-      dy = mouse.y - this.y - offsetY;
-      dist = Math.sqrt(dx * dx + dy * dy) + 0.00001;
-      f = range / dist;
-      this.x += (this.ox - this.x) * 0.1 - (dx / dist) * f;
-      this.y += (this.oy - this.y) * 0.1 - (dy / dist) * f;
-    } else {
-      // Spring back to origin when mouse is away
-      this.x += (this.ox - this.x) * 0.1;
-      this.y += (this.oy - this.y) * 0.1;
-    }
-    // Clamp to max distance from origin
-    dx = this.x - this.ox;
-    dy = this.y - this.oy;
-    dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > this.maxDist) {
-      this.x = this.ox + (dx / dist) * this.maxDist;
-      this.y = this.oy + (dy / dist) * this.maxDist;
-    }
-  };
-
-  // ===================================================================
-  // WallCard — one card in the wall, defined by 4 corner Points
-  // Calculates and applies CSS matrix3d from its 4 corners
-  // ===================================================================
-
-  // Matrix helpers (from PerspectiveTransform.js)
-  function _det2(p0, p1, p2) {
-    return p0.x * p1.y + p1.x * p2.y + p2.x * p0.y - p0.y * p1.x - p1.y * p2.x - p2.y * p0.x;
-  }
-
-  function _computeMatrix3d(tl, tr, bl, br, elementWidth, elementHeight, originOffsetX, originOffsetY) {
-    var det1 = _det2(tl, tr, br);
-    var det2 = _det2(br, bl, tl);
-    if (det1 <= 0 || det2 <= 0) return null;
-
-    var aM = [
-      [0,0,1,0,0,0,0,0], [0,0,1,0,0,0,0,0],
-      [0,0,1,0,0,0,0,0], [0,0,1,0,0,0,0,0],
-      [0,0,0,0,0,1,0,0], [0,0,0,0,0,1,0,0],
-      [0,0,0,0,0,1,0,0], [0,0,0,0,0,1,0,0]
-    ];
-    var bM = [0,0,0,0,0,0,0,0];
-    var width = elementWidth;
-    var height = elementHeight;
-    var offsetX = originOffsetX || 0;
-    var offsetY = originOffsetY || 0;
-    var dst = [tl, tr, bl, br];
-    var sx, sy, dx, dy;
-    var i, j, k, p, tmp;
-    var row, col = [];
-    var m = [0,1,2,3,4,5,6,7];
-    var kmax, sum;
-
-    for (i = 0; i < 4; i++) {
-      j = i + 4;
-      sx = i & 1 ? width + offsetX : offsetX;
-      sy = i > 1 ? height + offsetY : offsetY;
-      dx = dst[i].x + offsetX;
-      dy = dst[i].y + offsetY;
-      aM[i][0] = aM[j][3] = sx;
-      aM[i][1] = aM[j][4] = sy;
-      aM[i][2] = aM[j][5] = 1;
-      aM[i][3] = aM[i][4] = aM[i][5] = aM[j][0] = aM[j][1] = aM[j][2] = 0;
-      aM[i][6] = -sx * dx;
-      aM[i][7] = -sy * dx;
-      aM[j][6] = -sx * dy;
-      aM[j][7] = -sy * dy;
-      bM[i] = dx;
-      bM[j] = dy;
-    }
-
-    for (j = 0; j < 8; j++) {
-      for (i = 0; i < 8; i++) col[i] = aM[i][j];
-      for (i = 0; i < 8; i++) {
-        row = aM[i];
-        kmax = i < j ? i : j;
-        sum = 0;
-        for (k = 0; k < kmax; k++) sum += row[k] * col[k];
-        row[j] = col[i] -= sum;
-      }
-      p = j;
-      for (i = j + 1; i < 8; i++) {
-        if (Math.abs(col[i]) > Math.abs(col[p])) p = i;
-      }
-      if (p !== j) {
-        for (k = 0; k < 8; k++) {
-          tmp = aM[p][k]; aM[p][k] = aM[j][k]; aM[j][k] = tmp;
-        }
-        tmp = m[p]; m[p] = m[j]; m[j] = tmp;
-      }
-      if (aM[j][j] !== 0) {
-        for (i = j + 1; i < 8; i++) aM[i][j] /= aM[j][j];
-      }
-    }
-    for (i = 0; i < 8; i++) m[i] = bM[m[i]];
-    for (k = 0; k < 8; k++) {
-      for (i = k + 1; i < 8; i++) m[i] -= m[k] * aM[i][k];
-    }
-    for (k = 7; k > -1; k--) {
-      m[k] /= aM[k][k];
-      for (i = 0; i < k; i++) m[i] -= m[k] * aM[i][k];
-    }
-    for (i = 0; i < 8; i++) m[i] = m[i].toFixed(9);
-
-    return 'matrix3d(' + m[0] + ',' + m[3] + ',0,' + m[6] + ',' +
-                        m[1] + ',' + m[4] + ',0,' + m[7] + ',0,0,1,0,' +
-                        m[2] + ',' + m[5] + ',0,1)';
-  }
-
-  // ===================================================================
-  // HorizonWall — the 3D perspective card wall
-  // ===================================================================
-  function HorizonWall(container, frameWidth, frameHeight, cols, rows, elementScale) {
-    var self = this;
-    this.container = container;
-    this.points = [];
-    this.cards = [];
-    this._cols = cols;
-    this._rows = rows;
-    this.range = frameWidth * 15;
-    this._scale = elementScale || 2;
-
-    var points = this.points;
-    var cards = this.cards;
-    var pcol = cols + 1;
-    var prow = rows + 1;
-    var maxDist = Math.sqrt(frameWidth * frameWidth + frameHeight * frameHeight) * 0.75;
-    var realW = frameWidth * this._scale;
-    var realH = frameHeight * this._scale;
-    var i, j, x, y, ystep, p, m, a;
-
-    // Create Points grid
-    for (i = 0; i < pcol * prow; i++) {
-      m = frameWidth * Math.random() * 0.1;
-      a = Math.PI * 2 * Math.random();
-      p = new Point(
-        frameWidth * (i % pcol) + m * Math.cos(a),
-        frameHeight * Math.floor(i / pcol) + m * Math.sin(a),
-        maxDist
-      );
-      points.push(p);
-    }
-
-    // Create WallCards
-    for (y = 0; y < rows; y++) {
-      ystep = y * pcol;
-      for (x = 0; x < cols; x++) {
-        j = x + ystep;
-        var card = new WallCardWrapper(realW, realH, points[j], points[j + 1], points[j + pcol], points[j + pcol + 1]);
-        container.appendChild(card.element);
-        cards.push(card);
-      }
-    }
-
-    // Mouse tracking
-    this._mouse = { x: 0, y: 0, active: false };
-    this._scrollX = 0;
-    this._scrollY = 0;
-
-    function onScroll() {
-      self._scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
-      self._scrollY = document.documentElement.scrollTop || document.body.scrollTop;
-    }
-    function onMouseMove(e) {
-      self._mouse.x = e.clientX + self._scrollX;
-      self._mouse.y = e.clientY + self._scrollY;
-      self._mouse.active = true;
-    }
-    function onMouseLeave() {
-      self._mouse.active = false;
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    container.addEventListener('mousemove', onMouseMove, { passive: true });
-    container.addEventListener('mouseleave', onMouseLeave);
-
-    // Start animation loop
-    this._running = true;
-    this._animLoop();
-  }
-
-  HorizonWall.prototype._animLoop = function () {
-    if (!this._running) return;
-    var i, len;
-    var mouse = this._mouse.active ? this._mouse : null;
-    var left = this.container.getBoundingClientRect().left + (this._scrollX || document.documentElement.scrollLeft || document.body.scrollLeft);
-    var top = this.container.getBoundingClientRect().top + (this._scrollY || document.documentElement.scrollTop || document.body.scrollTop);
-
-    for (i = 0, len = this.points.length; i < len; i++) {
-      this.points[i].update(mouse, this.range, left, top);
-    }
-    for (i = 0, len = this.cards.length; i < len; i++) {
-      this.cards[i].update();
-    }
-    var self = this;
-    requestAnimationFrame(function () { self._animLoop(); });
-  };
-
-  HorizonWall.prototype.destroy = function () {
-    this._running = false;
-  };
-
-  HorizonWall.prototype.setContent = function (index, html) {
-    if (index >= 0 && index < this.cards.length) {
-      this.cards[index].setContent(html);
-    }
-  };
-
-  HorizonWall.prototype.setExplodeOrigin = function (cx, cy) {
-    for (var i = 0; i < this.points.length; i++) {
-      var p = this.points[i];
-      p.x = cx - this.container.getBoundingClientRect().left;
-      p.y = cy - this.container.getBoundingClientRect().top;
-    }
-  };
-
-  // ===================================================================
-  // WallCardWrapper — wraps a DOM element with 4 corner Points
-  // ===================================================================
-  function WallCardWrapper(elementWidth, elementHeight, tl, tr, bl, br) {
-    this.tl = tl;
-    this.tr = tr;
-    this.bl = bl;
-    this.br = br;
-    this.element = document.createElement('div');
-    this.element.className = 'wall-card';
-    this.element.style.width = Math.floor(elementWidth) + 'px';
-    this.element.style.height = Math.floor(elementHeight) + 'px';
-    this._computedStyle = window.getComputedStyle(this.element);
-    this._width = elementWidth;
-    this._height = elementHeight;
-  }
-
-  WallCardWrapper.prototype.setContent = function (html) {
-    this.element.innerHTML = html;
-    // Re-read computed style after content is set (origin may have changed)
-    this._computedStyle = window.getComputedStyle(this.element);
-  };
-
-  WallCardWrapper.prototype.update = function () {
-    var originStr = this._computedStyle[_transformOriginKey];
-    var ox = 0, oy = 0;
-
-    if (originStr && originStr.indexOf('px') > -1) {
-      var parts = originStr.split('px');
-      ox = -parseFloat(parts[0]) || 0;
-      oy = -parseFloat(parts[1]) || 0;
-    } else if (originStr && originStr.indexOf('%') > -1) {
-      var pcts = originStr.split('%');
-      ox = -parseFloat(pcts[0]) * this._width * 0.01;
-      oy = -parseFloat(pcts[1]) * this._height * 0.01;
-    }
-
-    var m3d = _computeMatrix3d(this.tl, this.tr, this.bl, this.br, this._width, this._height, ox, oy);
-    if (m3d) {
-      this.element.style[_transformKey] = m3d;
-    }
-  };
-
-  // ===================================================================
   // App State
   // ===================================================================
   var manifest = null;
-  var wall = null;
-  var wallContainer = null;
-  var currentTag = '';
-  var currentLang = '';
+  var currentPost = null;      // selected edition post object
+  var editionOrder = [];       // sorted posts array; selectEdition indexes into it
+  var expandedDate = null;     // date whose language sub-items are expanded in the left list
+  var filters = { sources: [], tags: [], scores: [] };  // multi-select filter state
+  var filterExpanded = { source: false, tag: false, score: false };  // show all chips per group
+  var FILTER_CHIP_LIMIT = 6;   // beyond this, a group collapses to one row + a "more" toggle
 
-  // Layout config
-  var CARD_W = 220;
-  var CARD_H = 180;
-  var CARD_GAP = 16;
-  var CARD_SCALE = 2; // actual pixels = display × scale (for retina-style crispness)
-
-  function calcGrid() {
-    var w = window.innerWidth;
-    var cols;
-    if (w < 600) cols = 2;
-    else if (w < 1024) cols = 3;
-    else cols = 4;
-    return cols;
-  }
+  // Score bands for the score filter (≤3 bands → never collapses)
+  var SCORE_BANDS = [
+    { key: 'high', label: '≥ 8', test: function (s) { return s >= 8; } },
+    { key: 'mid',  label: '5-7',     test: function (s) { return s >= 5 && s < 8; } },
+    { key: 'low',  label: '< 5',     test: function (s) { return s < 5; } }
+  ];
 
   // ===================================================================
-  // Loading
+  // i18n — page-level UI language (not edition language)
   // ===================================================================
-  function showLoading() {
-    var c = document.getElementById('loading-container');
-    if (c) c.classList.remove('hidden');
+  var uiLang = 'zh';
+  var I18N = {
+    en: {
+      nav_filter: 'Filter', nav_today: 'Lead', nav_more: 'More', nav_colophon: 'Colophon',
+      docs: 'Docs', github: 'GitHub',
+      masthead_slogan: 'AI-CURATED NEWS RADAR',
+      stat_editions: 'Editions', stat_stories: 'Stories', stat_updated: 'Updated',
+      edition_list: 'Editions',
+      filter_title: 'Filter',
+      lead_kicker: 'Lead',
+      filter_sources: 'Sources', filter_tags: 'Tags', filter_scores: 'Score',
+      filter_invert: 'Invert', filter_reset: 'Reset',
+      filter_more: 'more', filter_less: 'less',
+      more_edition: 'More articles',
+      feed_empty: 'No articles yet. Check back daily.',
+      feed_empty_cat: 'No articles match these filters.',
+      lang_zh: '中文', lang_en: 'EN',
+      loading: 'Loading...',
+      colophon_kicker: 'Colophon',
+      footer_project: 'Project', footer_doc: 'Documentation', footer_scoring: 'Scoring',
+      footer_community: 'Community', footer_legal: 'Legal',
+      footer_license: 'MIT License', footer_view_license: 'View License',
+      footer_powered: 'Powered by <a href="https://github.com/Thysrael/Horizon">Horizon</a> — AI-driven information aggregation',
+      article_tags: 'Tags', article_source: 'Source',
+      title_tag: 'Horizon Daily — AI-Curated News Digest',
+      meta_desc: 'Horizon is an AI-driven news aggregation system. Daily briefings in English & Chinese from Hacker News, Reddit, RSS, GitHub, and more.',
+      empty_editions: 'No editions yet.'
+    },
+    zh: {
+      nav_filter: '筛选', nav_today: '头条', nav_more: '更多', nav_colophon: '报尾',
+      docs: '文档', github: 'GitHub',
+      masthead_slogan: 'AI 精选新闻雷达',
+      stat_editions: '期数', stat_stories: '文章', stat_updated: '更新于',
+      edition_list: '速递',
+      filter_title: '筛选',
+      lead_kicker: '头条',
+      filter_sources: '来源', filter_tags: '标签', filter_scores: '评分',
+      filter_invert: '反选', filter_reset: '重置',
+      filter_more: '更多', filter_less: '收起',
+      more_edition: '更多文章',
+      feed_empty: '暂无文章，请明天再来。',
+      feed_empty_cat: '没有匹配这些筛选条件的文章。',
+      lang_zh: '中文', lang_en: 'EN',
+      loading: '加载中...',
+      colophon_kicker: '报尾',
+      footer_project: '项目', footer_doc: '文档', footer_scoring: '评分',
+      footer_community: '社区', footer_legal: '协议',
+      footer_license: 'MIT 协议', footer_view_license: '查看协议',
+      footer_powered: '由 <a href="https://github.com/Thysrael/Horizon">Horizon</a> 驱动 —— AI 信息聚合',
+      article_tags: '标签', article_source: '来源',
+      title_tag: 'Horizon 每日速递 —— AI 精选新闻',
+      meta_desc: 'Horizon 是一个 AI 驱动的信息聚合系统。从 Hacker News、Reddit、RSS、GitHub 等来源生成中英双语每日速递。',
+      empty_editions: '暂无速递。'
+    }
+  };
+
+  function t(key) {
+    return (I18N[uiLang] && I18N[uiLang][key]) || (I18N.en && I18N.en[key]) || key;
   }
 
-  function hideLoading() {
-    var c = document.getElementById('loading-container');
-    if (!c) return;
-    c.classList.add('hidden');
-    setTimeout(function () { c.style.display = 'none'; }, 350);
+  function langLabel(langCode) {
+    return langCode === 'zh' ? t('lang_zh') : t('lang_en');
   }
 
-  function setLoadingProgress(pct, text) {
-    var bar = document.querySelector('#loading .bar');
-    var per = document.querySelector('#loading .per');
-    if (bar) bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
-    if (per) per.textContent = text || (Math.floor(pct) + '%');
+  function initI18n() {
+    var saved = null;
+    try { saved = localStorage.getItem('hz-ui-lang'); } catch (e) { /* noop */ }
+    if (saved === 'en' || saved === 'zh') {
+      uiLang = saved;
+    } else {
+      var nav = (navigator.language || navigator.userLanguage || 'en');
+      uiLang = /^zh/i.test(nav) ? 'zh' : 'en';
+    }
+    applyUI();
   }
 
-  // ===================================================================
-  // Stats
-  // ===================================================================
-  function renderStats(stats) {
-    if (!stats) return;
-    var items = (manifest && manifest.items) ? manifest.items : [];
-    document.getElementById('stat-posts').textContent = stats.total_posts || 0;
-    document.getElementById('stat-articles').textContent = items.length;
-    document.getElementById('stat-langs').textContent = (stats.languages || []).join('/') || '—';
-    var updated = manifest.updated_at || '';
-    if (updated) {
-      var d = new Date(updated);
-      document.getElementById('stat-updated').textContent = (d.getMonth() + 1) + '/' + d.getDate();
+  function applyUI() {
+    document.documentElement.setAttribute('lang', uiLang);
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      el.innerHTML = t(key);
+    });
+
+    document.title = t('title_tag');
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t('meta_desc'));
+
+    updateLangButton();
+    renderMastheadStats();
+    if (currentPost) {
+      renderEditionList();
+      renderContent();
     }
   }
 
   // ===================================================================
-  // Filters
+  // Theme Toggle
   // ===================================================================
-  function setupFilters(allTags) {
-    var bar = document.getElementById('filter-bar');
-    if (!bar) return;
-    var existing = bar.querySelectorAll('.tag-filter');
-    existing.forEach(function (btn) { if (btn.dataset.tag !== '') btn.remove(); });
-
-    allTags.slice(0, 12).forEach(function (tag) {
-      var btn = document.createElement('button');
-      btn.className = 'tag-filter';
-      btn.dataset.tag = tag;
-      btn.textContent = '#' + tag;
-      btn.addEventListener('click', function () { filterByTag(tag); });
-      bar.appendChild(btn);
-    });
+  function initTheme() {
+    var saved = localStorage.getItem('hz-theme');
+    var prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'dark' || (!saved && prefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   }
 
-  function filterByTag(tag) {
-    currentTag = (currentTag === tag) ? '' : tag;
-    document.querySelectorAll('.tag-filter').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.tag === currentTag);
-    });
-    buildWall();
+  function toggleTheme() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next;
+    if (current === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', 'light');
+      next = 'light';
+    } else if (current === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      next = 'dark';
+    } else {
+      var prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+      next = prefersDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+    }
+    localStorage.setItem('hz-theme', next);
   }
 
   // ===================================================================
-  // Language
+  // Navbar
   // ===================================================================
+  function initNavbar() {
+    var navbar = document.getElementById('navbar');
+    var hamburger = document.getElementById('nav-hamburger');
+    var navLinks = document.getElementById('nav-links');
+
+    window.addEventListener('scroll', function () {
+      var scrolled = window.scrollY > 10;
+      navbar.classList.toggle('hz-navbar-scrolled', scrolled);
+    });
+
+    if (hamburger && navLinks) {
+      var drawerEl = document.createElement('div');
+      drawerEl.className = 'hz-nav-drawer';
+      drawerEl.id = 'nav-drawer';
+      navLinks.querySelectorAll('a').forEach(function (a) {
+        var clone = a.cloneNode(true);
+        clone.addEventListener('click', function () {
+          drawerEl.classList.remove('open');
+          hamburger.classList.remove('open');
+          // setActiveNav is hoisted — highlight the matching topbar link
+          setActiveNav(a.getAttribute('href'));
+        });
+        drawerEl.appendChild(clone);
+      });
+      navbar.after(drawerEl);
+
+      hamburger.addEventListener('click', function () {
+        var isOpen = drawerEl.classList.contains('open');
+        hamburger.classList.toggle('open', !isOpen);
+        drawerEl.classList.toggle('open', !isOpen);
+      });
+    }
+
+    // Highlight the nav link for a given anchor (used on click; also from observer)
+    function setActiveNav(href) {
+      navLinks.querySelectorAll('a').forEach(function (n) {
+        n.classList.toggle('active', n.getAttribute('href') === href);
+      });
+    }
+
+    // Smooth scroll for anchor links — set active immediately on click so the
+    // highlight always follows, even for short sections that never enter the
+    // observer's mid-viewport band.
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var href = this.getAttribute('href');
+        var target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          setActiveNav(href);
+          var offset = 80;
+          var top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Active nav link via IntersectionObserver (for manual scrolling)
+    if ('IntersectionObserver' in window && navLinks) {
+      var sections = document.querySelectorAll('section[id], header[id], footer[id], .lead-story, .filter-toolbar');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var id = entry.target.id || 'today';
+            setActiveNav('#' + id);
+          }
+        });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+      sections.forEach(function (s) { observer.observe(s); });
+    }
+
+    var themeBtn = document.getElementById('nav-theme-toggle');
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+  }
+
+  // ===================================================================
+  // Masthead stats — editions/stories counted by date (not language).
+  // Left: 期数 · 文章   Right: 更新于   Center: slogan (in HTML).
+  // ===================================================================
+  function renderMastheadStats() {
+    var leftEl = document.getElementById('masthead-stats-left');
+    var rightEl = document.getElementById('masthead-stats-right');
+
+    var posts = (manifest && manifest.posts) || [];
+
+    // Editions = number of unique dates (zh/en of the same day count once)
+    var dates = {};
+    posts.forEach(function (p) { if (p.date) dates[p.date] = true; });
+    var editionCount = Object.keys(dates).length;
+
+    // Stories = per-date item count (language-deduped, take the max), summed
+    var perDate = {};
+    posts.forEach(function (p) {
+      if (!p.date) return;
+      perDate[p.date] = Math.max(perDate[p.date] || 0, p.item_count || 0);
+    });
+    var storyCount = Object.keys(perDate).reduce(function (s, d) { return s + perDate[d]; }, 0);
+
+    // Updated = newest edition date (fall back to manifest updated_at)
+    var latestDate = Object.keys(dates).sort().pop() || '';
+    var updateStr = '';
+    if (latestDate) {
+      var dp = latestDate.split('-');
+      if (dp.length === 3) updateStr = parseInt(dp[1], 10) + '/' + parseInt(dp[2], 10);
+    } else if (manifest && manifest.updated_at) {
+      var u = new Date(manifest.updated_at);
+      if (!isNaN(u.getTime())) updateStr = (u.getMonth() + 1) + '/' + u.getDate();
+    }
+
+    if (leftEl) leftEl.textContent = t('stat_editions') + ' ' + editionCount + ' · ' + t('stat_stories') + ' ' + storyCount;
+    if (rightEl && updateStr) rightEl.textContent = t('stat_updated') + ' ' + updateStr;
+  }
+
+  // ===================================================================
+  // Topbar language switcher — controls BOTH the UI language and the
+  // language of the currently selected edition.
+  // ===================================================================
+  function switchLanguage() {
+    var target = uiLang === 'zh' ? 'en' : 'zh';
+    uiLang = target;
+    try { localStorage.setItem('hz-ui-lang', target); } catch (e) { /* noop */ }
+    applyUI();
+
+    if (currentPost && editionOrder.length) {
+      var idx = -1;
+      for (var i = 0; i < editionOrder.length; i++) {
+        if (editionOrder[i].date === currentPost.date && editionOrder[i].lang === target) { idx = i; break; }
+      }
+      if (idx === -1) {
+        for (var j = 0; j < editionOrder.length; j++) {
+          if (editionOrder[j].lang === target) { idx = j; break; }
+        }
+      }
+      if (idx !== -1) {
+        expandedDate = null;
+        selectEdition(idx, false); // language switch must not scroll the page
+      }
+    }
+  }
+
+  function updateLangButton() {
+    var btn = document.getElementById('nav-lang-toggle');
+    if (!btn) return;
+    btn.textContent = uiLang === 'zh' ? 'EN' : '中文';
+  }
+
   function setupLangToggle() {
-    var el = document.querySelector('.lang-toggle');
-    if (!el) return;
-    el.addEventListener('click', function (e) {
-      var btn = e.target.closest('button');
-      if (!btn) return;
-      currentLang = btn.dataset.lang;
-      el.querySelectorAll('button').forEach(function (b) {
-        b.classList.toggle('active', b.dataset.lang === currentLang);
-      });
-      buildWall();
+    var btn = document.getElementById('nav-lang-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', switchLanguage);
+  }
+
+  // ===================================================================
+  // Edition list (left column) — collapsed by date, click to expand langs
+  // ===================================================================
+  function buildEditionList() {
+    var posts = (manifest && manifest.posts) ? manifest.posts.slice() : [];
+    if (!posts.length) {
+      editionOrder = [];
+      return;
+    }
+    posts.sort(function (a, b) {
+      var dc = b.date.localeCompare(a.date);
+      if (dc !== 0) return dc;
+      return (a.lang === 'zh' ? 0 : 1) - (b.lang === 'zh' ? 0 : 1);
     });
+    editionOrder = posts;
+    renderEditionList();
   }
 
-  // ===================================================================
-  // Filter items
-  // ===================================================================
-  function getFilteredItems() {
-    var items = (manifest && manifest.items) ? manifest.items.slice() : [];
-    if (currentTag) {
-      items = items.filter(function (it) {
-        return it.tags && it.tags.indexOf(currentTag) !== -1;
-      });
-    }
-    return items;
-  }
+  function renderEditionList() {
+    var body = document.getElementById('edition-list-body');
+    if (!body) return;
+    body.innerHTML = '';
 
-  // ===================================================================
-  // Card HTML
-  // ===================================================================
-  function createCardHTML(item) {
-    var score = item.score || 0;
-    var tier = score >= 9 ? 'high' : score >= 7 ? 'good' : score >= 5 ? 'mid' : 'low';
-    var title = escapeHtml((item.title || '').length > 72 ? item.title.slice(0, 70) + '...' : item.title);
-
-    var tagsHtml = '';
-    if (item.tags) {
-      tagsHtml = item.tags.slice(0, 3).map(function (t) {
-        return '<span class="tag-dot">#' + escapeHtml(t) + '</span>';
-      }).join('');
-    }
-
-    var sourceLabel = escapeHtml(item.source_type || 'unknown');
-    var summary = escapeHtml((item.summary || '').length > 100 ? item.summary.slice(0, 98) + '...' : item.summary || '');
-
-    // OG image background or gradient fallback is handled by CSS :nth-child
-    var ogStyle = '';
-    if (item.og_image) {
-      ogStyle = ' style="background-image:url(' + escapeHtml(item.og_image) + ');background-size:cover;background-position:center"';
-    }
-
-    return '<a href="' + (item.url || '#') + '" target="_blank" rel="noopener">' +
-      '<div class="wall-card-visual"' + ogStyle + '>' +
-        '<span class="wall-card-score">' +
-          '<span class="score-badge" data-tier="' + tier + '">' + score + '</span>' +
-        '</span>' +
-        '<span class="wall-card-title">' + title + '</span>' +
-        '<span class="wall-card-meta">' + sourceLabel + '</span>' +
-      '</div>' +
-      '<div class="wall-card-info">' +
-        '<p class="wall-card-info-title">' + title + '</p>' +
-        '<p class="wall-card-info-summary">' + summary + '</p>' +
-        '<p class="wall-card-info-meta">' + tagsHtml + '</p>' +
-      '</div>' +
-    '</a>';
-  }
-
-  // ===================================================================
-  // Build / Rebuild Wall
-  // ===================================================================
-  function buildWall() {
-    wallContainer = document.getElementById('wall');
-    if (!wallContainer) return;
-
-    // Stop previous wall animation
-    if (wall) { wall.destroy(); wall = null; }
-    wallContainer.innerHTML = '';
-    wallContainer.classList.remove('loaded');
-
-    var items = getFilteredItems();
-    if (!items.length) {
-      wallContainer.innerHTML = '<div class="empty-state"><p>No articles match this filter.</p></div>';
-      wallContainer.classList.add('loaded');
-      wallContainer.style.height = '120px';
+    if (!editionOrder.length) {
+      body.innerHTML = '<div class="edition-empty">' + escapeHtml(t('empty_editions')) + '</div>';
       return;
     }
 
-    var cols = calcGrid();
-    var rows = Math.ceil(items.length / cols);
-    var totalCells = cols * rows;
+    var groups = {};
+    editionOrder.forEach(function (p, idx) {
+      if (!groups[p.date]) groups[p.date] = [];
+      groups[p.date].push({ post: p, idx: idx });
+    });
 
-    // Pad items to fill grid
-    while (items.length < totalCells) {
-      items.push(null); // placeholder for empty cells
-    }
+    Object.keys(groups).forEach(function (date) {
+      var entries = groups[date];
+      var g = document.createElement('div');
+      g.className = 'edition-group';
 
-    wall = new HorizonWall(wallContainer, CARD_W, CARD_H, cols, rows, CARD_SCALE);
-
-    // Fill cards with content
-    for (var i = 0; i < items.length; i++) {
-      if (items[i]) {
-        wall.setContent(i, createCardHTML(items[i]));
-      } else {
-        // Empty cell: invisible placeholder
-        wall.cards[i].element.classList.add('wall-card-placeholder');
+      var primaryLang = entries[0].post.lang;
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].post.lang === uiLang) { primaryLang = entries[i].post.lang; break; }
       }
-    }
+      var isExpanded = expandedDate === date;
+      var isActiveRow = currentPost && currentPost.date === date && !isExpanded;
 
-    // Set container size
-    var containerW = cols * CARD_W;
-    var containerH = rows * CARD_H;
-    wallContainer.style.width = containerW + 'px';
-    wallContainer.style.height = containerH + 'px';
+      var row = document.createElement('button');
+      row.className = 'edition-item' + (isActiveRow ? ' active' : '') + (isExpanded ? ' expanded' : '');
+      row.dataset.date = date;
+      var arrow = isExpanded ? '&#x25BC;' : '&#x25B6;';
+      row.innerHTML = '<span class="edition-arrow">' + arrow + '</span>' +
+        '<span class="edition-date">' + escapeHtml(formatDate(date)) + '</span>' +
+        '<span class="edition-lang">' + escapeHtml(langLabel(primaryLang)) + '</span>';
+      row.addEventListener('click', function () { toggleEdition(this.dataset.date); });
+      g.appendChild(row);
 
-    // Entry animation: explode from center
-    var cx = window.innerWidth * 0.5;
-    var cy = window.innerHeight * 0.5;
-    wall.setExplodeOrigin(cx, cy);
+      if (isExpanded) {
+        entries.forEach(function (entry) {
+          var sub = document.createElement('button');
+          sub.className = 'edition-subitem' + (currentPost && currentPost === entry.post ? ' active' : '');
+          sub.innerHTML = '<span class="edition-lang">' + escapeHtml(langLabel(entry.post.lang)) + '</span>' +
+            '<span class="edition-count">' + (entry.post.item_count || 0) + '</span>';
+          sub.addEventListener('click', function () {
+            selectEdition(entry.idx);
+            expandedDate = null;
+            renderEditionList();
+          });
+          g.appendChild(sub);
+        });
+      }
 
-    // Reveal
-    setTimeout(function () {
-      wallContainer.classList.add('loaded');
-    }, 150);
-
-    // Update today's brief
-    updateTodaysBrief(items.filter(Boolean));
+      body.appendChild(g);
+    });
   }
 
-  function updateTodaysBrief(items) {
-    var el = document.getElementById('todays-brief');
-    if (!el) return;
-    var count = items.length;
-    var sources = {};
-    var maxScore = 0;
-    items.forEach(function (it) {
-      if (it.source_type) sources[it.source_type] = true;
-      if (it.score > maxScore) maxScore = it.score;
-    });
-    var sourceList = Object.keys(sources).slice(0, 3).join(', ');
-    var now = new Date();
-    var dateStr = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
-    el.innerHTML = '📅 ' + dateStr + ' · ' + count + ' articles' +
-      (sourceList ? ' · Sources: ' + sourceList : '') +
-      (maxScore > 0 ? ' · Top score ' + maxScore + ' 🔥' : '');
+  function toggleEdition(date) {
+    if (expandedDate === date) {
+      expandedDate = null;
+      renderEditionList();
+    } else {
+      expandedDate = date;
+      selectByDate(date);
+      renderEditionList();
+    }
+  }
+
+  function selectByDate(date, doScroll) {
+    for (var i = 0; i < editionOrder.length; i++) {
+      if (editionOrder[i].date === date && editionOrder[i].lang === uiLang) {
+        selectEdition(i, doScroll);
+        return;
+      }
+    }
+    for (var j = 0; j < editionOrder.length; j++) {
+      if (editionOrder[j].date === date) { selectEdition(j, doScroll); return; }
+    }
+  }
+
+  function formatDate(dateStr) {
+    var parts = dateStr.split('-');
+    if (parts.length === 3) return parts[0] + '.' + parts[1] + '.' + parts[2];
+    return dateStr;
+  }
+
+  function selectEdition(idx, doScroll) {
+    if (idx < 0 || idx >= editionOrder.length) return;
+
+    currentPost = editionOrder[idx];
+    filters = { sources: [], tags: [], scores: [] };
+    filterExpanded = { source: false, tag: false, score: false };
+
+    renderEditionList();
+    renderMastheadStats();
+    updateLangButton();
+
+    buildFilterToolbar();
+    renderContent();
+
+    // Only scroll when the user actively switches editions — not on initial load.
+    if (doScroll !== false) {
+      var todayEl = document.getElementById('today');
+      if (todayEl) todayEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   // ===================================================================
-  // Article page helpers (for post detail pages)
+  // Filtering (multi-select: sources OR, tags OR, groups AND)
+  // ===================================================================
+  function getEditionItems() {
+    return (currentPost && currentPost.items) ? currentPost.items.slice() : [];
+  }
+
+  function applyFilters(items) {
+    return items.filter(function (it) {
+      var okSource = !filters.sources.length || filters.sources.indexOf(it.source_type) !== -1;
+      var okTag = !filters.tags.length || (it.tags || []).some(function (tg) { return filters.tags.indexOf(tg) !== -1; });
+      var okScore = !filters.scores.length || filters.scores.some(function (key) {
+        for (var b = 0; b < SCORE_BANDS.length; b++) {
+          if (SCORE_BANDS[b].key === key) return SCORE_BANDS[b].test(it.score || 0);
+        }
+        return false;
+      });
+      return okSource && okTag && okScore;
+    });
+  }
+
+  function buildFilterToolbar() {
+    var items = getEditionItems();
+    var sources = {}, tags = {};
+    items.forEach(function (it) {
+      if (it.source_type) sources[it.source_type] = true;
+      (it.tags || []).forEach(function (tg) { tags[tg] = true; });
+    });
+    renderFilterChips('filter-sources-chips', Object.keys(sources).sort(), filters.sources, 'source');
+    renderFilterChips('filter-tags-chips', Object.keys(tags).sort(), filters.tags, 'tag');
+    renderFilterChips('filter-scores-chips', SCORE_BANDS.map(function (b) { return b.key; }), filters.scores, 'score');
+  }
+
+  function renderFilterChips(containerId, values, selected, kind) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = '';
+
+    var shouldCollapse = values.length > FILTER_CHIP_LIMIT;
+    var showAll = filterExpanded[kind];
+    var collapsed = shouldCollapse && !showAll;
+    var visible = collapsed ? values.slice(0, FILTER_CHIP_LIMIT) : values;
+    var hiddenCount = values.length - visible.length;
+
+    // Collapsed groups stay on a single row (chips ellipsize, "more" pinned)
+    el.className = 'filter-chips' + (collapsed ? ' collapsed' : '');
+
+    visible.forEach(function (v) {
+      var chip = document.createElement('button');
+      chip.className = 'filter-chip' + (selected.indexOf(v) !== -1 ? ' selected' : '');
+      chip.dataset.kind = kind;
+      chip.dataset.value = v;
+      chip.textContent = chipLabel(kind, v);
+      chip.addEventListener('click', function () { toggleFilter(kind, v); });
+      el.appendChild(chip);
+    });
+
+    // Collapse/expand toggle whenever the group exceeds the limit —
+    // shown both when collapsed ("+N more") and expanded ("less").
+    if (shouldCollapse) {
+      var toggle = document.createElement('button');
+      toggle.className = 'filter-chip filter-more';
+      toggle.textContent = showAll ? t('filter_less') : '+' + hiddenCount + ' ' + t('filter_more');
+      toggle.addEventListener('click', function () {
+        filterExpanded[kind] = !filterExpanded[kind];
+        renderFilterChips(containerId, values, selected, kind);
+      });
+      el.appendChild(toggle);
+    }
+  }
+
+  function chipLabel(kind, value) {
+    if (kind === 'score') {
+      for (var i = 0; i < SCORE_BANDS.length; i++) {
+        if (SCORE_BANDS[i].key === value) return SCORE_BANDS[i].label;
+      }
+      return value;
+    }
+    return kind === 'source' ? escapeHtml(value) : '#' + escapeHtml(value);
+  }
+
+  function toggleFilter(kind, value) {
+    var arr = kind === 'source' ? filters.sources : (kind === 'tag' ? filters.tags : filters.scores);
+    var i = arr.indexOf(value);
+    if (i === -1) arr.push(value); else arr.splice(i, 1);
+    buildFilterToolbar();
+    renderContent();
+  }
+
+  // Invert the current selection: every unselected chip becomes selected and
+  // every selected chip becomes unselected (complement per group).
+  function invertFilters() {
+    var items = getEditionItems();
+    var srcSet = {}, tagSet = {};
+    items.forEach(function (it) {
+      if (it.source_type) srcSet[it.source_type] = true;
+      (it.tags || []).forEach(function (tg) { tagSet[tg] = true; });
+    });
+    var allSources = Object.keys(srcSet);
+    var allTags = Object.keys(tagSet);
+    var allScores = SCORE_BANDS.map(function (b) { return b.key; });
+
+    filters.sources = allSources.filter(function (s) { return filters.sources.indexOf(s) === -1; });
+    filters.tags = allTags.filter(function (tg) { return filters.tags.indexOf(tg) === -1; });
+    filters.scores = allScores.filter(function (sc) { return filters.scores.indexOf(sc) === -1; });
+
+    buildFilterToolbar();
+    renderContent();
+  }
+
+  function setupFilterReset() {
+    var btn = document.getElementById('filter-reset');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      filters = { sources: [], tags: [], scores: [] };
+      filterExpanded = { source: false, tag: false, score: false };
+      buildFilterToolbar();
+      renderContent();
+    });
+
+    var invertBtn = document.getElementById('filter-invert');
+    if (invertBtn) invertBtn.addEventListener('click', invertFilters);
+
+    // Per-group clear buttons — clear the group's selection only; keep the
+    // collapse/expand state untouched (clearing must not re-fold the group).
+    var clearSrc = document.getElementById('filter-clear-sources');
+    if (clearSrc) clearSrc.addEventListener('click', function () {
+      filters.sources = [];
+      buildFilterToolbar();
+      renderContent();
+    });
+    var clearTag = document.getElementById('filter-clear-tags');
+    if (clearTag) clearTag.addEventListener('click', function () {
+      filters.tags = [];
+      buildFilterToolbar();
+      renderContent();
+    });
+    var clearScore = document.getElementById('filter-clear-scores');
+    if (clearScore) clearScore.addEventListener('click', function () {
+      filters.scores = [];
+      buildFilterToolbar();
+      renderContent();
+    });
+  }
+
+  // ===================================================================
+  // Content — lead story (top score) + secondary multi-column list
+  // ===================================================================
+  function renderContent() {
+    var items = applyFilters(getEditionItems());
+    items.sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+    renderLead(items[0] || null);
+    renderSecondary(items.slice(1));
+  }
+
+  function articleHref(item) {
+    if (!currentPost || !item) return '#';
+    var items = currentPost.items || [];
+    var idx = items.indexOf(item);
+    var base = currentPost.url || '';
+    return base + (idx >= 0 ? '#item-' + (idx + 1) : '');
+  }
+
+  function renderLead(item) {
+    var el = document.querySelector('.lead-story');
+    if (!el) return;
+    if (!item) {
+      el.innerHTML = '<div class="feed-empty">' + escapeHtml(t('feed_empty')) + '</div>';
+      return;
+    }
+    var score = item.score || 0;
+    var tier = scoreTier(score);
+    var title = escapeHtml(item.title || '');
+    var summary = escapeHtml(item.summary || '');
+    var src = item.source_type || 'unknown';
+    var href = articleHref(item);
+    var bg = '';
+    if (item.og_image) {
+      // Bottom-strong scrim: darkest where the text sits, nearly clear at top
+      // so the image shows through fully.
+      bg = ' style="background-image:linear-gradient(to top, ' +
+        'rgba(0,0,0,.78) 0%, rgba(0,0,0,.4) 55%, rgba(0,0,0,.08) 100%),url(' +
+        escapeHtml(item.og_image) + ')"';
+    }
+    el.innerHTML =
+      '<a class="lead-link" href="' + href + '" target="_blank" rel="noopener">' +
+        '<div class="lead-visual"' + bg + '>' +
+          '<span class="lead-kicker">' + escapeHtml(readableSource(src)) + '</span>' +
+          '<h2 class="lead-title">' + title + '</h2>' +
+          '<p class="lead-summary">' + summary + '</p>' +
+          '<span class="lead-meta">' +
+            '<span class="score-badge" data-tier="' + tier + '">' + score + '/10</span>' +
+          '</span>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function renderSecondary(items) {
+    var el = document.getElementById('secondary-list');
+    if (!el) return;
+    if (!items.length) {
+      el.innerHTML = '<div class="feed-empty">' + escapeHtml(t('feed_empty_cat')) + '</div>';
+      return;
+    }
+    el.innerHTML = items.map(function (it) {
+      var src = it.source_type || 'unknown';
+      var sourceClass = 'source-' + src;
+      return '<article class="feed-item">' +
+        '<span class="source-badge ' + sourceClass + '">' + escapeHtml(src) + '</span>' +
+        '<h4 class="feed-item-title"><a href="' + articleHref(it) + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a></h4>' +
+        '<p class="feed-item-summary">' + escapeHtml(it.summary || '') + '</p>' +
+        '<p class="feed-item-meta"><span class="feed-item-score">' + (it.score || 0) + '/10</span></p>' +
+      '</article>';
+    }).join('');
+  }
+
+  function readableSource(src) {
+    return String(src).replace(/_/g, ' ').toUpperCase();
+  }
+
+  function scoreTier(score) {
+    if (score >= 9) return 'high';
+    if (score >= 7) return 'good';
+    if (score >= 5) return 'mid';
+    return 'low';
+  }
+
+  // ===================================================================
+  // Article page helpers (for posts/{date}-{lang}.html)
   // ===================================================================
   function processScoreBadges() {
     var scoreRe = /⭐️\s*(\d+(?:\.\d+)?)\/10/;
-    var targets = document.querySelectorAll('.hz-post h2, .hz-post li, .post-toc li');
-    targets.forEach(function (el) {
+    document.querySelectorAll('.hz-post h2, .hz-post li, .post-toc li').forEach(function (el) {
       var m = el.innerHTML.match(scoreRe);
       if (!m) return;
       var score = parseFloat(m[1]);
       var tier = score >= 9 ? 'high' : score >= 7 ? 'good' : score >= 5 ? 'mid' : 'low';
-      el.innerHTML = el.innerHTML.replace(scoreRe,
-        '<span class="score-badge" data-tier="' + tier + '">' + m[1] + '</span>');
+      el.innerHTML = el.innerHTML.replace(scoreRe, '<span class="score-badge" data-tier="' + tier + '">' + m[1] + '</span>');
     });
   }
 
   function markSemanticElements() {
-    var paragraphs = document.querySelectorAll('.hz-post p');
-    paragraphs.forEach(function (p) {
+    document.querySelectorAll('.hz-post p').forEach(function (p) {
       var text = p.textContent.trim();
       if (/^(Tags|标签)\s*:/.test(text)) p.classList.add('tag-line');
-      if (/^(rss|reddit|github|hackernews|hn|telegram|ossinsight|gdelt|openbb|google.news)\s*·/i.test(text)) {
-        p.classList.add('source-line');
-      }
+      if (/^(rss|reddit|github|hackernews|hn|telegram|ossinsight|gdelt|openbb|google.news)\s*·/i.test(text)) p.classList.add('source-line');
     });
   }
 
@@ -588,24 +695,48 @@
   }
 
   // ===================================================================
+  // Manifest loading — script-injected (window.__MANIFEST__) first,
+  // then fetch, then a dynamic <script> fallback (works under file://)
+  // ===================================================================
+  function loadManifest() {
+    return new Promise(function (resolve) {
+      if (window.__MANIFEST__) {
+        resolve(window.__MANIFEST__);
+        return;
+      }
+      fetch('manifest.json')
+        .then(function (resp) {
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          return resp.json();
+        })
+        .then(resolve)
+        .catch(function () {
+          var s = document.createElement('script');
+          s.src = 'manifest.js';
+          s.onload = function () { resolve(window.__MANIFEST__ || null); };
+          s.onerror = function () { resolve(null); };
+          document.head.appendChild(s);
+        });
+    });
+  }
+
+  // ===================================================================
   // Utilities
   // ===================================================================
   function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   // ===================================================================
   // Init
   // ===================================================================
   function init() {
-    wallContainer = document.getElementById('wall');
+    initI18n();
+    initTheme();
+    initNavbar();
 
-    // Article page mode
-    if (!wallContainer) {
+    // Article page mode (posts/{date}-{lang}.html)
+    if (document.querySelector('.hz-post')) {
       processScoreBadges();
       markSemanticElements();
       setupArticleLangToggle();
@@ -613,48 +744,35 @@
     }
 
     // Homepage mode
-    if (!_supports3d) {
-      document.getElementById('not-supported').style.display = 'block';
-      document.getElementById('loading-container').classList.add('hidden');
-      return;
-    }
+    var loadingEl = document.getElementById('loading-container');
+    var loadBar = document.querySelector('#loading .bar');
+    var loadPer = document.querySelector('#loading .per');
+    if (loadPer) loadPer.textContent = t('loading');
 
-    showLoading();
-    setLoadingProgress(5, 'Loading manifest...');
+    loadManifest().then(function (data) {
+      if (!data) {
+        console.error('Failed to load manifest');
+        if (loadBar) loadBar.style.width = '0%';
+        if (loadingEl) loadingEl.classList.add('hidden');
+        return;
+      }
+      manifest = data;
+      renderMastheadStats();
+      buildEditionList();
+      setupLangToggle();
+      setupFilterReset();
 
-    fetch('manifest.json')
-      .then(function (resp) {
-        setLoadingProgress(30, 'Parsing data...');
-        return resp.json();
-      })
-      .then(function (data) {
-        manifest = data;
-        setLoadingProgress(50, 'Building wall...');
-        renderStats(data.stats);
-        setupFilters((data.stats && data.stats.all_tags) || []);
-        setupLangToggle();
-        setLoadingProgress(80, 'Rendering...');
+      if (manifest.posts && manifest.posts.length) {
+        expandedDate = null;
+        selectByDate(editionOrder[0].date, false);
+      } else {
+        currentPost = { date: '', lang: '', items: manifest.items || [], url: '' };
+        filters = { sources: [], tags: [] };
+        buildFilterToolbar();
+        renderContent();
+      }
 
-        // Build wall in the next frame so loading UI can update
-        requestAnimationFrame(function () {
-          buildWall();
-          setLoadingProgress(100, 'Done');
-          setTimeout(hideLoading, 250);
-        });
-      })
-      .catch(function (err) {
-        console.error('Failed to load manifest:', err);
-        setLoadingProgress(0, 'Failed to load manifest.json');
-        setTimeout(hideLoading, 2500);
-      });
-
-    // Rebuild on resize
-    var resizeTimer;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        if (wall) buildWall();
-      }, 250);
+      if (loadingEl) loadingEl.classList.add('hidden');
     });
   }
 
