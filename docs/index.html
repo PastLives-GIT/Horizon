@@ -6,80 +6,154 @@
 <title>Horizon Daily — AI-Curated News Digest</title>
 <meta name="description" content="Horizon is an AI-driven news aggregation system. Daily briefings in English & Chinese from Hacker News, Reddit, RSS, GitHub, and more.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F305;</text></svg>">
+<!-- BroadSheet serif + mono typefaces (EN + CJK fallbacks) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Serif+SC:wght@400;600;800&family=Playfair+Display:wght@600;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/horizon.css">
+<!-- Manifest injected as JS so the page works under file:// too (no CORS on <script src>) -->
+<script src="manifest.js"></script>
 <script defer src="assets/js/horizon.js"></script>
 </head>
 <body>
 
-<!-- Not Supported -->
-<div id="not-supported">
-  Your browser does not support CSS 3D transforms. Please use a modern browser.
-</div>
-
-<!-- Loading -->
+<!-- ================================================================= -->
+<!-- Loading                                                            -->
+<!-- ================================================================= -->
 <div id="loading-container">
   <div id="loading">
     <div class="bar"></div>
-    <div class="per">Loading...</div>
+    <div class="per" data-i18n="loading">Loading...</div>
   </div>
 </div>
 
-<!-- Hero -->
-<header class="hero-section">
-  <div class="hero-content">
-    <h1 class="hero-title">&#x1F305; Horizon Daily</h1>
-    <p class="hero-tagline">AI-Curated News Digest · Bilingual EN/ZH · Multi-Source</p>
-    <div class="hero-links">
-      <a href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener">GitHub</a>
-      <a href="configuration">Documentation</a>
+<!-- ================================================================= -->
+<!-- Masthead (newspaper nameplate)                                     -->
+<!-- ================================================================= -->
+<header class="masthead">
+  <div class="masthead-meta">
+    <div class="masthead-meta-left">
+      <span id="masthead-stats-left">—</span>
+    </div>
+    <div class="masthead-meta-center">
+      <span class="masthead-slogan" data-i18n="masthead_slogan">AI-CURATED NEWS RADAR</span>
+    </div>
+    <div class="masthead-meta-right">
+      <span id="masthead-stats-right">—</span>
     </div>
   </div>
+  <h1 class="masthead-nameplate">Horizon</h1>
+  <div class="masthead-rule" aria-hidden="true"></div>
 </header>
 
-<!-- Stats -->
-<div id="stats-panel" class="stats-panel">
-  <div class="stat-item">
-    <span class="stat-value" id="stat-posts">—</span>
-    <span class="stat-label">Posts</span>
+<!-- ================================================================= -->
+<!-- Index strip (print-style navbar)                                   -->
+<!-- ================================================================= -->
+<nav class="hz-navbar" id="navbar">
+  <div class="hz-navbar-inner">
+    <a class="hz-navbar-brand" href="#today">&#x1F305; Horizon</a>
+    <div class="hz-navbar-links" id="nav-links">
+      <a href="#filter-toolbar" data-i18n="nav_filter">Filter</a>
+      <a href="#today" class="active" data-i18n="nav_today">Lead</a>
+      <a href="#secondary" data-i18n="nav_more">More</a>
+      <a href="#colophon" data-i18n="nav_colophon">Colophon</a>
+    </div>
+    <div class="hz-navbar-actions">
+      <a class="hz-navbar-doc" href="configuration" data-i18n="docs">Docs</a>
+      <a class="hz-navbar-doc" href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener" data-i18n="github">GitHub</a>
+      <button class="hz-navbar-lang" id="nav-lang-toggle" title="Switch language" aria-label="Switch language">EN</button>
+      <button class="hz-navbar-theme" id="nav-theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hz-navbar-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
-  <div class="stat-item">
-    <span class="stat-value" id="stat-articles">—</span>
-    <span class="stat-label">Articles</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-value" id="stat-langs">—</span>
-    <span class="stat-label">Languages</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-value" id="stat-updated">—</span>
-    <span class="stat-label">Updated</span>
-  </div>
+</nav>
+
+<!-- ================================================================= -->
+<!-- Split layout: edition list (left) + content (right)                -->
+<!-- ================================================================= -->
+<div class="edition-layout">
+
+  <!-- Left: list of editions -->
+  <aside class="edition-list" id="edition-list">
+    <p class="edition-list-title" data-i18n="edition_list">Editions</p>
+    <div id="edition-list-body"></div>
+  </aside>
+
+  <!-- Right: selected edition content -->
+  <main class="edition-main">
+
+    <!-- Multi-select filter toolbar (sources + tags + score) -->
+    <div id="filter-toolbar" class="filter-toolbar">
+      <h2 class="filter-title" data-i18n="filter_title">Filter</h2>
+      <div class="filter-group" id="filter-sources">
+        <span class="filter-label" data-i18n="filter_sources">Sources</span>
+        <div class="filter-chips" id="filter-sources-chips"></div>
+        <button class="filter-clear" id="filter-clear-sources" title="Clear sources">&#x2715;</button>
+      </div>
+      <div class="filter-group" id="filter-tags">
+        <span class="filter-label" data-i18n="filter_tags">Tags</span>
+        <div class="filter-chips" id="filter-tags-chips"></div>
+        <button class="filter-clear" id="filter-clear-tags" title="Clear tags">&#x2715;</button>
+      </div>
+      <div class="filter-group" id="filter-scores">
+        <span class="filter-label" data-i18n="filter_scores">Score</span>
+        <div class="filter-chips" id="filter-scores-chips"></div>
+        <button class="filter-clear" id="filter-clear-scores" title="Clear score">&#x2715;</button>
+      </div>
+      <div class="filter-actions">
+        <button id="filter-invert" class="filter-reset" data-i18n="filter_invert">Invert</button>
+        <button id="filter-reset" class="filter-reset" data-i18n="filter_reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Lead story (top score, large) — also the #today anchor -->
+    <h2 class="section-kicker" data-i18n="lead_kicker">Lead</h2>
+    <div class="lead-story" id="today"></div>
+
+    <!-- Secondary articles (multi-column) -->
+    <section id="secondary" class="secondary-section">
+      <div class="section-kicker" data-i18n="more_edition">More from this edition</div>
+      <div id="secondary-list" class="secondary-list">
+        <div class="feed-empty" data-i18n="loading">Loading articles...</div>
+      </div>
+    </section>
+
+    <!-- Footer — COLOPHON (stays inside the right column) -->
+    <footer class="hz-footer" id="colophon">
+      <div class="section-kicker" data-i18n="colophon_kicker">Colophon</div>
+      <div class="hz-footer-cols">
+        <div class="hz-footer-col">
+          <h4 data-i18n="footer_project">Project</h4>
+          <a href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener" data-i18n="github">GitHub</a>
+          <a href="configuration" data-i18n="footer_doc">Documentation</a>
+          <a href="scoring" data-i18n="footer_scoring">Scoring</a>
+        </div>
+        <div class="hz-footer-col">
+          <h4 data-i18n="footer_community">Community</h4>
+          <a href="https://linux.do/" target="_blank" rel="noopener">LINUX.DO</a>
+          <a href="https://hellogithub.com/" target="_blank" rel="noopener">HelloGitHub</a>
+          <a href="https://github.com/Thysrael/Horizon/issues" target="_blank" rel="noopener" data-i18n="github">GitHub</a>
+        </div>
+        <div class="hz-footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <span data-i18n="footer_license">MIT License</span>
+          <a href="https://github.com/Thysrael/Horizon/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="footer_view_license">View License</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
 </div>
 
-<!-- Filters -->
-<div id="filter-bar" class="filter-bar">
-  <button class="tag-filter active" data-tag="">All</button>
+<!-- Powered-by line (full width, outside the split layout) -->
+<div class="hz-footer-bottom">
+  <p data-i18n="footer_powered">Powered by <a href="https://github.com/Thysrael/Horizon">Horizon</a> — AI-driven information aggregation</p>
 </div>
-
-<!-- Language toggle -->
-<div class="lang-toggle">
-  <button id="btn-lang-all" class="active" data-lang="">All</button>
-  <button id="btn-lang-en" data-lang="en">EN</button>
-  <button id="btn-lang-zh" data-lang="zh">中文</button>
-</div>
-
-<!-- 3D Card Wall (dark section) -->
-<div class="wall-section">
-<div id="wall"></div>
-
-<!-- Today's Brief -->
-<div id="todays-brief" class="todays-brief"></div>
-</div>
-
-<!-- Footer -->
-<footer class="hz-footer">
-  <p>Generated by <a href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener">Horizon</a> — AI-driven information aggregation</p>
-</footer>
 
 </body>
 </html>

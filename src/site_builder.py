@@ -206,6 +206,7 @@ class SiteBuilder:
         # Write
         content = json.dumps(manifest, ensure_ascii=False, indent=2)
         _atomic_write_text(self.manifest_path, content + "\n")
+        self._write_manifest_js(manifest)
         return manifest
 
     def ensure_manifest_exists(self) -> Path:
@@ -218,7 +219,23 @@ class SiteBuilder:
             }
             content = json.dumps(empty, ensure_ascii=False, indent=2)
             _atomic_write_text(self.manifest_path, content + "\n")
+            self._write_manifest_js(empty)
         return self.manifest_path
+
+    def _write_manifest_js(self, manifest: Dict[str, Any]) -> None:
+        """Write manifest.js so the site works under file:// too.
+
+        ``<script src="manifest.js">`` is not subject to the CORS rules that
+        block ``fetch("manifest.json")`` on the ``file://`` protocol, so the
+        homepage reads ``window.__MANIFEST__`` as its primary data source.
+        """
+        js_path = self.docs_dir / "manifest.js"
+        content = (
+            "window.__MANIFEST__ = "
+            + json.dumps(manifest, ensure_ascii=False)
+            + ";\n"
+        )
+        _atomic_write_text(js_path, content)
 
     # ------------------------------------------------------------------
     # Internal: manifest helpers

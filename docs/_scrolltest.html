@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><body>
+<iframe id="f" src="index.html" style="width:100%;height:100vh;border:0"></iframe>
+<script>
+  var f = document.getElementById('f');
+  var r = [];
+  f.onload = function () {
+    setTimeout(function () {
+      var doc = f.contentDocument;
+      r.push('INIT scrollY=' + doc.defaultView.scrollY);
+      // click a left edition row to force a user switch → should scroll
+      var row = doc.querySelector('.edition-item');
+      if (row) { row.click(); }
+      setTimeout(function () {
+        r.push('AFTER_CLICK scrollY=' + doc.defaultView.scrollY);
+        document.title = 'R:' + r.join(' || ');
+      }, 500);
+    }, 2500);
+  };
+</script></body></html>
