@@ -582,6 +582,23 @@
     });
   }
 
+  // Click delegation for secondary article cards — makes the whole .feed-item
+  // clickable (opens in new tab). The title link has target="_blank" and we
+  // ignore clicks that originate from it to avoid double-open.
+  function setupSecondaryCardClick() {
+    var list = document.getElementById('secondary-list');
+    if (!list) return;
+    list.addEventListener('click', function (e) {
+      var card = e.target.closest('.feed-item');
+      if (!card) return;
+      // If the click came from the title link, let the native <a> handle it.
+      if (e.target.closest('.feed-item-title a')) return;
+      var href = card.dataset.href;
+      if (!href || href === '#') return;
+      window.open(href, '_blank', 'noopener,noreferrer');
+    });
+  }
+
   // ===================================================================
   // Content — lead story (top score) + secondary multi-column list
   // ===================================================================
@@ -613,17 +630,9 @@
     var summary = escapeHtml(item.summary || '');
     var src = item.source_type || 'unknown';
     var href = articleHref(item);
-    var bg = '';
-    if (item.og_image) {
-      // Bottom-strong scrim: darkest where the text sits, nearly clear at top
-      // so the image shows through fully.
-      bg = ' style="background-image:linear-gradient(to top, ' +
-        'rgba(0,0,0,.78) 0%, rgba(0,0,0,.4) 55%, rgba(0,0,0,.08) 100%),url(' +
-        escapeHtml(item.og_image) + ')"';
-    }
     el.innerHTML =
       '<a class="lead-link" href="' + href + '" target="_blank" rel="noopener">' +
-        '<div class="lead-visual"' + bg + '>' +
+        '<div class="lead-visual">' +
           '<span class="lead-kicker">' + escapeHtml(readableSource(src)) + '</span>' +
           '<h2 class="lead-title">' + title + '</h2>' +
           '<p class="lead-summary">' + summary + '</p>' +
@@ -632,6 +641,12 @@
           '</span>' +
         '</div>' +
       '</a>';
+
+    // Ensure background image loads with fallback (handles 404/CORS on og_image)
+    var leadVisual = el.querySelector('.lead-visual');
+    var fallbackUrl = 'assets/stacked-newspapers.png';
+    var primaryUrl = item.og_image || null;
+    ensureBgImage(leadVisual, primaryUrl, fallbackUrl);
   }
 
   function renderSecondary(items) {
@@ -641,32 +656,37 @@
       el.innerHTML = '<div class="feed-empty">' + escapeHtml(t('feed_empty_cat')) + '</div>';
       return;
     }
-    el.innerHTML = items.map(function (it) {
+    var html = items.map(function (it) {
       var src = it.source_type || 'unknown';
       var sourceClass = 'source-' + src;
       // Background layer, revealed on hover: the OG photo if available,
       // otherwise the stacked-newspapers placeholder photo with a light scrim.
-      var bgLayer = '';
-      if (it.og_image) {
-        // Top-strong scrim: the item's text sits at the top of the card, so
-        // the top needs the darkest veil; the middle lets the photo through.
-        bgLayer = '<div class="feed-item-bg" style="background-image:linear-gradient(to bottom, ' +
-          'rgba(0,0,0,.88) 0%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.62) 100%),url(' +
-          escapeHtml(it.og_image) + ')"></div>';
-      } else {
-        bgLayer = '<div class="feed-item-bg" style="background-image:linear-gradient(to bottom, ' +
-          'rgba(0,0,0,.6) 0%, rgba(0,0,0,.35) 50%, rgba(0,0,0,.5) 100%),url(assets/stacked-newspapers.png)"></div>';
-      }
-      return '<article class="feed-item">' +
+      // We store the primary og_image in data-og-image for ensureBgImage to pick up.
+      var ogImageAttr = it.og_image ? ' data-og-image="' + escapeHtml(it.og_image) + '"' : '';
+      var bgLayer = '<div class="feed-item-bg"' + ogImageAttr + '></div>';
+      var href = articleHref(it);
+      return '<article class="feed-item" data-href="' + escapeHtml(href) + '">' +
         bgLayer +
         '<div class="feed-item-body">' +
           '<span class="source-badge ' + sourceClass + '">' + escapeHtml(src) + '</span>' +
-          '<h4 class="feed-item-title"><a href="' + articleHref(it) + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a></h4>' +
+          '<h4 class="feed-item-title"><a href="' + escapeHtml(href) + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a></h4>' +
           '<p class="feed-item-summary">' + escapeHtml(it.summary || '') + '</p>' +
           '<span class="score-badge" data-tier="' + scoreTier(it.score || 0) + '">' + (it.score || 0) + '/10</span>' +
         '</div>' +
       '</article>';
     }).join('');
+    el.innerHTML = html;
+
+    // Ensure background images load with fallback (handles 404/CORS on og_image)
+    var fallbackUrl = 'assets/stacked-newspapers.png';
+    var bgElements = el.querySelectorAll('.feed-item-bg');
+    var promises = [];
+    bgElements.forEach(function (bgEl) {
+      var primaryUrl = bgEl.getAttribute('data-og-image') || null;
+      promises.push(ensureBgImage(bgEl, primaryUrl, fallbackUrl));
+    });
+    // Optionally await all, but fire-and-forget is fine for background images
+    Promise.all(promises).catch(function () { /* ignore */ });
   }
 
   function readableSource(src) {
@@ -746,6 +766,29 @@
   // ===================================================================
   // Utilities
   // ===================================================================
+
+  // Preload an image URL and apply as background-image on success,
+  // or fall back to fallbackUrl on error. Returns a Promise.
+  function ensureBgImage(el, primaryUrl, fallbackUrl) {
+    return new Promise(function (resolve) {
+      if (!primaryUrl) {
+        if (fallbackUrl) el.style.backgroundImage = 'url(' + fallbackUrl + ')';
+        resolve();
+        return;
+      }
+      var img = new Image();
+      img.onload = function () {
+        el.style.backgroundImage = 'url(' + primaryUrl + ')';
+        resolve();
+      };
+      img.onerror = function () {
+        if (fallbackUrl) el.style.backgroundImage = 'url(' + fallbackUrl + ')';
+        resolve();
+      };
+      img.src = primaryUrl;
+    });
+  }
+
   function escapeHtml(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
@@ -794,6 +837,8 @@
         buildFilterToolbar();
         renderContent();
       }
+
+      setupSecondaryCardClick();
 
       if (loadingEl) loadingEl.classList.add('hidden');
     });
