@@ -157,10 +157,15 @@
     var navbar = document.getElementById('navbar');
     var hamburger = document.getElementById('nav-hamburger');
     var navLinks = document.getElementById('nav-links');
+    var programmaticScroll = false;   // suppress observer while a nav click scrolls
+    var scrollEndTimer = null;
 
     window.addEventListener('scroll', function () {
       var scrolled = window.scrollY > 10;
       navbar.classList.toggle('hz-navbar-scrolled', scrolled);
+      // Detect scroll end → re-enable the observer-based highlight
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(function () { programmaticScroll = false; }, 150);
     });
 
     if (hamburger && navLinks) {
@@ -202,6 +207,7 @@
         var target = document.querySelector(href);
         if (target) {
           e.preventDefault();
+          programmaticScroll = true;   // ignore observer while this smooth scroll runs
           setActiveNav(href);
           var offset = 80;
           var top = target.getBoundingClientRect().top + window.scrollY - offset;
@@ -214,6 +220,7 @@
     if ('IntersectionObserver' in window && navLinks) {
       var sections = document.querySelectorAll('section[id], header[id], footer[id], .lead-story, .filter-toolbar');
       var observer = new IntersectionObserver(function (entries) {
+        if (programmaticScroll) return;   // don't fight the nav-click highlight
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             var id = entry.target.id || 'today';
