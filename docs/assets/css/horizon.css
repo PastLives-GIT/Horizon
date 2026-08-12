@@ -346,17 +346,40 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Feed item — a news column blurb */
+/* Text list by default: source · title · collapsed summary · score.
+   On hover the summary hides and a background layer fades in — the OG photo
+   if available, otherwise a brand gradient with a centered "Horizon" logo. */
 .feed-item {
+  position: relative;
+  overflow: hidden;
   break-inside: avoid;
-  margin-bottom: 26px;
-  padding: 0 0 18px;
+  padding: 0 0 14px;
+  margin-bottom: 22px;
   border-bottom: 1px solid var(--rule);
+  color: var(--ink);
 }
-
 .feed-item:last-child { border-bottom: none; }
 
-.feed-item-left { }
-.feed-item-right { display: none; } /* score moves into left meta line */
+/* Background layer revealed on hover (visibility hidden when faded out so
+   the empty compositing layer leaves no ghost). */
+.feed-item-bg {
+  position: absolute; inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover; background-position: center;
+}
+.feed-item:hover .feed-item-bg {
+  opacity: 1;
+  visibility: visible;
+}
+
+.feed-item-body {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+}
 
 .source-badge {
   display: inline-block;
@@ -380,34 +403,38 @@ h1, h2, h3, h4, h5, h6 {
 .feed-item-title {
   font-family: var(--font-display);
   font-size: 1.02em; font-weight: 700; line-height: 1.3;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
 }
 .feed-item-title a { color: var(--ink); text-decoration: none; }
 .feed-item-title a:hover { color: var(--accent); }
 
-.feed-item-score {
-  font-family: var(--font-mono);
-  font-size: 0.7em; color: var(--accent);
-}
-
-.feed-item-meta {
-  margin: 6px 0 0;
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.68em;
-  color: var(--ink-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .feed-item-summary {
   font-family: var(--font-body);
   font-size: 0.86em; color: var(--ink-muted); line-height: 1.55;
-  margin: 6px 0 0;
+  margin: 2px 0 0;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
 }
 
-.feed-item-ext { display: none; }
+/* Score uses the shared .score-badge (colored plate, white text) so it stays
+   legible in both themes and whether the background image is shown or not. */
+.feed-item-body .score-badge {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+/* Hover: text floats white over the revealed background. The summary is
+   hidden with visibility (NOT display:none) so the item keeps its height —
+   otherwise the column would re-flow and the card under the cursor would
+   jump, causing hover flicker. */
+.feed-item:hover .feed-item-body { color: #fff; }
+.feed-item:hover .feed-item-title a {
+  color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.feed-item:hover .feed-item-summary {
+  visibility: hidden;
+  opacity: 0;
+}
 
 .feed-empty {
   column-span: all;
@@ -637,6 +664,8 @@ h1, h2, h3, h4, h5, h6 {
 .lead-link:hover { box-shadow: 0 6px 0 var(--rule-strong); }
 
 .lead-visual {
+  position: relative;
+  overflow: hidden;   /* clip the hover-displaced elements */
   padding: 28px 30px 26px;
   background: linear-gradient(135deg, var(--hz-accent), var(--hz-indigo));
   background-size: cover; background-position: center;
@@ -644,6 +673,39 @@ h1, h2, h3, h4, h5, h6 {
   aspect-ratio: 21 / 9;   /* stable image crop; not stretched, centered */
   min-height: 220px;      /* floor on narrow screens so text never clips */
   display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+/* Darkening scrim on hover — content sits above it */
+.lead-visual::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.lead-visual:hover::after { opacity: 1; }
+.lead-visual > * { position: relative; z-index: 1; }
+
+/* Hover interaction: kicker & title slide up out of frame, meta slides down
+   out, the summary grows to fill the area and centers vertically.
+   `visibility` hides the displaced elements after the fade (no ghosting). */
+.lead-kicker,
+.lead-title,
+.lead-meta {
+  transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s;
+}
+.lead-visual:hover .lead-kicker,
+.lead-visual:hover .lead-title {
+  transform: translateY(-150px);
+  opacity: 0;
+  visibility: hidden;
+}
+.lead-visual:hover .lead-meta {
+  transform: translateY(150px);
+  opacity: 0;
+  visibility: hidden;
 }
 
 .lead-kicker {
@@ -671,6 +733,14 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 70ch;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: flex-grow 0.35s ease;
+}
+.lead-visual:hover .lead-summary {
+  /* switch off the 2-line clamp so the full text fills the area */
+  display: flex; flex-direction: column; justify-content: center;
+  -webkit-line-clamp: unset;
+  flex-grow: 1;
+  align-self: stretch;
 }
 
 .lead-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
