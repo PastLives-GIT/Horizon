@@ -644,11 +644,27 @@
     el.innerHTML = items.map(function (it) {
       var src = it.source_type || 'unknown';
       var sourceClass = 'source-' + src;
+      // Background layer, revealed on hover: the OG photo if available,
+      // otherwise the stacked-newspapers placeholder photo with a light scrim.
+      var bgLayer = '';
+      if (it.og_image) {
+        // Top-strong scrim: the item's text sits at the top of the card, so
+        // the top needs the darkest veil; the middle lets the photo through.
+        bgLayer = '<div class="feed-item-bg" style="background-image:linear-gradient(to bottom, ' +
+          'rgba(0,0,0,.88) 0%, rgba(0,0,0,.5) 50%, rgba(0,0,0,.62) 100%),url(' +
+          escapeHtml(it.og_image) + ')"></div>';
+      } else {
+        bgLayer = '<div class="feed-item-bg" style="background-image:linear-gradient(to bottom, ' +
+          'rgba(0,0,0,.6) 0%, rgba(0,0,0,.35) 50%, rgba(0,0,0,.5) 100%),url(assets/stacked-newspapers.png)"></div>';
+      }
       return '<article class="feed-item">' +
-        '<span class="source-badge ' + sourceClass + '">' + escapeHtml(src) + '</span>' +
-        '<h4 class="feed-item-title"><a href="' + articleHref(it) + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a></h4>' +
-        '<p class="feed-item-summary">' + escapeHtml(it.summary || '') + '</p>' +
-        '<p class="feed-item-meta"><span class="feed-item-score">' + (it.score || 0) + '/10</span></p>' +
+        bgLayer +
+        '<div class="feed-item-body">' +
+          '<span class="source-badge ' + sourceClass + '">' + escapeHtml(src) + '</span>' +
+          '<h4 class="feed-item-title"><a href="' + articleHref(it) + '" target="_blank" rel="noopener">' + escapeHtml(it.title) + '</a></h4>' +
+          '<p class="feed-item-summary">' + escapeHtml(it.summary || '') + '</p>' +
+          '<span class="score-badge" data-tier="' + scoreTier(it.score || 0) + '">' + (it.score || 0) + '/10</span>' +
+        '</div>' +
       '</article>';
     }).join('');
   }
